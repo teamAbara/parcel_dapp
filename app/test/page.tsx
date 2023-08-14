@@ -6,7 +6,12 @@ export default function Home() {
   const { wallet } = ethos.useWallet();
 
   return (
-    <main>
+    <div
+      style={{
+        backgroundColor: "white",
+        minHeight: "500px",
+      }}
+    >
       <div className="max-w-7xl mx-auto text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8 flex-6">
         {!wallet ? (
           <SignInButton className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
@@ -32,6 +37,6 @@ export default function Home() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

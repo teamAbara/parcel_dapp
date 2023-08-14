@@ -4,9 +4,7 @@ import { Chain, EthosConnectProvider } from "ethos-connect";
 
 export default function Home() {
   const ethosConfiguration = {
-    // apiKey: process.env.NEXT_PUBLIC_ETHOS_API_KEY,
     preferredWallets: ["Ethos Wallet"],
-    // network: NETWORK,
     chain: Chain.SUI_TESTNET,
   };
 
@@ -33,7 +31,11 @@ export default function Home() {
       }
       connectMessage="Your connect message goes here!"
     >
-      <main style={{ backgroundColor: "white", minHeight: "500px" }}>cc</main>
+      <main
+        style={{ backgroundColor: "white", minHeight: "500px", width: "100%" }}
+      >
+        <div>ddada</div>
+      </main>
     </EthosConnectProvider>
   );
 }

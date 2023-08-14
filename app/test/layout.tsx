@@ -7,9 +7,7 @@ export default function ObjectLayout({
   children: React.ReactNode;
 }) {
   const ethosConfiguration = {
-    // apiKey: process.env.NEXT_PUBLIC_ETHOS_API_KEY,
     preferredWallets: ["Ethos Wallet"],
-    // network: NETWORK,
     chain: Chain.SUI_TESTNET,
   };
   return (

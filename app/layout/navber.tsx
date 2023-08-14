@@ -2,8 +2,6 @@
 
 import {
   createStyles,
-  Menu,
-  Center,
   Header,
   Container,
   Group,
@@ -12,10 +10,9 @@ import {
   rem,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown } from "@tabler/icons-react";
-import { MantineLogo } from "@mantine/ds";
 import Image from "next/image";
 import Logo from "@img/logo.jpg";
+import Link from "next/link";
 const HEADER_HEIGHT = rem(150);
 
 const useStyles = createStyles(theme => ({
@@ -81,7 +78,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
         key={link.label}
         href={link.link}
         className={classes.link}
-        onClick={event => event.preventDefault()}
+        // onClick={event => event.preventDefault()}
       >
         {link.label}
       </a>
@@ -91,7 +88,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
   return (
     <Header
       height={HEADER_HEIGHT}
-      sx={{ borderBottom: 0, backgroundColor: "#091140" }}
+      sx={{ borderBottom: 0, backgroundColor: "#091140", position: "fixed" }}
       mb={0}
     >
       <Container className={classes.inner} fluid>
@@ -103,11 +100,13 @@ export function HeaderAction({ links }: HeaderActionProps) {
             size="sm"
           />
 
-          <Image
-            src={Logo}
-            alt="Picture of me"
-            style={{ width: "150px", height: "150px" }}
-          />
+          <Link href="/">
+            <Image
+              src={Logo}
+              alt="Picture of me"
+              style={{ width: "150px", height: "150px" }}
+            />
+          </Link>
         </Group>
         <Group spacing={5} className={classes.links}>
           {items}
