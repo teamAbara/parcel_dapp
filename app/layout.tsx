@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body style={{ backgroundColor: "#091140" }}>
         <HeaderAction
           links={[
             { link: "dd", label: "d" },

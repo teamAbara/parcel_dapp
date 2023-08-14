@@ -15,7 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown } from "@tabler/icons-react";
 import { MantineLogo } from "@mantine/ds";
 import Image from "next/image";
-
+import Logo from "@img/logo.jpg";
 const HEADER_HEIGHT = rem(150);
 
 const useStyles = createStyles(theme => ({
@@ -46,17 +46,17 @@ const useStyles = createStyles(theme => ({
     borderRadius: theme.radius.sm,
     textDecoration: "none",
     color:
-      theme.colorScheme === "dark"
+      theme.colorScheme === "light"
         ? theme.colors.dark[0]
-        : theme.colors.gray[7],
+        : theme.colors.gray[0],
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
     "&:hover": {
       backgroundColor:
         theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+          ? theme.colors.dark[7]
+          : theme.colors.gray[7],
     },
   },
 
@@ -92,7 +92,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
     <Header
       height={HEADER_HEIGHT}
       sx={{ borderBottom: 0, backgroundColor: "#091140" }}
-      mb={120}
+      mb={0}
     >
       <Container className={classes.inner} fluid>
         <Group>
@@ -103,11 +103,11 @@ export function HeaderAction({ links }: HeaderActionProps) {
             size="sm"
           />
 
-          {/* <Image
-            src={logo}
+          <Image
+            src={Logo}
             alt="Picture of me"
             style={{ width: "150px", height: "150px" }}
-          /> */}
+          />
         </Group>
         <Group spacing={5} className={classes.links}>
           {items}

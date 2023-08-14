@@ -33,7 +33,7 @@ export default function Home() {
       }
       connectMessage="Your connect message goes here!"
     >
-      <main>cc</main>
+      <main style={{ backgroundColor: "white", minHeight: "500px" }}>cc</main>
     </EthosConnectProvider>
   );
 }
