@@ -1,15 +1,17 @@
 "use client";
-
 import { Chain, EthosConnectProvider } from "ethos-connect";
 
-export default function Home() {
+export default function ObjectLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const ethosConfiguration = {
     // apiKey: process.env.NEXT_PUBLIC_ETHOS_API_KEY,
     preferredWallets: ["Ethos Wallet"],
     // network: NETWORK,
     chain: Chain.SUI_TESTNET,
   };
-
   return (
     <EthosConnectProvider
       dappName="<your dApp's Name>"
@@ -33,7 +35,7 @@ export default function Home() {
       }
       connectMessage="Your connect message goes here!"
     >
-      <main>cc</main>
+      <div>{children}</div>
     </EthosConnectProvider>
   );
 }
