@@ -6,7 +6,7 @@ import {
   IconBrandYoutube,
   IconBrandInstagram,
 } from "@tabler/icons-react";
-import Logo from "@img/logo.jpg";
+import Logo from "@img/footer_logo.jpg";
 
 const useStyles = createStyles(theme => ({
   footer: {
@@ -42,17 +42,17 @@ export default function FooterSocial() {
         <Image
           src={Logo}
           alt="Picture of me"
-          style={{ width: "150px", height: "150px" }}
+          style={{ width: "200px", height: "50px" }}
         />
         <Group spacing={0} className={classes.links} position="right" noWrap>
           <ActionIcon size="lg">
-            <IconBrandTwitter size="1.05rem" stroke={1.5} />
+            <IconBrandTwitter size="1.5rem" stroke={1.5} />
           </ActionIcon>
           <ActionIcon size="lg">
-            <IconBrandYoutube size="1.05rem" stroke={1.5} />
+            <IconBrandYoutube size="1.5rem" stroke={1.5} />
           </ActionIcon>
           <ActionIcon size="lg">
-            <IconBrandInstagram size="1.05rem" stroke={1.5} />
+            <IconBrandInstagram size="1.5rem" stroke={1.5} />
           </ActionIcon>
         </Group>
       </Container>

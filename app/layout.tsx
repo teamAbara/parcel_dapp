@@ -18,8 +18,8 @@ export default function RootLayout({
       <body style={{ backgroundColor: "#091140", margin: 0 }}>
         <HeaderAction
           links={[
-            { link: "/test", label: "test" },
-            { link: "dd", label: "d" },
+            { link: "/InvoiceRegistration", label: "택배 예약" },
+            { link: "/test", label: "택배 조회" },
           ]}
         />
         {children}
