@@ -2,8 +2,8 @@
 
 import { Chain, EthosConnectProvider } from "ethos-connect";
 import { MainBenner } from "./component/main/main_benner";
+import { MiddleBenner } from "./component/main/middle_benner";
 import { useEffect, useState } from "react";
-
 export default function Home() {
   const ethosConfiguration = {
     preferredWallets: ["Ethos Wallet"],
@@ -47,6 +47,7 @@ export default function Home() {
           }}
         >
           <MainBenner />
+          {/* <MiddleBenner /> */}
         </main>
       </EthosConnectProvider>
     )

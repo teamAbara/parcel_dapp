@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { ethos, TransactionBlock, SignInButton } from "ethos-connect";
 import { useEffect, useState } from "react";
+import { GetInTouch } from "../component/main/parcel";
 
 export default function Home() {
   const { wallet } = ethos.useWallet();
@@ -19,7 +20,7 @@ export default function Home() {
           marginTop: 150,
         }}
       >
-        <div className="max-w-7xl mx-auto text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8 flex-6">
+        {/* <div className="max-w-7xl mx-auto text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8 flex-6">
           {!wallet ? (
             <SignInButton className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
               Connect
@@ -42,8 +43,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          )} */}
+
+        {/* </div> */}
+        <GetInTouch />
       </div>
     )
   );

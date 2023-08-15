@@ -110,7 +110,7 @@ export function MainBenner() {
                 gradient={{ from: "#FFCD4A", to: "#FFCD4A" }}
                 size="xl"
                 className={classes.control}
-                mt={100}
+                mt={200}
               >
                 예약하기
               </Button>
