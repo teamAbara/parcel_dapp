@@ -19,7 +19,7 @@ export default function RootLayout({
         <HeaderAction
           links={[
             { link: "/InvoiceRegistration", label: "택배 예약" },
-            { link: "/test", label: "택배 조회" },
+            { link: "/Courierinquiry", label: "택배 조회" },
           ]}
         />
         {children}
