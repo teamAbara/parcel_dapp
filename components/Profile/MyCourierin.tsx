@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useState } from "react";
 import {
   createStyles,
@@ -20,7 +20,7 @@ import {
   IconChevronUp,
   IconSearch,
 } from "@tabler/icons-react";
-
+import { useRouter } from "next/router";
 const useStyles = createStyles(theme => ({
   th: {
     padding: "0 !important",
@@ -115,84 +115,85 @@ function sortData(
 }
 
 export function MyTableSort() {
+  const router = useRouter();
   const data = [
     {
-      id: "Athena Weissnat",
+      id: "1",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "2",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "3",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "4",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "5",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "6",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "7",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "8",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "9",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "10",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "11",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "12",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "13",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "14",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "15",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
     {
-      id: "Athena Weissnat",
+      id: "16",
       ToAddress: "0x12341234141414141241241241241412414141",
       FromAddress: "0x12341234141414141241241241241412414141",
     },
@@ -218,7 +219,12 @@ export function MyTableSort() {
   };
 
   const rows = sortedData.map(row => (
-    <tr key={row.id}>
+    <tr
+      key={row.id}
+      onClick={e => {
+        router.push(`/ParcelDetail/${row.id}`);
+      }}
+    >
       <td>{row.id}</td>
       <td>{row.FromAddress}</td>
       <td>{row.ToAddress}</td>

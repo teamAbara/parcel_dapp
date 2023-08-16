@@ -2,7 +2,7 @@ import { Tabs } from "@mantine/core";
 import { MyTableSort } from "./MyCourierin";
 function Tab() {
   return (
-    <Tabs color="teal" defaultValue="first">
+    <Tabs color="teal" defaultValue="from_parcel">
       <Tabs.List
         sx={{
           display: "flex",
@@ -16,11 +16,9 @@ function Tab() {
           받은택배
         </Tabs.Tab>
       </Tabs.List>
-
       <Tabs.Panel value="from_parcel" pt="xs">
         <MyTableSort />
       </Tabs.Panel>
-
       <Tabs.Panel value="to_parcel" pt="xs">
         <MyTableSort />
       </Tabs.Panel>
