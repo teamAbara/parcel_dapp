@@ -121,7 +121,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
         {!wallet ? (
           <SignInButton>dd</SignInButton>
         ) : (
-          <Link href="/Mypage">
+          <Link href="/Profile">
             <Button
               variant="gradient"
               gradient={{ from: "yellow", to: "#091140", deg: 105 }}

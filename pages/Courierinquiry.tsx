@@ -1,4 +1,4 @@
-import { TableSort } from "@/components/Courierinquiry/test";
+import { TableSort } from "@/components/Courierinquiry/Courierinquiry";
 import { useEffect, useState } from "react";
 import CourierinquiryLogo from "@img/Courierinquiry.png";
 import Image from "next/image";
