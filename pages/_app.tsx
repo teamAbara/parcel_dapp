@@ -1,15 +1,15 @@
-"use client";
 import { Chain, EthosConnectProvider } from "ethos-connect";
+import Layout from "@/components/layout";
+import "../style/global.css";
+import type { AppProps } from "next/app";
+import Head from "next/head";
 
-export default function ObjectLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function MyApp({ Component, pageProps }: AppProps) {
   const ethosConfiguration = {
     preferredWallets: ["Ethos Wallet"],
     chain: Chain.SUI_TESTNET,
   };
+
   return (
     <EthosConnectProvider
       dappName="<your dApp's Name>"
@@ -33,7 +33,14 @@ export default function ObjectLayout({
       }
       connectMessage="Your connect message goes here!"
     >
-      <div>{children}</div>
+      <Head>
+        <title>X-Box</title>
+      </Head>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </EthosConnectProvider>
   );
 }
+
+export default MyApp;

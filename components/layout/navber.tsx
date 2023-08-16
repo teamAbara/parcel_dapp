@@ -1,4 +1,7 @@
 "use client";
+import { ethos, TransactionBlock } from "ethos-connect";
+import { useCallback, useEffect } from "react";
+import { SignInButton } from "ethos-connect";
 
 import {
   createStyles,
@@ -8,6 +11,7 @@ import {
   Button,
   Burger,
   rem,
+  Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
@@ -70,6 +74,8 @@ interface HeaderActionProps {
 }
 
 export function HeaderAction({ links }: HeaderActionProps) {
+  const { wallet } = ethos.useWallet();
+
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const items = links.map(link => {
@@ -84,6 +90,9 @@ export function HeaderAction({ links }: HeaderActionProps) {
       </a>
     );
   });
+  // interface TruncatedButtonProps extends ButtonProps {
+  //   maxLength: number;
+  // }
 
   return (
     <Header
@@ -111,9 +120,22 @@ export function HeaderAction({ links }: HeaderActionProps) {
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
-        <Button radius="xl" h={30}>
-          Get early access
-        </Button>
+        {!wallet ? (
+          <SignInButton>dd</SignInButton>
+        ) : (
+          <Button>
+            <Text
+              style={{
+                maxWidth: "150px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {wallet.address}
+            </Text>
+          </Button>
+        )}
       </Container>
     </Header>
   );
