@@ -1,11 +1,27 @@
 import { ethos } from "ethos-connect";
 import { useEffect, useState } from "react";
-import { InvoiceRegistration } from "@/components/InvoiceRegistrationPage/InvoiceRegistration";
-import { SimpleGrid, Container, Stack, Button, Grid } from "@mantine/core";
+import {
+  SimpleGrid,
+  Container,
+  Stack,
+  Button,
+  Grid,
+  Text,
+  Title,
+  CopyButton,
+} from "@mantine/core";
 import Tab from "./test";
-export function Profile() {
-  const { wallet } = ethos.useWallet();
+import { useRouter } from "next/router";
+import { IconClipboard } from "@tabler/icons-react";
 
+export function Profile() {
+  const router = useRouter();
+  const { wallet } = ethos.useWallet();
+  useEffect(() => {
+    if (!wallet) {
+      router.push("/");
+    }
+  }, [wallet]);
   return (
     <>
       <div
@@ -15,7 +31,7 @@ export function Profile() {
           marginTop: 150,
         }}
       >
-        <Container size="md">
+        <Container size="xl">
           <SimpleGrid cols={1} breakpoints={[{ maxWidth: "xs", cols: 1 }]}>
             <Stack>
               {
@@ -33,10 +49,78 @@ export function Profile() {
                   >
                     <Grid sx={{ marginTop: 25, textAlign: "center" }}>
                       <Grid.Col span={6}>
-                        <Button sx={{ width: "80%" }}>{wallet?.address}</Button>
+                        <CopyButton
+                          value={
+                            wallet ? wallet.address?.toString() : "notCopy"
+                          }
+                        >
+                          {({ copied, copy }) => (
+                            <Button
+                              sx={{
+                                width: "80%",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                              color={copied ? "teal" : "blue"}
+                              onClick={copy}
+                            >
+                              {copied ? (
+                                "Copied Address"
+                              ) : (
+                                <Text
+                                  style={{
+                                    fontSize: "120%",
+                                    width: "800%",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {wallet?.address}
+                                </Text>
+                              )}
+                            </Button>
+                          )}
+                        </CopyButton>
+                        {/* <Button
+                          sx={{
+                            width: "80%",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: "120%",
+                              width: "800%",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {wallet?.address}
+                          </Text>
+                        </Button> */}
                       </Grid.Col>
-                      <Grid.Col span={6}>
-                        <Button sx={{ width: "80%" }}>{wallet?.address}</Button>
+                      <Grid.Col span={4}>
+                        <Title>
+                          <Text span c="white" inherit>
+                            {ethos.formatBalance(
+                              wallet?.contents?.suiBalance.toString()
+                            )}
+                            SUI
+                          </Text>
+                        </Title>
+                      </Grid.Col>
+                      <Grid.Col span={2}>
+                        <Button
+                          sx={{ width: "60%" }}
+                          onClick={wallet?.disconnect}
+                        >
+                          로그아웃
+                        </Button>
                       </Grid.Col>
                     </Grid>
                   </SimpleGrid>

@@ -119,7 +119,20 @@ export function HeaderAction({ links }: HeaderActionProps) {
           {items}
         </Group>
         {!wallet ? (
-          <SignInButton>dd</SignInButton>
+          <SignInButton
+            style={{
+              backgroundColor: "#FFCD4A",
+              color: "white",
+              borderRadius: 5,
+              width: "150px",
+              height: "30px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            로그인
+          </SignInButton>
         ) : (
           <Link href="/Profile">
             <Button
@@ -134,7 +147,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
                   textOverflow: "ellipsis",
                 }}
               >
-                {wallet.address}
+                {ethos.truncateMiddle(wallet?.address, 4)}
               </Text>
             </Button>
           </Link>
