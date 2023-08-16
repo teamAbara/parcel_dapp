@@ -10,6 +10,7 @@ import {
   rem,
   Modal,
   Select,
+  Container,
 } from "@mantine/core";
 import { ContactIconsList } from "./ContractIcons";
 import bg from "@img/bg.svg";
@@ -235,208 +236,210 @@ export function InvoiceRegistration() {
     },
   ];
   return (
-    <Paper shadow="md" radius="lg">
-      <div className={classes.wrapper}>
-        <div className={classes.contacts}>
-          <Text fz="lg" fw={700} className={classes.title} c="#fff">
-            송장
-          </Text>
-
-          <ContactIconsList variant="white" data={MOCKDATA} />
-        </div>
-        <form
-          className={classes.form}
-          onSubmit={event => event.preventDefault()}
-        >
-          <Text fz="lg" fw={700} className={classes.title}>
-            보내는 분
-          </Text>
-
-          <div className={classes.fields}>
-            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              <TextInput
-                label="성함"
-                placeholder="Your name"
-                required
-                onChange={e => {
-                  setFromName(e.target.value);
-                }}
-              />
-              <TextInput
-                label="이메일"
-                placeholder="hello@mantine.dev"
-                required
-                onChange={e => {
-                  setFromEmail(e.target.value);
-                }}
-              />
-              <TextInput
-                mt="md"
-                label="연락처1"
-                placeholder="phone"
-                required
-                onChange={e => {
-                  setFromPhoneNumber(e.target.value);
-                }}
-              />
-              <TextInput
-                mt="md"
-                label="연락처2"
-                placeholder="phone2"
-                required
-                onChange={e => {
-                  setFromPhoneNumber2(e.target.value);
-                }}
-              />
-              <TextInput
-                mt="md"
-                label="주소"
-                placeholder="address"
-                value={from_address}
-                required
-              />
-              <Group position="left" mt="md">
-                <Button
-                  type="submit"
-                  className={classes.control}
-                  sx={{ marginTop: 20 }}
-                  onClick={() => setSlowTransitionOpened(true)}
-                >
-                  주소찾기
-                </Button>
-              </Group>
-            </SimpleGrid>
-            <Textarea
-              mt="md"
-              label="요청사항"
-              placeholder="requst"
-              minRows={3}
-              onChange={e => {
-                setRequest(e.target.value);
-              }}
-            />
-
-            <Group position="right" mt="md"></Group>
-          </div>
-          <Text fz="lg" fw={700} className={classes.title}>
-            받는 분
-          </Text>
-
-          <div className={classes.fields}>
-            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              <TextInput
-                label="성함"
-                placeholder="Your name"
-                required
-                onChange={e => setToName(e.target.value)}
-              />
-              <TextInput
-                label="이메일"
-                placeholder="hello@mantine.dev"
-                required
-                onChange={e => setToEmail(e.target.value)}
-              />
-              <TextInput
-                mt="md"
-                label="연락처1"
-                placeholder="phone"
-                required
-                onChange={e => setToPhoneNumber(e.target.value)}
-              />
-              <TextInput
-                mt="md"
-                label="연락처2"
-                placeholder="phone2"
-                required
-                onChange={e => setToPhoneNumber2(e.target.value)}
-              />
-              <TextInput
-                mt="md"
-                label="주소"
-                placeholder="address"
-                value={to_address}
-                required
-              />
-              <Group position="left" mt="md">
-                <Button
-                  type="submit"
-                  className={classes.control}
-                  sx={{ marginTop: 20 }}
-                  onClick={() => setSlowTransitionOpened2(true)}
-                >
-                  주소찾기
-                </Button>
-              </Group>
-            </SimpleGrid>
-          </div>
-
-          <div style={{ marginTop: 20 }}>
-            <Text fz="lg" fw={700} className={classes.title}>
-              물품
+    <Container size="xl">
+      <Paper shadow="md" radius="lg">
+        <div className={classes.wrapper}>
+          <div className={classes.contacts}>
+            <Text fz="lg" fw={700} className={classes.title} c="#fff">
+              송장
             </Text>
-            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              <TextInput
-                label="물품 명"
-                placeholder="물품 명"
-                required
-                onChange={e => setItemnName(e.target.value)}
-              />
-              <TextInput
-                label="물품 가격"
-                placeholder="물품 가격"
-                required
-                onChange={e => setItemPrice(e.target.value)}
-              />
-              <TextInput
-                mt="md"
-                label="물품 크기"
-                placeholder="물품 크기"
-                required
-                onChange={e => setItemSize(e.target.value)}
-              />
-              <TextInput
-                mt="md"
-                label="물품 무게"
-                placeholder="물품 무게"
-                required
-                onChange={e => setItemKg(e.target.value)}
-              />
-              <Select
-                label="우임구분"
-                placeholder="Pick one"
-                onChange={setItemType}
-                data={[
-                  { value: "선불", label: "선불" },
-                  { value: "착불", label: "착불" },
-                ]}
-              />
-            </SimpleGrid>
-            <Group position="right" mt="md">
-              <Button type="submit" className={classes.control}>
-                택배 예약하기
-              </Button>
-            </Group>
+
+            <ContactIconsList variant="white" data={MOCKDATA} />
           </div>
-        </form>
-      </div>
-      <Modal
-        opened={slowTransitionOpened}
-        onClose={close}
-        centered
-        title="주소"
-        transitionProps={{ transition: "fade", duration: 200 }}
-      >
-        <DaumPostcode autoClose={false} onComplete={onCompletePost} />
-      </Modal>
-      <Modal
-        opened={slowTransitionOpened2}
-        onClose={close}
-        centered
-        title="주소"
-        transitionProps={{ transition: "fade", duration: 200 }}
-      >
-        <DaumPostcode autoClose={false} onComplete={onCompletePost2} />
-      </Modal>
-    </Paper>
+          <form
+            className={classes.form}
+            onSubmit={event => event.preventDefault()}
+          >
+            <Text fz="lg" fw={700} className={classes.title}>
+              보내는 분
+            </Text>
+
+            <div className={classes.fields}>
+              <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+                <TextInput
+                  label="성함"
+                  placeholder="Your name"
+                  required
+                  onChange={e => {
+                    setFromName(e.target.value);
+                  }}
+                />
+                <TextInput
+                  label="이메일"
+                  placeholder="hello@mantine.dev"
+                  required
+                  onChange={e => {
+                    setFromEmail(e.target.value);
+                  }}
+                />
+                <TextInput
+                  mt="md"
+                  label="연락처1"
+                  placeholder="phone"
+                  required
+                  onChange={e => {
+                    setFromPhoneNumber(e.target.value);
+                  }}
+                />
+                <TextInput
+                  mt="md"
+                  label="연락처2"
+                  placeholder="phone2"
+                  required
+                  onChange={e => {
+                    setFromPhoneNumber2(e.target.value);
+                  }}
+                />
+                <TextInput
+                  mt="md"
+                  label="주소"
+                  placeholder="address"
+                  value={from_address}
+                  required
+                />
+                <Group position="left" mt="md">
+                  <Button
+                    type="submit"
+                    className={classes.control}
+                    sx={{ marginTop: 20 }}
+                    onClick={() => setSlowTransitionOpened(true)}
+                  >
+                    주소찾기
+                  </Button>
+                </Group>
+              </SimpleGrid>
+              <Textarea
+                mt="md"
+                label="요청사항"
+                placeholder="requst"
+                minRows={3}
+                onChange={e => {
+                  setRequest(e.target.value);
+                }}
+              />
+
+              <Group position="right" mt="md"></Group>
+            </div>
+            <Text fz="lg" fw={700} className={classes.title}>
+              받는 분
+            </Text>
+
+            <div className={classes.fields}>
+              <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+                <TextInput
+                  label="성함"
+                  placeholder="Your name"
+                  required
+                  onChange={e => setToName(e.target.value)}
+                />
+                <TextInput
+                  label="이메일"
+                  placeholder="hello@mantine.dev"
+                  required
+                  onChange={e => setToEmail(e.target.value)}
+                />
+                <TextInput
+                  mt="md"
+                  label="연락처1"
+                  placeholder="phone"
+                  required
+                  onChange={e => setToPhoneNumber(e.target.value)}
+                />
+                <TextInput
+                  mt="md"
+                  label="연락처2"
+                  placeholder="phone2"
+                  required
+                  onChange={e => setToPhoneNumber2(e.target.value)}
+                />
+                <TextInput
+                  mt="md"
+                  label="주소"
+                  placeholder="address"
+                  value={to_address}
+                  required
+                />
+                <Group position="left" mt="md">
+                  <Button
+                    type="submit"
+                    className={classes.control}
+                    sx={{ marginTop: 20 }}
+                    onClick={() => setSlowTransitionOpened2(true)}
+                  >
+                    주소찾기
+                  </Button>
+                </Group>
+              </SimpleGrid>
+            </div>
+
+            <div style={{ marginTop: 20 }}>
+              <Text fz="lg" fw={700} className={classes.title}>
+                물품
+              </Text>
+              <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+                <TextInput
+                  label="물품 명"
+                  placeholder="물품 명"
+                  required
+                  onChange={e => setItemnName(e.target.value)}
+                />
+                <TextInput
+                  label="물품 가격"
+                  placeholder="물품 가격"
+                  required
+                  onChange={e => setItemPrice(e.target.value)}
+                />
+                <TextInput
+                  mt="md"
+                  label="물품 크기"
+                  placeholder="물품 크기"
+                  required
+                  onChange={e => setItemSize(e.target.value)}
+                />
+                <TextInput
+                  mt="md"
+                  label="물품 무게"
+                  placeholder="물품 무게"
+                  required
+                  onChange={e => setItemKg(e.target.value)}
+                />
+                <Select
+                  label="우임구분"
+                  placeholder="Pick one"
+                  onChange={setItemType}
+                  data={[
+                    { value: "선불", label: "선불" },
+                    { value: "착불", label: "착불" },
+                  ]}
+                />
+              </SimpleGrid>
+              <Group position="right" mt="md">
+                <Button type="submit" className={classes.control}>
+                  택배 예약하기
+                </Button>
+              </Group>
+            </div>
+          </form>
+        </div>
+        <Modal
+          opened={slowTransitionOpened}
+          onClose={close}
+          centered
+          title="주소"
+          transitionProps={{ transition: "fade", duration: 200 }}
+        >
+          <DaumPostcode autoClose={false} onComplete={onCompletePost} />
+        </Modal>
+        <Modal
+          opened={slowTransitionOpened2}
+          onClose={close}
+          centered
+          title="주소"
+          transitionProps={{ transition: "fade", duration: 200 }}
+        >
+          <DaumPostcode autoClose={false} onComplete={onCompletePost2} />
+        </Modal>
+      </Paper>
+    </Container>
   );
 }

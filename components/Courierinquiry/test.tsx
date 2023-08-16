@@ -11,6 +11,7 @@ import {
   Center,
   TextInput,
   rem,
+  Container,
 } from "@mantine/core";
 import { keys } from "@mantine/utils";
 import {
@@ -225,59 +226,61 @@ export function TableSort() {
   ));
 
   return (
-    <ScrollArea>
-      <TextInput
-        placeholder="Search by any field"
-        mb="md"
-        icon={<IconSearch size="0.9rem" stroke={1.5} />}
-        value={search}
-        onChange={handleSearchChange}
-      />
-      <Table
-        horizontalSpacing="md"
-        verticalSpacing="xs"
-        miw={700}
-        sx={{ tableLayout: "fixed" }}
-      >
-        <thead>
-          <tr>
-            <Th
-              sorted={sortBy === "id"}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting("id")}
-            >
-              id
-            </Th>
-            <Th
-              sorted={sortBy === "FromAddress"}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting("FromAddress")}
-            >
-              FromAddress
-            </Th>
-            <Th
-              sorted={sortBy === "ToAddress"}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting("ToAddress")}
-            >
-              ToAddress
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.length > 0 ? (
-            rows
-          ) : (
+    <Container size="xl">
+      <ScrollArea>
+        <TextInput
+          placeholder="Search by any field"
+          mb="md"
+          icon={<IconSearch size="0.9rem" stroke={1.5} />}
+          value={search}
+          onChange={handleSearchChange}
+        />
+        <Table
+          horizontalSpacing="md"
+          verticalSpacing="xs"
+          miw={700}
+          sx={{ tableLayout: "fixed" }}
+        >
+          <thead>
             <tr>
-              <td colSpan={Object.keys(data[0]).length}>
-                <Text weight={500} align="center">
-                  Nothing found
-                </Text>
-              </td>
+              <Th
+                sorted={sortBy === "id"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("id")}
+              >
+                id
+              </Th>
+              <Th
+                sorted={sortBy === "FromAddress"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("FromAddress")}
+              >
+                FromAddress
+              </Th>
+              <Th
+                sorted={sortBy === "ToAddress"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("ToAddress")}
+              >
+                ToAddress
+              </Th>
             </tr>
-          )}
-        </tbody>
-      </Table>
-    </ScrollArea>
+          </thead>
+          <tbody>
+            {rows.length > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td colSpan={Object.keys(data[0]).length}>
+                  <Text weight={500} align="center">
+                    Nothing found
+                  </Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </ScrollArea>
+    </Container>
   );
 }
