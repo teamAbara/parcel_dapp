@@ -15,7 +15,15 @@ import { ContactIconsList } from "../Courierinquiry/ContractIcons";
 import bg from "@img/bg.svg";
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
-import { IconSun, IconPhone, IconMapPin, IconAt } from "@tabler/icons-react";
+import {
+  IconAlignLeft,
+  IconUser,
+  IconPhone,
+  IconMapPin,
+  IconAt,
+  IconBox,
+  IconCurrencyWon,
+} from "@tabler/icons-react";
 
 const useStyles = createStyles(theme => {
   const BREAKPOINT = theme.fn.smallerThan("sm");
@@ -151,7 +159,7 @@ export function InvoiceRegistration() {
   };
 
   const MOCKDATA = [
-    { title: "보내는 분", description: from_name, icon: IconAt },
+    { title: "보내는 분", description: from_name, icon: IconUser },
     {
       title: "보내는 분 Email",
       description: from_email,
@@ -176,9 +184,9 @@ export function InvoiceRegistration() {
     {
       title: "요청사항",
       description: requst,
-      icon: IconMapPin,
+      icon: IconAlignLeft,
     },
-    { title: "받는 분", description: to_name, icon: IconAt },
+    { title: "받는 분", description: to_name, icon: IconUser },
     {
       title: "받는 분 Email",
       description: to_email,
@@ -203,27 +211,27 @@ export function InvoiceRegistration() {
     {
       title: "물품 명",
       description: item_name,
-      icon: IconMapPin,
+      icon: IconBox,
     },
     {
       title: "물품 가격",
       description: item_price,
-      icon: IconMapPin,
+      icon: IconCurrencyWon,
     },
     {
       title: "물품 크기",
       description: item_size,
-      icon: IconMapPin,
+      icon: IconBox,
     },
     {
       title: "물품 무게",
       description: item_kg,
-      icon: IconMapPin,
+      icon: IconBox,
     },
     {
       title: "우임구분",
       description: item_type,
-      icon: IconMapPin,
+      icon: IconBox,
     },
   ];
   return (
