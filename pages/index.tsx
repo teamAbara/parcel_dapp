@@ -9,7 +9,7 @@ const Home = () => {
   return (
     mounted && (
       <>
-        <div style={{ marginTop: 150 }}>
+        <div style={{ marginTop: 150, paddingBottom: 150 }}>
           <MainBenner />
         </div>
       </>
