@@ -11,7 +11,7 @@ import {
   Modal,
   Select,
 } from "@mantine/core";
-import { ContactIconsList } from "../Courierinquiry/ContractIcons";
+import { ContactIconsList } from "./ContractIcons";
 import bg from "@img/bg.svg";
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
