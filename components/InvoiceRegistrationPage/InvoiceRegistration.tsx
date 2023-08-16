@@ -9,6 +9,7 @@ import {
   createStyles,
   rem,
   Modal,
+  Select,
 } from "@mantine/core";
 import { ContactIconsList } from "../Courierinquiry/ContractIcons";
 import bg from "@img/bg.svg";
@@ -132,7 +133,8 @@ export function InvoiceRegistration() {
   const [item_price, setItemPrice] = useState("");
   const [item_size, setItemSize] = useState("");
   const [item_kg, setItemKg] = useState("");
-  const [item_type, setItemType] = useState("");
+  const [item_type, setItemType] = useState<string | null>(null);
+
   const [parcel_price, setParcelPrice] = useState("");
   const [to_account, setToAccount] = useState("");
   /*보내는 사람 주소 저장 */
@@ -196,6 +198,31 @@ export function InvoiceRegistration() {
     {
       title: "받는 분 주소",
       description: to_address,
+      icon: IconMapPin,
+    },
+    {
+      title: "물품 명",
+      description: item_name,
+      icon: IconMapPin,
+    },
+    {
+      title: "물품 가격",
+      description: item_price,
+      icon: IconMapPin,
+    },
+    {
+      title: "물품 크기",
+      description: item_size,
+      icon: IconMapPin,
+    },
+    {
+      title: "물품 무게",
+      description: item_kg,
+      icon: IconMapPin,
+    },
+    {
+      title: "우임구분",
+      description: item_type,
       icon: IconMapPin,
     },
   ];
@@ -365,6 +392,15 @@ export function InvoiceRegistration() {
                 placeholder="물품 무게"
                 required
                 onChange={e => setItemKg(e.target.value)}
+              />
+              <Select
+                label="우임구분"
+                placeholder="Pick one"
+                onChange={setItemType}
+                data={[
+                  { value: "선불", label: "선불" },
+                  { value: "착불", label: "착불" },
+                ]}
               />
             </SimpleGrid>
             <Group position="right" mt="md">
