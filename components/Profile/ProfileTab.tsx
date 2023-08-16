@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core";
 import { MyTableSort } from "./MyCourierin";
-function Tab() {
+function ProfileTab() {
   return (
     <Tabs color="teal" defaultValue="from_parcel">
       <Tabs.List
@@ -25,4 +25,4 @@ function Tab() {
     </Tabs>
   );
 }
-export default Tab;
+export default ProfileTab;

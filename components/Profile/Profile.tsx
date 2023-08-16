@@ -9,10 +9,13 @@ import {
   Text,
   Title,
   CopyButton,
+  ActionIcon,
+  Tooltip,
 } from "@mantine/core";
-import Tab from "./test";
+import { IconCopy, IconCheck } from "@tabler/icons-react";
+
+import ProfileTab from "./ProfileTab";
 import { useRouter } from "next/router";
-import { IconClipboard } from "@tabler/icons-react";
 
 export function Profile() {
   const router = useRouter();
@@ -83,26 +86,6 @@ export function Profile() {
                             </Button>
                           )}
                         </CopyButton>
-                        {/* <Button
-                          sx={{
-                            width: "80%",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: "120%",
-                              width: "800%",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {wallet?.address}
-                          </Text>
-                        </Button> */}
                       </Grid.Col>
                       <Grid.Col span={4}>
                         <Title>
@@ -160,8 +143,7 @@ export function Profile() {
               ></div>
             </Stack>
           </SimpleGrid>
-
-          <Tab />
+          <ProfileTab />
         </Container>
       </div>
     </>

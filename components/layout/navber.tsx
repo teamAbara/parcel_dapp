@@ -78,19 +78,11 @@ export function HeaderAction({ links }: HeaderActionProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const items = links.map(link => {
     return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        // onClick={event => event.preventDefault()}
-      >
+      <a key={link.label} href={link.link} className={classes.link}>
         {link.label}
       </a>
     );
   });
-  // interface TruncatedButtonProps extends ButtonProps {
-  //   maxLength: number;
-  // }
 
   return (
     <Header
