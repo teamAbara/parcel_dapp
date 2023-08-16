@@ -1,8 +1,6 @@
 "use client";
 import { ethos, TransactionBlock } from "ethos-connect";
-import { useCallback, useEffect } from "react";
 import { SignInButton } from "ethos-connect";
-
 import {
   createStyles,
   Header,
@@ -123,18 +121,23 @@ export function HeaderAction({ links }: HeaderActionProps) {
         {!wallet ? (
           <SignInButton>dd</SignInButton>
         ) : (
-          <Button>
-            <Text
-              style={{
-                maxWidth: "150px",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
+          <Link href="/Mypage">
+            <Button
+              variant="gradient"
+              gradient={{ from: "yellow", to: "#091140", deg: 105 }}
             >
-              {wallet.address}
-            </Text>
-          </Button>
+              <Text
+                style={{
+                  maxWidth: "150px",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {wallet.address}
+              </Text>
+            </Button>
+          </Link>
         )}
       </Container>
     </Header>

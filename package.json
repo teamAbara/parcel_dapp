@@ -20,6 +20,7 @@
     "ethos-connect": "^0.0.180",
     "next": "13.4.13",
     "react": "18.2.0",
+    "react-daum-postcode": "^3.1.3",
     "react-dom": "18.2.0",
     "typescript": "5.1.6"
   }

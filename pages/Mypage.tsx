@@ -1,9 +1,11 @@
+import { ethos, TransactionBlock, SignInButton } from "ethos-connect";
 import { useEffect, useState } from "react";
 import { InvoiceRegistration } from "@/components/InvoiceRegistrationPage/InvoiceRegistration";
 
-export default function InvoiceRegistrationPage() {
+export default function Mypage() {
+  const { wallet } = ethos.useWallet();
   const [mounted, setMounted] = useState(false);
-  //html
+
   useEffect(() => {
     setMounted(true);
   }, []);
