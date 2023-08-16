@@ -88,24 +88,16 @@ interface ContactIconsListProps {
   variant?: ContactIconVariant;
 }
 
-const MOCKDATA = [
-  { title: "Email", description: "hello@mantine.dev", icon: IconAt },
-  { title: "Phone", description: "+49 (800) 335 35 35", icon: IconPhone },
-  { title: "Address", description: "844 Morris Park avenue", icon: IconMapPin },
-  { title: "Working hours", description: "8 a.m. – 11 p.m.", icon: IconSun },
-];
-
-export function ContactIconsList({
-  data = MOCKDATA,
-  variant,
-}: ContactIconsListProps) {
-  const items = data.map((item, index) => (
+export function ContactIconsList({ data, variant }: ContactIconsListProps) {
+  const items = data?.map((item, index) => (
     <ContactIcon key={index} variant={variant} {...item} />
   ));
   return <Stack>{items}</Stack>;
 }
 
-export function ContactIcons() {
+export function ContactIcons(props: any) {
+  const { data } = props;
+
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: 755, cols: 1 }]}>
       <Box
@@ -115,7 +107,7 @@ export function ContactIcons() {
           backgroundColor: theme.white,
         })}
       >
-        <ContactIconsList />
+        <ContactIconsList data={data} />
       </Box>
 
       <Box

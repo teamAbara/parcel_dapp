@@ -14,6 +14,8 @@ import { ContactIconsList } from "../Courierinquiry/ContractIcons";
 import bg from "@img/bg.svg";
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
+import { IconSun, IconPhone, IconMapPin, IconAt } from "@tabler/icons-react";
+
 const useStyles = createStyles(theme => {
   const BREAKPOINT = theme.fn.smallerThan("sm");
   return {
@@ -48,7 +50,7 @@ const useStyles = createStyles(theme => {
     },
 
     fields: {
-      marginTop: rem(-12),
+      marginTop: rem(30),
     },
 
     fieldInput: {
@@ -110,14 +112,29 @@ export function InvoiceRegistration() {
   const { classes } = useStyles();
   /*보내는사람 */
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false); //모달창
+  const [from_name, setFromName] = useState(""); //이름
+  const [from_email, setFromEmail] = useState(""); //이메일
+  const [from_phone_number, setFromPhoneNumber] = useState(""); //연락처1
+  const [from_phone_number2, setFromPhoneNumber2] = useState(""); //연락처2
   const [from_address, setFromAddress] = useState(""); //주소
+  const [requst, setRequest] = useState(""); //요청사항
 
   /*받는사람 */
   const [slowTransitionOpened2, setSlowTransitionOpened2] = useState(false); //모달창
+  const [to_name, setToName] = useState(""); //주소
+  const [to_email, setToEmail] = useState(""); //이메일
+  const [to_phone_number, setToPhoneNumber] = useState(""); //연락처1
+  const [to_phone_number2, setToPhoneNumber2] = useState(""); //연락처2
   const [to_address, setToAddress] = useState(""); //주소
 
   /*물품 */
-
+  const [item_name, setItemnName] = useState("");
+  const [item_price, setItemPrice] = useState("");
+  const [item_size, setItemSize] = useState("");
+  const [item_kg, setItemKg] = useState("");
+  const [item_type, setItemType] = useState("");
+  const [parcel_price, setParcelPrice] = useState("");
+  const [to_account, setToAccount] = useState("");
   /*보내는 사람 주소 저장 */
   const onCompletePost = (data: any) => {
     setFromAddress(data.address);
@@ -130,6 +147,58 @@ export function InvoiceRegistration() {
 
     setSlowTransitionOpened2(false);
   };
+
+  const MOCKDATA = [
+    { title: "보내는 분", description: from_name, icon: IconAt },
+    {
+      title: "보내는 분 Email",
+      description: from_email,
+      icon: IconAt,
+    },
+    {
+      title: "보내는 분 연락처1",
+      description: from_phone_number,
+      icon: IconPhone,
+    },
+    {
+      title: "보내는 분 연락처2",
+      description: from_phone_number2,
+      icon: IconPhone,
+    },
+
+    {
+      title: "보내는 분 주소",
+      description: from_address,
+      icon: IconMapPin,
+    },
+    {
+      title: "요청사항",
+      description: requst,
+      icon: IconMapPin,
+    },
+    { title: "받는 분", description: to_name, icon: IconAt },
+    {
+      title: "받는 분 Email",
+      description: to_email,
+      icon: IconAt,
+    },
+    {
+      title: "받는 분 연락처1",
+      description: to_phone_number,
+      icon: IconPhone,
+    },
+    {
+      title: "받는 분 연락처2",
+      description: to_phone_number2,
+      icon: IconPhone,
+    },
+
+    {
+      title: "받는 분 주소",
+      description: to_address,
+      icon: IconMapPin,
+    },
+  ];
   return (
     <Paper shadow="md" radius="lg">
       <div className={classes.wrapper}>
@@ -138,7 +207,7 @@ export function InvoiceRegistration() {
             송장
           </Text>
 
-          <ContactIconsList variant="white" />
+          <ContactIconsList variant="white" data={MOCKDATA} />
         </div>
         <form
           className={classes.form}
@@ -150,28 +219,44 @@ export function InvoiceRegistration() {
 
           <div className={classes.fields}>
             <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              <TextInput label="성함" placeholder="Your name" required />
+              <TextInput
+                label="성함"
+                placeholder="Your name"
+                required
+                onChange={e => {
+                  setFromName(e.target.value);
+                }}
+              />
               <TextInput
                 label="이메일"
                 placeholder="hello@mantine.dev"
                 required
+                onChange={e => {
+                  setFromEmail(e.target.value);
+                }}
               />
               <TextInput
                 mt="md"
                 label="연락처1"
-                placeholder="Subject"
+                placeholder="phone"
                 required
+                onChange={e => {
+                  setFromPhoneNumber(e.target.value);
+                }}
               />
               <TextInput
                 mt="md"
                 label="연락처2"
-                placeholder="Subject"
+                placeholder="phone2"
                 required
+                onChange={e => {
+                  setFromPhoneNumber2(e.target.value);
+                }}
               />
               <TextInput
                 mt="md"
                 label="주소"
-                placeholder="Subject"
+                placeholder="address"
                 value={from_address}
                 required
               />
@@ -189,8 +274,11 @@ export function InvoiceRegistration() {
             <Textarea
               mt="md"
               label="요청사항"
-              placeholder="Please include all relevant information"
+              placeholder="requst"
               minRows={3}
+              onChange={e => {
+                setRequest(e.target.value);
+              }}
             />
 
             <Group position="right" mt="md"></Group>
@@ -201,28 +289,36 @@ export function InvoiceRegistration() {
 
           <div className={classes.fields}>
             <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              <TextInput label="성함" placeholder="Your name" required />
+              <TextInput
+                label="성함"
+                placeholder="Your name"
+                required
+                onChange={e => setToName(e.target.value)}
+              />
               <TextInput
                 label="이메일"
                 placeholder="hello@mantine.dev"
                 required
+                onChange={e => setToEmail(e.target.value)}
               />
               <TextInput
                 mt="md"
                 label="연락처1"
-                placeholder="Subject"
+                placeholder="phone"
                 required
+                onChange={e => setToPhoneNumber(e.target.value)}
               />
               <TextInput
                 mt="md"
                 label="연락처2"
-                placeholder="Subject"
+                placeholder="phone2"
                 required
+                onChange={e => setToPhoneNumber2(e.target.value)}
               />
               <TextInput
                 mt="md"
                 label="주소"
-                placeholder="Subject"
+                placeholder="address"
                 value={to_address}
                 required
               />
@@ -237,16 +333,40 @@ export function InvoiceRegistration() {
                 </Button>
               </Group>
             </SimpleGrid>
+          </div>
 
-            <TextInput mt="md" label="Subject" placeholder="Subject" required />
-
-            <Textarea
-              mt="md"
-              label="Your message"
-              placeholder="Please include all relevant information"
-              minRows={3}
-            />
-
+          <div style={{ marginTop: 20 }}>
+            <Text fz="lg" fw={700} className={classes.title}>
+              물품
+            </Text>
+            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+              <TextInput
+                label="물품 명"
+                placeholder="물품 명"
+                required
+                onChange={e => setItemnName(e.target.value)}
+              />
+              <TextInput
+                label="물품 가격"
+                placeholder="물품 가격"
+                required
+                onChange={e => setItemPrice(e.target.value)}
+              />
+              <TextInput
+                mt="md"
+                label="물품 크기"
+                placeholder="물품 크기"
+                required
+                onChange={e => setItemSize(e.target.value)}
+              />
+              <TextInput
+                mt="md"
+                label="물품 무게"
+                placeholder="물품 무게"
+                required
+                onChange={e => setItemKg(e.target.value)}
+              />
+            </SimpleGrid>
             <Group position="right" mt="md">
               <Button type="submit" className={classes.control}>
                 택배 예약하기
