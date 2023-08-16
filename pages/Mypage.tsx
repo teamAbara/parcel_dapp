@@ -1,17 +1,11 @@
-import { ethos, TransactionBlock, SignInButton } from "ethos-connect";
+import { ethos } from "ethos-connect";
 import { useEffect, useState } from "react";
 import { InvoiceRegistration } from "@/components/InvoiceRegistrationPage/InvoiceRegistration";
-import {
-  SimpleGrid,
-  Skeleton,
-  Container,
-  Stack,
-  Button,
-  Grid,
-} from "@mantine/core";
+import { SimpleGrid, Container, Stack, Button, Grid } from "@mantine/core";
 
 export default function Mypage() {
   const [mounted, setMounted] = useState(false);
+  const { wallet } = ethos.useWallet();
 
   useEffect(() => {
     setMounted(true);
@@ -31,7 +25,12 @@ export default function Mypage() {
               <Stack>
                 {
                   <div
-                    style={{ backgroundColor: "red", height: 100, margin: 10 }}
+                    style={{
+                      backgroundColor: "#FFCD4A",
+                      height: 100,
+                      margin: 10,
+                      borderRadius: 20,
+                    }}
                   >
                     <SimpleGrid
                       cols={1}
@@ -39,10 +38,14 @@ export default function Mypage() {
                     >
                       <Grid sx={{ marginTop: 25, textAlign: "center" }}>
                         <Grid.Col span={6}>
-                          <Button>dd</Button>
+                          <Button sx={{ width: "80%" }}>
+                            {wallet?.address}
+                          </Button>
                         </Grid.Col>
                         <Grid.Col span={6}>
-                          <Button>dd</Button>
+                          <Button sx={{ width: "80%" }}>
+                            {wallet?.address}
+                          </Button>
                         </Grid.Col>
                       </Grid>
                     </SimpleGrid>
@@ -53,17 +56,32 @@ export default function Mypage() {
             <SimpleGrid cols={3} breakpoints={[{ maxWidth: "xs", cols: 1 }]}>
               <Stack>
                 <div
-                  style={{ backgroundColor: "red", height: 100, margin: 10 }}
+                  style={{
+                    backgroundColor: "red",
+                    height: 100,
+                    margin: 10,
+                    borderRadius: 20,
+                  }}
                 ></div>
               </Stack>
               <Stack>
                 <div
-                  style={{ backgroundColor: "red", height: 100, margin: 10 }}
+                  style={{
+                    backgroundColor: "red",
+                    height: 100,
+                    margin: 10,
+                    borderRadius: 20,
+                  }}
                 ></div>
               </Stack>
               <Stack>
                 <div
-                  style={{ backgroundColor: "red", height: 100, margin: 10 }}
+                  style={{
+                    backgroundColor: "red",
+                    height: 100,
+                    margin: 10,
+                    borderRadius: 20,
+                  }}
                 ></div>
               </Stack>
             </SimpleGrid>
