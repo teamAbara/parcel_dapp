@@ -39,3 +39,4 @@ next-env.d.ts
 /parcel_move/build
 /parcel_move/Move.toml
 sui.log.????-??-??
+.env
