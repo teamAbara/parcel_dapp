@@ -7,7 +7,7 @@ import Head from "next/head";
 function MyApp({ Component, pageProps }: AppProps) {
   const ethosConfiguration = {
     preferredWallets: ["Ethos Wallet"],
-    chain: Chain.SUI_TESTNET,
+    chain: Chain.SUI_DEVNET,
   };
 
   return (

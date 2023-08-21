@@ -15,7 +15,9 @@ import {
 import { ContactIconsList } from "./ContractIcons";
 import bg from "@img/bg.svg";
 import DaumPostcode from "react-daum-postcode";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { ethos, TransactionBlock, SignInButton } from "ethos-connect";
+
 import {
   IconAlignLeft,
   IconUser,
@@ -25,7 +27,7 @@ import {
   IconBox,
   IconCurrencyWon,
 } from "@tabler/icons-react";
-
+import axios from "axios";
 const useStyles = createStyles(theme => {
   const BREAKPOINT = theme.fn.smallerThan("sm");
   return {
@@ -120,6 +122,8 @@ const useStyles = createStyles(theme => {
 
 export function InvoiceRegistration() {
   const { classes } = useStyles();
+  const { wallet } = ethos.useWallet();
+
   /*보내는사람 */
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false); //모달창
   const [from_name, setFromName] = useState(""); //이름
@@ -235,6 +239,83 @@ export function InvoiceRegistration() {
       icon: IconBox,
     },
   ];
+
+  /*택배 블록체인에 저장 */
+  const create_parcel = async () => {
+    if (!wallet?.currentAccount) return;
+    if (!process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT) return;
+    if (!process.env.NEXT_PUBLIC_SUI_PACKAGE) return;
+
+    const metadata = {
+      pinataMetadata: {
+        name: from_name + 1,
+      },
+      pinataContent: {
+        from_name: from_name,
+        from_phone_number: from_phone_number,
+        from_phone_number2: from_phone_number2,
+        from_address: from_address,
+        from_email: from_email,
+        requst: requst,
+        to_name: to_name,
+        to_phone_number: to_phone_number,
+        to_phone_number2: to_phone_number2,
+        to_address: to_address,
+        item_name: item_name,
+        item_price: item_price,
+        item_size: item_size,
+        item_kg: item_kg,
+        item_type: item_type,
+      },
+    };
+    const pinJsonUrl = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
+
+    const pinataJsonRsp = await axios.post(pinJsonUrl, metadata, {
+      headers: {
+        pinata_api_key: "c1f5c76737c17169fc9d",
+        pinata_secret_api_key:
+          "d10c98647ecb75089d6cff03d6e995e5b5d6d87d4217281c4d2c1698ce293cfa",
+      },
+    });
+    try {
+      const transactionBlock = new TransactionBlock();
+      transactionBlock.moveCall({
+        target: `${process.env.NEXT_PUBLIC_SUI_PACKAGE.toString()}::parcel::parcel_reservation`,
+        arguments: [
+          transactionBlock.object(
+            process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT.toString()
+          ),
+          transactionBlock.pure(wallet.address, "address"),
+          transactionBlock.pure(wallet.address, "address"),
+          transactionBlock.pure(wallet.address, "address"),
+          transactionBlock.pure(pinataJsonRsp.data.IpfsHash),
+        ],
+      });
+      const response = await wallet.signAndExecuteTransactionBlock({
+        transactionBlock,
+        options: {
+          showInput: true,
+          showEffects: true,
+          showEvents: true,
+          showBalanceChanges: true,
+          showObjectChanges: true,
+        },
+      });
+
+      if (response?.objectChanges) {
+        const createdObject = response.objectChanges.find(
+          e => e.type === "created"
+        );
+        if (createdObject && "objectId" in createdObject) {
+          // setNftObjectId(createdObject.objectId);
+        }
+      }
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container size="xl">
       <Paper shadow="md" radius="lg">
@@ -414,7 +495,12 @@ export function InvoiceRegistration() {
                 />
               </SimpleGrid>
               <Group position="right" mt="md">
-                <Button type="submit" className={classes.control}>
+                <Button
+                  onClick={(e: any) => {
+                    create_parcel();
+                  }}
+                  className={classes.control}
+                >
                   택배 예약하기
                 </Button>
               </Group>

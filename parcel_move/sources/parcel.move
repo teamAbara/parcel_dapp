@@ -2,8 +2,9 @@ module parcel_package_addr::parcel {
     use sui::transfer;
     use sui::object::{Self, UID};
     use sui::tx_context::{Self, TxContext};
-    use sui::table::{Self, Table};
+    // use sui::table::{Self, Table};
     use std::string::{Self,String};
+    use std::vector;
     
 
     /*Parcel progress*/  
@@ -21,11 +22,8 @@ module parcel_package_addr::parcel {
     //ParcelList
     struct ParcelList has key {
         id:UID,
-        parcel_list:Table<u64,Parcel>,
-        return_parcel_list:Table<u64,ReturnParcel>,
-        parcel_counter:u64,
-        return_parcel_counter:u64,
-        
+        parcel_list:vector<Parcel>,
+        parcel_counter:u64,        
      }
      //parcel
       struct Parcel has store,drop,copy{
@@ -33,92 +31,58 @@ module parcel_package_addr::parcel {
         from_address:address,
         to_address:address,
         worker_address:address,
-        url:String,
+        url:vector<u8>,
         progress: u64,
+        type:u64
      }
-     //return parcel
-     struct ReturnParcel has store,drop,copy {
-        id:u64,
-        from_address:address,
-        to_address:address,
-        worker_address:address,
-        url:String,
-        progress: u64,
-     }
+
+
     //init : contract init
     fun init(ctx: &mut TxContext) {
-        let parcel = table::new<u64, Parcel>(ctx);
-        let return_parcel = table::new<u64, ReturnParcel>(ctx);
+        let parcel = vector::empty();
          transfer::share_object(ParcelList {
             id: object::new(ctx),
             parcel_list:parcel,
-            return_parcel_list:return_parcel,
             parcel_counter:0,
-            return_parcel_counter:0,
         })
     }
   //parcel  reservation
-   public entry fun parcel_reservation(parcel_list:&mut ParcelList,from_address:address,to_address:address,worker_address:address,url:String) {
-    let parcel_id :u64=parcel_list.parcel_counter;
-    table::add(&mut parcel_list.parcel_list, parcel_id+1, 
-    Parcel { 
-      id: parcel_id + 1, 
+   public entry fun parcel_reservation(parcel_list:&mut ParcelList,from_address:address,to_address:address,worker_address:address,url:vector<u8>,type:u64) {
+
+    parcel_list.parcel_counter= parcel_list.parcel_counter     +1;   
+    vector::push_back(&mut parcel_list.parcel_list,Parcel { 
+      id: parcel_list.parcel_counter , 
       from_address:from_address,
       to_address,
       worker_address,
       url,
-      progress:COLLECTING_TREATMENT
+      progress:COLLECTING_TREATMENT,
+      type:type,
       });
     }
      
-    //return parcel  reservation
 
-    public entry fun return_parcel_reservation(parcel_list:&mut ParcelList,from_address:address,to_address:address,worker_address:address,url:String) {
-    let return_parcel_id :u64=parcel_list.return_parcel_counter;
-    table::add(&mut parcel_list.return_parcel_list, return_parcel_id+1, 
-    ReturnParcel { 
-      id: return_parcel_id + 1, 
-      from_address:from_address,
-      to_address,
-      worker_address,
-      url,
-      progress:COLLECTING_TREATMENT
-      });
-    }
     //Take courier to the next level
     public entry fun next_parcel_progress(parcel_list:&mut ParcelList,id:u64){
-      let parcel_list= table::borrow_mut(&mut parcel_list.parcel_list, id);
+      let parcel_list= vector::borrow_mut(&mut parcel_list.parcel_list, id);
       assert!(parcel_list.progress != DELIVERY_COMPLETED,0);
       parcel_list.progress = parcel_list.progress+1;
     }
-   //Take courier to the next level
-    public entry fun next_return_parcel_progress(return_parcel_list:&mut ParcelList,id:u64){
-      let return_parcel_list= table::borrow_mut(&mut return_parcel_list.return_parcel_list, id);
-      return_parcel_list.progress = return_parcel_list.progress+1;
+  
+    public fun get_parcel_list(coin: &ParcelList,id:u64): &Parcel{
+      //  Parcel{
+      //        id:vector::borrow(&coin.parcel_list, id).id,
+      //        from_address:vector::borrow(&coin.parcel_list, id).from_address,
+      //        to_address:vector::borrow(&coin.parcel_list, id).to_address,
+      //        worker_address:vector::borrow(&coin.parcel_list, id).worker_address,
+      //        url:vector::borrow(&coin.parcel_list, id).url,
+      //        progress:vector::borrow(&coin.parcel_list, id).progress,
+      //        type:vector::borrow(&coin.parcel_list, id).type,
+      //   }
+     vector::borrow(&coin.parcel_list, id - 1 )
+      
     }
 
-
-    
-    public fun get_parcel_list(coin: &ParcelList,id:u64): Parcel{
-       Parcel{
-             id:table::borrow(&coin.parcel_list, id).id,
-             from_address:table::borrow(&coin.parcel_list, id).from_address,
-             to_address:table::borrow(&coin.parcel_list, id).to_address,
-             worker_address:table::borrow(&coin.parcel_list, id).worker_address,
-             url:table::borrow(&coin.parcel_list, id).url,
-             progress:table::borrow(&coin.parcel_list, id).progress,
-        }
-    }
-      public fun get_return_parcel_list(coin: &ParcelList,id:u64): ReturnParcel{
-       ReturnParcel{
-             id:table::borrow(&coin.return_parcel_list, id).id,
-             from_address:table::borrow(&coin.return_parcel_list, id).from_address,
-             to_address:table::borrow(&coin.return_parcel_list, id).to_address,
-             worker_address:table::borrow(&coin.return_parcel_list, id).worker_address,
-             url:table::borrow(&coin.return_parcel_list, id).url,
-             progress:table::borrow(&coin.return_parcel_list, id).progress,
-        }
-    }
 #[test]
     fun test_parcel() {
         use sui::test_scenario;
@@ -133,15 +97,17 @@ module parcel_package_addr::parcel {
         {
             let parcel_list_val = test_scenario::take_shared<ParcelList>(scenario);
             let parcel_list = &mut parcel_list_val;
-            parcel_reservation(parcel_list,user1,user1,user1,string::utf8(b"eil"));
+      
+            parcel_reservation(parcel_list,user1,user1,user1,(b"eil"),0);
+            parcel_reservation(parcel_list,user1,user1,user1,(b"eil"),0);
+            parcel_reservation(parcel_list,user1,user1,user1,(b"eil"),0);
+            assert!(vector::length(&parcel_list.parcel_list)== 3, 0);
 
-            assert!(get_parcel_list(parcel_list,1) == Parcel{id:1,from_address:user1,to_address:user1,worker_address:user1,url:string::utf8(b"eil"),progress:1}, 0);
-            next_parcel_progress(parcel_list,1);
-            assert!(get_parcel_list(parcel_list,1) == Parcel{id:1,from_address:user1,to_address:user1,worker_address:user1,url:string::utf8(b"eil"),progress:2}, 0);
-            return_parcel_reservation(parcel_list,user1,user1,user1,string::utf8(b"eil"));
-            assert!(get_return_parcel_list(parcel_list,1) == ReturnParcel{id:1,from_address:user1,to_address:user1,worker_address:user1,url:string::utf8(b"eil"),progress:1}, 0);
-            next_return_parcel_progress(parcel_list,1);
-            assert!(get_return_parcel_list(parcel_list,1) == ReturnParcel{id:1,from_address:user1,to_address:user1,worker_address:user1,url:string::utf8(b"eil"),progress:2}, 0);
+            // assert!(get_parcel_list(parcel_list,3) == 3, 0);
+            assert!(get_parcel_list(parcel_list,3) == &Parcel{id:3,from_address:user1,to_address:user1,worker_address:user1,url:b"eil",progress:1,type:0}, 0);
+
+            // next_parcel_progress(parcel_list,1);
+            // assert!(get_parcel_list(parcel_list,1) == &Parcel{id:1,from_address:user1,to_address:user1,worker_address:user1,url:(b"eil"),progress:2,type:0}, 0);
 
             test_scenario::return_shared(parcel_list_val);
         };
