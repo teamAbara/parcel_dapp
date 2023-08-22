@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SimpleGrid, Container, Stack, ScrollArea } from "@mantine/core";
 import { useRouter } from "next/router";
 
-export default function CourierReceived({ parcel_list }: any) {
+export default function RecentTransaction({ parcel_list }: any) {
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
   const router = useRouter();
   const { wallet } = ethos.useWallet();
@@ -35,23 +35,72 @@ export default function CourierReceived({ parcel_list }: any) {
             color: "white",
           }}
         >
-          받은택배
+          최근 거래내역
         </div>
         <Container size="xl">
           <SimpleGrid cols={1} breakpoints={[{ maxWidth: "xs", cols: 1 }]}>
             <Stack>
-              {parcel_list_arr.map((item: any) => (
-                <div
+              <div
+                style={{
+                  backgroundColor: "rgb(51 50 61)",
+                  height: "100%",
+                  margin: 10,
+                  borderRadius: 20,
+                }}
+              >
+                <p
                   style={{
-                    backgroundColor: "#FFCD4A",
-                    height: 100,
-                    margin: 10,
-                    borderRadius: 20,
+                    textAlign: "center",
+                    color: "white",
+                    padding: 20,
+                    width: "90%",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
-                  ddd
-                </div>
-              ))}
+                  보낸사람:
+                </p>
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    padding: 20,
+                    width: "90%",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  받은 사람:
+                </p>
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    padding: 20,
+                    width: "90%",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  택배원:
+                </p>
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    padding: 20,
+                    width: "90%",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  택배 현황:{" "}
+                </p>
+              </div>
             </Stack>
           </SimpleGrid>
         </Container>

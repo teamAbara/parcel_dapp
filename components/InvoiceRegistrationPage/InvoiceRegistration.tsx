@@ -15,9 +15,10 @@ import {
 import { ContactIconsList } from "./ContractIcons";
 import bg from "@img/bg.svg";
 import DaumPostcode from "react-daum-postcode";
-import { useState, useCallback, useEffect } from "react";
-import { ethos, TransactionBlock, SignInButton } from "ethos-connect";
-
+import { useState } from "react";
+import { ethos, TransactionBlock } from "ethos-connect";
+import { useRouter } from "next/router";
+import { worker_pick } from "@/util/worker";
 import {
   IconAlignLeft,
   IconUser,
@@ -123,7 +124,7 @@ const useStyles = createStyles(theme => {
 export function InvoiceRegistration() {
   const { classes } = useStyles();
   const { wallet } = ethos.useWallet();
-
+  const router = useRouter();
   /*보내는사람 */
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false); //모달창
   const [from_name, setFromName] = useState(""); //이름
@@ -131,6 +132,7 @@ export function InvoiceRegistration() {
   const [from_phone_number, setFromPhoneNumber] = useState(""); //연락처1
   const [from_phone_number2, setFromPhoneNumber2] = useState(""); //연락처2
   const [from_address, setFromAddress] = useState(""); //주소
+
   const [requst, setRequest] = useState(""); //요청사항
 
   /*받는사람 */
@@ -140,7 +142,7 @@ export function InvoiceRegistration() {
   const [to_phone_number, setToPhoneNumber] = useState(""); //연락처1
   const [to_phone_number2, setToPhoneNumber2] = useState(""); //연락처2
   const [to_address, setToAddress] = useState(""); //주소
-
+  const [to_zonecode, setToZonecode] = useState<number>(0);
   /*물품 */
   const [item_name, setItemnName] = useState("");
   const [item_price, setItemPrice] = useState("");
@@ -152,6 +154,7 @@ export function InvoiceRegistration() {
   const [to_account, setToAccount] = useState("");
   /*보내는 사람 주소 저장 */
   const onCompletePost = (data: any) => {
+    setToZonecode(data.zonecode);
     setFromAddress(data.address);
 
     setSlowTransitionOpened(false);
@@ -238,6 +241,11 @@ export function InvoiceRegistration() {
       description: item_type,
       icon: IconBox,
     },
+    {
+      title: "택배원",
+      description: worker_pick(to_zonecode),
+      icon: IconBox,
+    },
   ];
 
   /*택배 블록체인에 저장 */
@@ -310,7 +318,7 @@ export function InvoiceRegistration() {
           // setNftObjectId(createdObject.objectId);
         }
       }
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

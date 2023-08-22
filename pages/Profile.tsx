@@ -1,11 +1,7 @@
-import { ethos } from "ethos-connect";
 import { useEffect, useState } from "react";
-import { InvoiceRegistration } from "@/components/InvoiceRegistrationPage/InvoiceRegistration";
-import { SimpleGrid, Container, Stack, Button, Grid } from "@mantine/core";
 import { Profile } from "@/components/Profile/Profile";
 export default function ProfilePage() {
   const [mounted, setMounted] = useState(false);
-  const { wallet } = ethos.useWallet();
 
   useEffect(() => {
     setMounted(true);

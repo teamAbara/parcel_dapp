@@ -1,12 +1,10 @@
 import { ethos } from "ethos-connect";
 import { useEffect, useState } from "react";
 import { SimpleGrid, Container, Stack, ScrollArea } from "@mantine/core";
-
 import { useRouter } from "next/router";
-
+//보낸택배 페이지
 export default function CourierSent({ parcel_list }: any) {
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
-
   const router = useRouter();
   const { wallet } = ethos.useWallet();
 
@@ -44,13 +42,25 @@ export default function CourierSent({ parcel_list }: any) {
               {parcel_list_arr.map((item: any) => (
                 <div
                   style={{
-                    backgroundColor: "#FFCD4A",
+                    backgroundColor: "rgb(51 50 61)",
                     height: 100,
                     margin: 10,
                     borderRadius: 20,
                   }}
                 >
-                  ddd
+                  <p
+                    style={{
+                      textAlign: "center",
+                      color: "white",
+                      padding: 20,
+                      width: "90%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    받은 주소:{item.to_address}
+                  </p>
                 </div>
               ))}
             </Stack>

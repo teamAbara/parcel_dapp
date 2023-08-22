@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { InvoiceRegistration } from "@/components/InvoiceRegistrationPage/InvoiceRegistration";
 import Image from "next/image";
+
 import InvoiceRegistrationLogo from "@img/InvoiceRegistration.jpeg";
 export default function InvoiceRegistrationPage() {
   const [mounted, setMounted] = useState(false);
-  //html
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
   return (
     mounted && (
       <>

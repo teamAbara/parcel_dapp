@@ -1,4 +1,3 @@
-"use client";
 import { createStyles, Container, Group, ActionIcon, rem } from "@mantine/core";
 import Image from "next/image";
 import {

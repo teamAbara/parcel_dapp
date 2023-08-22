@@ -1,5 +1,4 @@
-"use client";
-import { ethos, TransactionBlock } from "ethos-connect";
+import { ethos } from "ethos-connect";
 import { SignInButton } from "ethos-connect";
 import {
   createStyles,
@@ -73,7 +72,6 @@ interface HeaderActionProps {
 
 export function HeaderAction({ links }: HeaderActionProps) {
   const { wallet } = ethos.useWallet();
-
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const items = links.map(link => {
@@ -129,7 +127,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
           <Link href="/Profile">
             <Button
               variant="gradient"
-              gradient={{ from: "yellow", to: "#091140", deg: 105 }}
+              gradient={{ from: "yellow", to: "#FFCD4A", deg: 105 }}
             >
               <Text
                 style={{

@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/router";
 import CourierSent from "./CourierSent";
 import CourierReceived from "./CourierReceived";
+import RecentTransaction from "./RecentTransaction";
 //마이페이지
 export function Profile() {
   const router = useRouter();
@@ -138,7 +139,20 @@ export function Profile() {
             <Stack>
               <div
                 style={{
-                  backgroundColor: "red",
+                  backgroundColor: "#696969",
+
+                  minHeight: 500,
+                  margin: 10,
+                  borderRadius: 20,
+                }}
+              >
+                <RecentTransaction />
+              </div>
+            </Stack>
+            <Stack>
+              <div
+                style={{
+                  backgroundColor: "#696969",
 
                   minHeight: 500,
                   margin: 10,
@@ -151,7 +165,7 @@ export function Profile() {
             <Stack>
               <div
                 style={{
-                  backgroundColor: "red",
+                  backgroundColor: "#696969",
 
                   minHeight: 500,
                   margin: 10,
@@ -160,17 +174,6 @@ export function Profile() {
               >
                 <CourierReceived parcel_list={parcel_list} />
               </div>
-            </Stack>
-            <Stack>
-              <div
-                style={{
-                  backgroundColor: "red",
-
-                  minHeight: 500,
-                  margin: 10,
-                  borderRadius: 20,
-                }}
-              ></div>
             </Stack>
           </SimpleGrid>
         </Container>
