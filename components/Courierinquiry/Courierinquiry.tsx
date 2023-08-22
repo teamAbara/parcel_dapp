@@ -1,6 +1,6 @@
-"use client";
-
-import { useState } from "react";
+import { ethos } from "ethos-connect";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   createStyles,
   Table,
@@ -11,6 +11,7 @@ import {
   Center,
   TextInput,
   rem,
+  Button,
   Container,
 } from "@mantine/core";
 import { keys } from "@mantine/utils";
@@ -46,13 +47,12 @@ const useStyles = createStyles(theme => ({
 }));
 
 interface RowData {
+  from_address: string;
   id: string;
-  FromAddress: string;
-  ToAddress: string;
-}
-
-interface TableSortProps {
-  data: RowData[];
+  progress: string;
+  to_address: string;
+  url: string;
+  worker_address: string;
 }
 
 interface ThProps {
@@ -115,90 +115,10 @@ function sortData(
 }
 
 export function TableSort() {
-  const data = [
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-    {
-      id: "Athena Weissnat",
-      ToAddress: "0x12341234141414141241241241241412414141",
-      FromAddress: "0x12341234141414141241241241241412414141",
-    },
-  ];
+  const router = useRouter();
+  const { wallet } = ethos.useWallet();
+  const [parcel_list, setParcelList] = useState<RowData[]>([]);
   const [search, setSearch] = useState("");
-  const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
@@ -206,25 +126,101 @@ export function TableSort() {
     const reversed = field === sortBy ? !reverseSortDirection : false;
     setReverseSortDirection(reversed);
     setSortBy(field);
-    setSortedData(sortData(data, { sortBy: field, reversed, search }));
+    setParcelList(sortData(parcel_list, { sortBy: field, reversed, search }));
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
     setSearch(value);
-    setSortedData(
-      sortData(data, { sortBy, reversed: reverseSortDirection, search: value })
+    setParcelList(
+      sortData(parcel_list, {
+        sortBy,
+        reversed: reverseSortDirection,
+        search: value,
+      })
     );
   };
-
-  const rows = sortedData.map(row => (
+  const rows = parcel_list.map(row => (
     <tr key={row.id}>
-      <td>{row.id}</td>
-      <td>{row.FromAddress}</td>
-      <td>{row.ToAddress}</td>
+      <td>
+        <Button>{row.id}</Button>
+      </td>
+      <td>
+        <Button
+          style={{
+            width: "90%",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {row.from_address}
+        </Button>
+      </td>
+      <td>
+        {" "}
+        <Button
+          style={{
+            width: "90%",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {row.to_address}
+        </Button>
+      </td>
+      <td>
+        <Button
+          style={{
+            width: "90%",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {row.progress == "1"
+            ? "집화처리"
+            : row.progress == "2"
+            ? "간선상차"
+            : row.progress == "3"
+            ? "간선하차"
+            : row.progress == "4"
+            ? "배송출고"
+            : "배송완료"}
+        </Button>
+      </td>
+      <td>
+        <Button onClick={(e: any) => router.push(`/ParcelDetail/${row.id}`)}>
+          자세히
+        </Button>
+      </td>
     </tr>
   ));
-
+  console.log(rows.length);
+  useEffect(() => {
+    const providers = async () => {
+      if (!wallet) return;
+      if (!process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT) return;
+      const nft = await wallet.provider.getObject({
+        id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
+        options: {
+          showContent: true,
+        },
+      });
+      console.log(nft);
+      const data = nft.data;
+      console.log(data);
+      if (data && nft.data?.content?.dataType === "moveObject") {
+        let data_arr = [];
+        for (let i = 0; i < nft.data?.content.fields.parcel_counter; i++) {
+          data_arr.push(nft.data?.content.fields.parcel_list[i].fields);
+        }
+        setParcelList(data_arr);
+      }
+    };
+    providers();
+  }, [wallet]);
   return (
     <Container size="xl">
       <ScrollArea>
@@ -251,18 +247,25 @@ export function TableSort() {
                 id
               </Th>
               <Th
-                sorted={sortBy === "FromAddress"}
+                sorted={sortBy === "from_address"}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("FromAddress")}
+                onSort={() => setSorting("from_address")}
               >
-                FromAddress
+                from_address
               </Th>
               <Th
-                sorted={sortBy === "ToAddress"}
+                sorted={sortBy === "to_address"}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("ToAddress")}
+                onSort={() => setSorting("to_address")}
               >
-                ToAddress
+                to_address
+              </Th>
+              <Th
+                sorted={sortBy === "progress"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("progress")}
+              >
+                progress
               </Th>
             </tr>
           </thead>
@@ -271,7 +274,7 @@ export function TableSort() {
               rows
             ) : (
               <tr>
-                <td colSpan={Object.keys(data[0]).length}>
+                <td colSpan={Object.keys(parcel_list).length}>
                   <Text weight={500} align="center">
                     Nothing found
                   </Text>

@@ -116,7 +116,8 @@ export function Profile() {
               <div
                 style={{
                   backgroundColor: "red",
-                  height: 100,
+
+                  minHeight: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}
@@ -126,7 +127,8 @@ export function Profile() {
               <div
                 style={{
                   backgroundColor: "red",
-                  height: 100,
+
+                  minHeight: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}
@@ -136,14 +138,14 @@ export function Profile() {
               <div
                 style={{
                   backgroundColor: "red",
-                  height: 100,
+
+                  minHeight: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}
               ></div>
             </Stack>
           </SimpleGrid>
-          <ProfileTab />
         </Container>
       </div>
     </>

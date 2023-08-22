@@ -310,7 +310,7 @@ export function InvoiceRegistration() {
           // setNftObjectId(createdObject.objectId);
         }
       }
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.log(error);
     }
