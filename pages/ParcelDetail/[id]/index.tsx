@@ -45,7 +45,13 @@ export default function ParcelDetail() {
       <>
         <div style={{ marginTop: 150 }}>
           {parcel_list ? (
-            <ParcelDetailComponent parcel_list={parcel_list} />
+            <ParcelDetailComponent
+              parcel_list={parcel_list}
+              from_account={parcel_list.from_address}
+              to_account={parcel_list.to_address}
+              worker_account={parcel_list.worker_address}
+              progress={parcel_list.progress}
+            />
           ) : null}
         </div>
       </>
