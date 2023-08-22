@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { ethos, TransactionBlock } from "ethos-connect";
-import { ParcelData } from "@/util/type";
+import { ParcelDataType } from "@/util/type";
 import { ParcelDetailComponent } from "@/components/ParcelDetail/ParcelDetailComponent";
 export default function ParcelDetail() {
   const router = useRouter();
   const { id } = router.query;
   const [mounted, setMounted] = useState(false);
   const { wallet } = ethos.useWallet();
-  const [parcel_list, setParcelList] = useState<ParcelData | undefined>();
+  const [parcel_list, setParcelList] = useState<ParcelDataType | undefined>();
 
   useEffect(() => {
     setMounted(true);

@@ -21,7 +21,9 @@ import {
   IconChevronUp,
   IconSearch,
 } from "@tabler/icons-react";
-
+//타입
+import { ParcelDataType } from "@/util/type";
+import { ThProps } from "@/util/type";
 const useStyles = createStyles(theme => ({
   th: {
     padding: "0 !important",
@@ -46,22 +48,6 @@ const useStyles = createStyles(theme => ({
   },
 }));
 
-interface RowData {
-  from_address: string;
-  id: string;
-  progress: string;
-  to_address: string;
-  url: string;
-  worker_address: string;
-}
-
-interface ThProps {
-  children: React.ReactNode;
-  reversed: boolean;
-  sorted: boolean;
-  onSort(): void;
-}
-
 function Th({ children, reversed, sorted, onSort }: ThProps) {
   const { classes } = useStyles();
   const Icon = sorted
@@ -85,7 +71,7 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
   );
 }
 
-function filterData(data: RowData[], search: string) {
+function filterData(data: ParcelDataType[], search: string) {
   const query = search.toLowerCase().trim();
   return data.filter(item =>
     keys(data[0]).some(key => item[key].toLowerCase().includes(query))
@@ -93,8 +79,12 @@ function filterData(data: RowData[], search: string) {
 }
 
 function sortData(
-  data: RowData[],
-  payload: { sortBy: keyof RowData | null; reversed: boolean; search: string }
+  data: ParcelDataType[],
+  payload: {
+    sortBy: keyof ParcelDataType | null;
+    reversed: boolean;
+    search: string;
+  }
 ) {
   const { sortBy } = payload;
 
@@ -117,12 +107,12 @@ function sortData(
 export function TableSort() {
   const router = useRouter();
   const { wallet } = ethos.useWallet();
-  const [parcel_list, setParcelList] = useState<RowData[]>([]);
+  const [parcel_list, setParcelList] = useState<ParcelDataType[]>([]);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
+  const [sortBy, setSortBy] = useState<keyof ParcelDataType | null>(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
-  const setSorting = (field: keyof RowData) => {
+  const setSorting = (field: keyof ParcelDataType) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
     setReverseSortDirection(reversed);
     setSortBy(field);

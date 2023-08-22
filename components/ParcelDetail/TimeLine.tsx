@@ -5,7 +5,7 @@ import {
   IconGitCommit,
   IconMessageDots,
 } from "@tabler/icons-react";
-
+//타임라인 사용
 export function TimeLine(props: any) {
   const { num } = props;
   return (
