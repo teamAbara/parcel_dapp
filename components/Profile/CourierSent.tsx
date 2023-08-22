@@ -47,6 +47,9 @@ export default function CourierSent({ parcel_list }: any) {
                     margin: 10,
                     borderRadius: 20,
                   }}
+                  onClick={e => {
+                    router.push(`/ParcelDetail/${item.id}`);
+                  }}
                 >
                   <p
                     style={{
