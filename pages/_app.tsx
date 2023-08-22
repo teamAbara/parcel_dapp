@@ -9,7 +9,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     preferredWallets: ["Ethos Wallet"],
     chain: Chain.SUI_TESTNET,
   };
-
   return (
     <EthosConnectProvider
       dappName="<your dApp's Name>"

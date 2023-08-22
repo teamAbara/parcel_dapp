@@ -9,21 +9,44 @@ import {
   Text,
   Title,
   CopyButton,
-  ActionIcon,
-  Tooltip,
 } from "@mantine/core";
-import { IconCopy, IconCheck } from "@tabler/icons-react";
-
-import ProfileTab from "./ProfileTab";
 import { useRouter } from "next/router";
-
+import CourierSent from "./CourierSent";
+import CourierReceived from "./CourierReceived";
+//마이페이지
 export function Profile() {
   const router = useRouter();
+  const [parcel_list, setParcelList] = useState<any[]>([]);
   const { wallet } = ethos.useWallet();
+
+  /* 월렛이 로그인이 안대있으면 메인페이지로 이동*/
   useEffect(() => {
     if (!wallet) {
       router.push("/");
     }
+  }, [wallet]);
+  useEffect(() => {
+    const providers = async () => {
+      //지갑이 없으면 리턴
+      if (!wallet) return;
+      //오브젝트 id가 없으면 리턴
+      if (!process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT) return;
+      //오브젝트 id 불러와서 컨텐츠 불러오기
+      const data = await wallet.provider.getObject({
+        id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
+        options: {
+          showContent: true,
+        },
+      });
+      if (data && data.data?.content?.dataType === "moveObject") {
+        let data_arr = [];
+        for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
+          data_arr.push(data.data?.content.fields.parcel_list[i].fields);
+        }
+        setParcelList(data_arr);
+      }
+    };
+    providers();
   }, [wallet]);
   return (
     <>
@@ -121,7 +144,9 @@ export function Profile() {
                   margin: 10,
                   borderRadius: 20,
                 }}
-              ></div>
+              >
+                <CourierSent parcel_list={parcel_list} />
+              </div>
             </Stack>
             <Stack>
               <div
@@ -132,7 +157,9 @@ export function Profile() {
                   margin: 10,
                   borderRadius: 20,
                 }}
-              ></div>
+              >
+                <CourierReceived parcel_list={parcel_list} />
+              </div>
             </Stack>
             <Stack>
               <div
