@@ -2,6 +2,7 @@ import { SimpleGrid, Container, Stack, Button, Grid } from "@mantine/core";
 import { useEffect, useState } from "react";
 import QRCode from "qrcode"; // qrcode 라이브러리 불러오기
 import axios from "axios";
+import { TimeLine } from "./TimeLine";
 export function ParcelDetailComponent(props: any) {
   const { parcel_list, from_account, to_account, worker_acount, progress } =
     props;
@@ -68,6 +69,7 @@ export function ParcelDetailComponent(props: any) {
     };
     meta_data_list();
   }, [parcel_list]);
+  console.log(progress);
   return (
     <div>
       <Container size="md">
@@ -528,6 +530,7 @@ export function ParcelDetailComponent(props: any) {
                         height: "100%",
                         margin: 10,
                         borderRadius: 20,
+                        padding: 40,
                       }}
                     >
                       <p
@@ -543,6 +546,8 @@ export function ParcelDetailComponent(props: any) {
                       >
                         진행사항
                       </p>
+
+                      <TimeLine num={progress} />
                     </div>
                   </Stack>
                 </SimpleGrid>
