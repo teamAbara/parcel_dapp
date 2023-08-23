@@ -54,7 +54,7 @@ export function Profile() {
       <div
         style={{
           backgroundColor: "white",
-          minHeight: "600px",
+          minHeight: "700px",
           marginTop: 150,
         }}
       >
@@ -154,7 +154,7 @@ export function Profile() {
                 style={{
                   backgroundColor: "#696969",
 
-                  minHeight: 500,
+                  maxHeight: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}
@@ -167,7 +167,7 @@ export function Profile() {
                 style={{
                   backgroundColor: "#696969",
 
-                  minHeight: 500,
+                  maxHeight: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}

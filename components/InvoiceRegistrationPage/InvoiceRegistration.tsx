@@ -145,13 +145,14 @@ export function InvoiceRegistration() {
   const [to_zonecode, setToZonecode] = useState<number>(0);
   /*물품 */
   const [item_name, setItemnName] = useState("");
-  const [item_price, setItemPrice] = useState("");
   const [item_size, setItemSize] = useState("");
   const [item_kg, setItemKg] = useState("");
   const [item_type, setItemType] = useState<string | null>(null);
 
   const [parcel_price, setParcelPrice] = useState("");
   const [to_account, setToAccount] = useState("");
+  const [slowTransitionOpened3, setSlowTransitionOpened3] = useState(false); //모달창
+
   /*보내는 사람 주소 저장 */
   const onCompletePost = (data: any) => {
     setToZonecode(data.zonecode);
@@ -222,11 +223,6 @@ export function InvoiceRegistration() {
       icon: IconBox,
     },
     {
-      title: "물품 가격",
-      description: item_price,
-      icon: IconCurrencyWon,
-    },
-    {
       title: "물품 크기",
       description: item_size,
       icon: IconBox,
@@ -270,7 +266,6 @@ export function InvoiceRegistration() {
         to_phone_number2: to_phone_number2,
         to_address: to_address,
         item_name: item_name,
-        item_price: item_price,
         item_size: item_size,
         item_kg: item_kg,
         item_type: item_type,
@@ -328,13 +323,6 @@ export function InvoiceRegistration() {
     <Container size="xl">
       <Paper shadow="md" radius="lg">
         <div className={classes.wrapper}>
-          <div className={classes.contacts}>
-            <Text fz="lg" fw={700} className={classes.title} c="#fff">
-              송장
-            </Text>
-
-            <ContactIconsList variant="white" data={MOCKDATA} />
-          </div>
           <form
             className={classes.form}
             onSubmit={event => event.preventDefault()}
@@ -472,12 +460,7 @@ export function InvoiceRegistration() {
                   required
                   onChange={e => setItemnName(e.target.value)}
                 />
-                <TextInput
-                  label="물품 가격"
-                  placeholder="물품 가격"
-                  required
-                  onChange={e => setItemPrice(e.target.value)}
-                />
+
                 <TextInput
                   mt="md"
                   label="물품 크기"
@@ -505,7 +488,7 @@ export function InvoiceRegistration() {
               <Group position="right" mt="md">
                 <Button
                   onClick={(e: any) => {
-                    create_parcel();
+                    setSlowTransitionOpened3(true);
                   }}
                   className={classes.control}
                 >
@@ -532,6 +515,31 @@ export function InvoiceRegistration() {
           transitionProps={{ transition: "fade", duration: 200 }}
         >
           <DaumPostcode autoClose={false} onComplete={onCompletePost2} />
+        </Modal>
+        <Modal
+          size={"xl"}
+          opened={slowTransitionOpened3}
+          onClose={close}
+          centered
+          title="주소"
+          transitionProps={{ transition: "fade", duration: 200 }}
+        >
+          <div className={classes.contacts} style={{ marginTop: 100 }}>
+            <Text fz="xl" fw={800} className={classes.title} c="#fff">
+              송장
+            </Text>
+
+            <ContactIconsList variant="white" data={MOCKDATA} />
+          </div>
+          <Group position="center">
+            <Button
+              onClick={() => {
+                create_parcel();
+              }}
+            >
+              택배 예약
+            </Button>
+          </Group>
         </Modal>
       </Paper>
     </Container>
