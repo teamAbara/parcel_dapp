@@ -146,7 +146,7 @@ export function Profile() {
                   borderRadius: 20,
                 }}
               >
-                <RecentTransaction />
+                <RecentTransaction parcel_list={parcel_list} />
               </div>
             </Stack>
             <Stack>
