@@ -26,7 +26,6 @@ import {
   IconMapPin,
   IconAt,
   IconBox,
-  IconCurrencyWon,
 } from "@tabler/icons-react";
 import axios from "axios";
 const useStyles = createStyles(theme => {
@@ -122,6 +121,7 @@ const useStyles = createStyles(theme => {
 });
 
 export function InvoiceRegistration() {
+  const router = useRouter();
   const { classes } = useStyles();
   const { wallet } = ethos.useWallet();
   /*보내는사람 */
@@ -315,7 +315,9 @@ export function InvoiceRegistration() {
           // setNftObjectId(createdObject.objectId);
         }
       }
-      window.location.reload();
+
+      //완료되면 마이페이지로 이동
+      router.push("/Profile");
     } catch (error) {
       console.log(error);
     }
