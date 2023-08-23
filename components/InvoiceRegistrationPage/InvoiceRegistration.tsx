@@ -124,7 +124,6 @@ const useStyles = createStyles(theme => {
 export function InvoiceRegistration() {
   const { classes } = useStyles();
   const { wallet } = ethos.useWallet();
-  const router = useRouter();
   /*보내는사람 */
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false); //모달창
   const [from_name, setFromName] = useState(""); //이름
