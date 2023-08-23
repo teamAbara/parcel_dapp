@@ -132,6 +132,7 @@ export function InvoiceRegistration() {
   const [from_phone_number, setFromPhoneNumber] = useState(""); //연락처1
   const [from_phone_number2, setFromPhoneNumber2] = useState(""); //연락처2
   const [from_address, setFromAddress] = useState(""); //주소
+  const [from_address_detail, setFromAddressDetail] = useState(""); //주소
 
   const [requst, setRequest] = useState(""); //요청사항
 
@@ -142,6 +143,8 @@ export function InvoiceRegistration() {
   const [to_phone_number, setToPhoneNumber] = useState(""); //연락처1
   const [to_phone_number2, setToPhoneNumber2] = useState(""); //연락처2
   const [to_address, setToAddress] = useState(""); //주소
+  const [to_address_detail, setToAddressDetail] = useState(""); //주소
+
   const [to_zonecode, setToZonecode] = useState<number>(0);
   /*물품 */
   const [item_name, setItemnName] = useState("");
@@ -187,7 +190,7 @@ export function InvoiceRegistration() {
 
     {
       title: "보내는 분 주소",
-      description: from_address,
+      description: `${from_address} ${from_address_detail}`,
       icon: IconMapPin,
     },
     {
@@ -214,7 +217,7 @@ export function InvoiceRegistration() {
 
     {
       title: "받는 분 주소",
-      description: to_address,
+      description: `${to_address} ${to_address_detail}`,
       icon: IconMapPin,
     },
     {
@@ -258,13 +261,13 @@ export function InvoiceRegistration() {
         from_name: from_name,
         from_phone_number: from_phone_number,
         from_phone_number2: from_phone_number2,
-        from_address: from_address,
+        from_address: from_address + from_address_detail,
         from_email: from_email,
         requst: requst,
         to_name: to_name,
         to_phone_number: to_phone_number,
         to_phone_number2: to_phone_number2,
-        to_address: to_address,
+        to_address: to_address + to_address_detail,
         item_name: item_name,
         item_size: item_size,
         item_kg: item_kg,
@@ -385,6 +388,15 @@ export function InvoiceRegistration() {
                   </Button>
                 </Group>
               </SimpleGrid>
+              <TextInput
+                mt="md"
+                label="상세 주소"
+                placeholder="상세 주소"
+                required
+                onChange={e => {
+                  setFromAddressDetail(e.target.value);
+                }}
+              />
               <Textarea
                 mt="md"
                 label="요청사항"
@@ -447,6 +459,15 @@ export function InvoiceRegistration() {
                   </Button>
                 </Group>
               </SimpleGrid>
+              <TextInput
+                mt="md"
+                label="상세 주소"
+                placeholder="상세 주소"
+                required
+                onChange={e => {
+                  setToAddressDetail(e.target.value);
+                }}
+              />
             </div>
 
             <div style={{ marginTop: 20 }}>
