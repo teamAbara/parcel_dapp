@@ -500,7 +500,7 @@ export function InvoiceRegistration() {
         </div>
         <Modal
           opened={slowTransitionOpened}
-          onClose={close}
+          onClose={() => setSlowTransitionOpened(false)}
           centered
           title="주소"
           transitionProps={{ transition: "fade", duration: 200 }}
@@ -509,7 +509,7 @@ export function InvoiceRegistration() {
         </Modal>
         <Modal
           opened={slowTransitionOpened2}
-          onClose={close}
+          onClose={() => setSlowTransitionOpened2(false)}
           centered
           title="주소"
           transitionProps={{ transition: "fade", duration: 200 }}
@@ -519,7 +519,7 @@ export function InvoiceRegistration() {
         <Modal
           size={"xl"}
           opened={slowTransitionOpened3}
-          onClose={close}
+          onClose={() => setSlowTransitionOpened3(false)}
           centered
           title="주소"
           transitionProps={{ transition: "fade", duration: 200 }}
