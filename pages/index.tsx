@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { MainBenner } from "@/components/main/main_benner";
 import { AlertComponent } from "@/util/Alert";
-import { Group, Button } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
-
 const Home = () => {
   /*next js에서 page원할하게 가져올려면 데이머 먼저 로딩후에 페이지 렌더링 */
   const [mounted, setMounted] = useState(false);
@@ -11,7 +8,6 @@ const Home = () => {
     setMounted(true);
     AlertComponent("dd");
   }, []);
-
   return (
     mounted && (
       <>

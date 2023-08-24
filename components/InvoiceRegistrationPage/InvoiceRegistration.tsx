@@ -307,19 +307,12 @@ export function InvoiceRegistration() {
         },
       });
 
-      if (response?.objectChanges) {
-        const createdObject = response.objectChanges.find(
-          e => e.type === "created"
-        );
-        if (createdObject && "objectId" in createdObject) {
-          // setNftObjectId(createdObject.objectId);
-        }
-      }
-
-      //완료되면 마이페이지로 이동
+      console.log(response);
+      //성공하면 프로필 페이지
       router.push("/Profile");
     } catch (error) {
-      console.log(error);
+      //실패하면 메인페이지로
+      router.push("/");
     }
   };
 
