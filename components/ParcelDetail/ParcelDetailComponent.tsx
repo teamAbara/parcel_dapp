@@ -37,7 +37,9 @@ export function ParcelDetailComponent(props: any) {
     try {
       // QR 코드 생성
 
-      const qrCodeDataURL = await QRCode.toDataURL(JSON.stringify("d"));
+      const qrCodeDataURL = await QRCode.toDataURL(
+        JSON.stringify({ to_name, to_email })
+      );
       setQRCodeData(qrCodeDataURL);
     } catch (error) {
       console.error("Error generating QR code:", error);
@@ -548,6 +550,22 @@ export function ParcelDetailComponent(props: any) {
                       </p>
 
                       <TimeLine num={progress} />
+                    </div>
+                  </Stack>
+                  <Stack>
+                    <div
+                      style={{
+                        backgroundColor: "rgb(51 50 61)",
+                        height: "100%",
+                        margin: 10,
+                        borderRadius: 20,
+                        padding: 40,
+                      }}
+                    >
+                      <Button onClick={generateQRCode}>Qr</Button>
+                      {qrCodeData && (
+                        <img src={qrCodeData} width="80%" alt="QR Code" />
+                      )}
                     </div>
                   </Stack>
                 </SimpleGrid>

@@ -292,7 +292,10 @@ export function InvoiceRegistration() {
           ),
           transactionBlock.pure(wallet.address, "address"),
           transactionBlock.pure(wallet.address, "address"),
-          transactionBlock.pure(wallet.address, "address"),
+          transactionBlock.pure(
+            "0x76a54842b7db8807879e2da353108a7052ffec54146b6fd3f831035e7b41c9c7",
+            "address"
+          ),
           transactionBlock.pure(pinataJsonRsp.data.IpfsHash),
         ],
       });
