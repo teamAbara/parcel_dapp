@@ -46,6 +46,7 @@ export default function ParcelDetail() {
         <div style={{ marginTop: 150 }}>
           {parcel_list ? (
             <ParcelDetailComponent
+              id={id}
               parcel_list={parcel_list}
               from_account={parcel_list.from_address}
               to_account={parcel_list.to_address}

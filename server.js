@@ -11,7 +11,6 @@ const port = 8080;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-
 const { sequelize, DeliveryWorker } = require("./model/index.js");
 /*====================설정===================== */
 /*====================sui===================== */
@@ -44,6 +43,7 @@ sequelize
   .catch(err => {
     console.error(err);
   });
+dotenv.config();
 
 app.prepare().then(() => {
   server.use(cors());
@@ -126,6 +126,7 @@ app.prepare().then(() => {
         );
         res.send({
           result: true,
+          worker_id: worker_id,
           access_token: access_token,
           refresh_token: refresh_token,
         });
@@ -133,6 +134,15 @@ app.prepare().then(() => {
     });
   });
 
+  //유저 정보 받아오기
+  server.post("/auth/get_user", async (req, res) => {
+    const { worker_id } = req.body;
+    const worker = await DeliveryWorker.findOne({
+      where: { worker_id: JSON.parse(worker_id) },
+    });
+    console.log(worker);
+    res.send({ result: true, worker: worker });
+  });
   /*======================== USER =============================== */
   /*======================== Parcel =============================== */
 
@@ -185,6 +195,27 @@ app.prepare().then(() => {
     }
     res.send({ result: true, arr: data_arr });
   });
+  //전체 메타데이터
+  server.post("/parcel/all_parcel_list_metadata", async (req, res) => {
+    //택배 리스트 조회
+    const data = await provider.getObject({
+      id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
+      options: {
+        showContent: true,
+      },
+    });
+    let data_arr = [];
+    for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
+      const meta_data_list = await axios.get(
+        `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
+      );
+      meta_data_list.data.progress =
+        data.data?.content.fields.parcel_list[i].fields.progress;
+      data_arr.push(meta_data_list.data);
+    }
+
+    res.send({ result: true, arr: data_arr });
+  });
   //택배 다음 단계로 변경
   server.post("/parcel/update_parcel_progress", async (req, res) => {
     //아이디 받아서
@@ -229,7 +260,35 @@ app.prepare().then(() => {
       res.send({ result: false });
     }
   });
+  //택배 스캔
+  server.post("/parcel/get_parcel", async (req, res) => {
+    const { worker_id, id } = req.body;
 
+    const worker = await DeliveryWorker.findOne({
+      where: { worker_id: 12341 },
+    });
+    //택배기사가 아니면 리턴대게
+    if (worker == null) return;
+    //택배 리스트 조회
+    const data = await provider.getObject({
+      id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
+      options: {
+        showContent: true,
+      },
+    });
+    let data_arr = [];
+    for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
+      const meta_data_list = await axios.get(
+        `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
+      );
+
+      if (meta_data_list.data.id == id) {
+        data_arr.push(meta_data_list.data);
+      }
+    }
+    console.log(data_arr);
+    res.send({ result: true, arr: data_arr[0] });
+  });
   /*======================== Parcel =============================== */
 
   server.all("*", (req, res) => {

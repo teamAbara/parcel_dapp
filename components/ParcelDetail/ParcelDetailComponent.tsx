@@ -4,7 +4,7 @@ import QRCode from "qrcode"; // qrcode 라이브러리 불러오기
 import axios from "axios";
 import { TimeLine } from "./TimeLine";
 export function ParcelDetailComponent(props: any) {
-  const { parcel_list, from_account, to_account, worker_acount, progress } =
+  const { id, parcel_list, from_account, to_account, worker_acount, progress } =
     props;
 
   /*qrcode */
@@ -37,9 +37,7 @@ export function ParcelDetailComponent(props: any) {
     try {
       // QR 코드 생성
 
-      const qrCodeDataURL = await QRCode.toDataURL(
-        JSON.stringify({ to_name, to_email })
-      );
+      const qrCodeDataURL = await QRCode.toDataURL(id);
       setQRCodeData(qrCodeDataURL);
     } catch (error) {
       console.error("Error generating QR code:", error);

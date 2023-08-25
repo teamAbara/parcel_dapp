@@ -1,5 +1,6 @@
 import { ethos } from "ethos-connect";
 import { useEffect, useState } from "react";
+import { TransactionBlock } from "ethos-connect";
 import {
   SimpleGrid,
   Container,
@@ -10,12 +11,16 @@ import {
   Title,
   CopyButton,
 } from "@mantine/core";
+import { BCS, getSuiMoveConfig } from "@mysten/bcs";
+
 import { useRouter } from "next/router";
 import CourierSent from "./CourierSent";
 import CourierReceived from "./CourierReceived";
 import RecentTransaction from "./RecentTransaction";
 //마이페이지
 export function Profile() {
+  const bcs = new BCS(getSuiMoveConfig());
+
   const router = useRouter();
   const [parcel_list, setParcelList] = useState<any[]>([]);
   const { wallet } = ethos.useWallet();
@@ -49,6 +54,7 @@ export function Profile() {
     };
     providers();
   }, [wallet]);
+
   return (
     <>
       <div
