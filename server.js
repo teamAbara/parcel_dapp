@@ -85,53 +85,58 @@ app.prepare().then(() => {
   /*택배기사 로그인 */
   server.post("/auth/login", async (req, res) => {
     const { worker_id, worker_pw } = req.body;
-    //db에 받은 아이디로 검색
-    await DeliveryWorker.findOne({
-      where: { worker_id: worker_id },
-    }).then(data => {
-      if (data.worker_pw !== worker_pw) {
-        res.send({
-          result: false,
-          msg: "비밀번호가 틀렸습니다.",
-        });
-      } else {
-        const refresh_token = jwt.sign(
-          { worker_id: worker_id },
-          process.env.JWT_USER,
-          {
-            algorithm: "HS256", // 해싱 알고리즘
-            expiresIn: "1d", // 토큰 유효 기간
-            issuer: "issuer", // 발행자
-          }
-        );
-        DeliveryWorker.update(
-          { token: refresh_token },
-          { where: { worker_id: worker_id } }
-        )
-          .then(res => {
-            return refresh_token;
-          })
-          .catch(err => {
-            console.log(err);
+    try {
+      //db에 받은 아이디로 검색
+      await DeliveryWorker.findOne({
+        where: { worker_id: worker_id },
+      }).then(data => {
+        if (data.worker_pw !== worker_pw) {
+          res.send({
+            result: false,
+            msg: "비밀번호가 틀렸습니다.",
           });
+        } else {
+          const refresh_token = jwt.sign(
+            { worker_id: worker_id },
+            process.env.JWT_USER,
+            {
+              algorithm: "HS256", // 해싱 알고리즘
+              expiresIn: "1d", // 토큰 유효 기간
+              issuer: "issuer", // 발행자
+            }
+          );
+          DeliveryWorker.update(
+            { token: refresh_token },
+            { where: { worker_id: worker_id } }
+          )
+            .then(res => {
+              return refresh_token;
+            })
+            .catch(err => {
+              console.log(err);
+            });
 
-        const access_token = jwt.sign(
-          { worker_id: worker_id },
-          process.env.JWT_USER,
-          {
-            algorithm: "HS256", // 해싱 알고리즘
-            expiresIn: "30m", // 토큰 유효 기간
-            issuer: "issuer", // 발행자
-          }
-        );
-        res.send({
-          result: true,
-          worker_id: worker_id,
-          access_token: access_token,
-          refresh_token: refresh_token,
-        });
-      }
-    });
+          const access_token = jwt.sign(
+            { worker_id: worker_id },
+            process.env.JWT_USER,
+            {
+              algorithm: "HS256", // 해싱 알고리즘
+              expiresIn: "30m", // 토큰 유효 기간
+              issuer: "issuer", // 발행자
+            }
+          );
+          res.send({
+            result: true,
+            worker_id: worker_id,
+            access_token: access_token,
+            refresh_token: refresh_token,
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      res.send({ result: false });
+    }
   });
 
   //유저 정보 받아오기
@@ -170,51 +175,69 @@ app.prepare().then(() => {
     const worker = await DeliveryWorker.findOne({
       where: { worker_id: 12341 },
     });
-
+    try {
+      //택배 리스트 조회
+      const data = await provider.getObject({
+        id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
+        options: {
+          showContent: true,
+        },
+      });
+      let data_arr = [];
+      for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
+        //배당된 기사 만 볼수 있게
+        if (
+          worker.worker_public ==
+          data.data?.content.fields.parcel_list[i].fields.worker_address
+        ) {
+          const meta_data_list = await axios.get(
+            `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
+          );
+          meta_data_list.data.progress =
+            data.data?.content.fields.parcel_list[i].fields.progress;
+          data_arr.push(meta_data_list.data);
+        }
+      }
+      res.send({ result: true, arr: data_arr });
+    } catch (error) {
+      console.log(error);
+      res.send({ result: false });
+    }
+  });
+  //전체 메타데이터
+  server.post("/parcel/all_parcel_list_metadata", async (req, res) => {
     //택배 리스트 조회
-    const data = await provider.getObject({
-      id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
-      options: {
-        showContent: true,
-      },
-    });
-    let data_arr = [];
-    for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
-      //배당된 기사 만 볼수 있게
-      if (
-        worker.worker_public ==
-        data.data?.content.fields.parcel_list[i].fields.worker_address
-      ) {
+
+    try {
+      const data = await provider.getObject({
+        id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
+        options: {
+          showContent: true,
+        },
+      });
+      let data_arr = [];
+      for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
         const meta_data_list = await axios.get(
-          `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
+          `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`,
+          {
+            headers: {
+              pinata_api_key:
+                "d10c98647ecb75089d6cff03d6e995e5b5d6d87d4217281c4d2c1698ce293cfa",
+              pinata_secret_api_key:
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJkYWMzYjcxYy1hNjAyLTQ5ZGYtYWE2YS05MzFlYjYyYWZhMzAiLCJlbWFpbCI6Imtlc21haS5wbGF5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiJjMWY1Yzc2NzM3YzE3MTY5ZmM5ZCIsInNjb3BlZEtleVNlY3JldCI6ImQxMGM5ODY0N2VjYjc1MDg5ZDZjZmYwM2Q2ZTk5NWU1YjVkNmQ4N2Q0MjE3MjgxYzRkMmMxNjk4Y2UyOTNjZmEiLCJpYXQiOjE2OTI2MDA3NTV9.BMY97a8NxayARap2JVo4d7_OUwUaILY2UG1s3I6Fjcg",
+            },
+          }
         );
         meta_data_list.data.progress =
           data.data?.content.fields.parcel_list[i].fields.progress;
         data_arr.push(meta_data_list.data);
       }
+      console.log("11");
+      res.send({ result: true, arr: data_arr });
+    } catch (error) {
+      console.log(error);
+      res.send({ result: false });
     }
-    res.send({ result: true, arr: data_arr });
-  });
-  //전체 메타데이터
-  server.post("/parcel/all_parcel_list_metadata", async (req, res) => {
-    //택배 리스트 조회
-    const data = await provider.getObject({
-      id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
-      options: {
-        showContent: true,
-      },
-    });
-    let data_arr = [];
-    for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
-      const meta_data_list = await axios.get(
-        `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
-      );
-      meta_data_list.data.progress =
-        data.data?.content.fields.parcel_list[i].fields.progress;
-      data_arr.push(meta_data_list.data);
-    }
-
-    res.send({ result: true, arr: data_arr });
   });
   //택배 다음 단계로 변경
   server.post("/parcel/update_parcel_progress", async (req, res) => {
