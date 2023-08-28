@@ -18,7 +18,6 @@ import DaumPostcode from "react-daum-postcode";
 import { useState, useEffect } from "react";
 import { ethos } from "ethos-connect";
 import { useRouter } from "next/router";
-import { worker_pick } from "@/util/worker";
 import {
   IconAlignLeft,
   IconUser,
@@ -29,6 +28,7 @@ import {
 } from "@tabler/icons-react";
 import { TransactionBlock } from "ethos-connect";
 import { create } from "ipfs-http-client";
+import axios from "axios";
 const useStyles = createStyles(theme => {
   const BREAKPOINT = theme.fn.smallerThan("sm");
   return {
@@ -148,24 +148,28 @@ export function InvoiceRegistration() {
 
   const [to_zonecode, setToZonecode] = useState<number>(0);
   /*물품 */
-  const [item_name, setItemnName] = useState("");
-  const [item_size, setItemSize] = useState("");
-  const [item_kg, setItemKg] = useState("");
-  const [item_type, setItemType] = useState<string | null>(null);
+  const [item_name, setItemnName] = useState(""); //물품명
+  const [box_size, setBoxSize] = useState<string | null>(null); //물품사이즈
+  const [item_type, setItemType] = useState<string | null>(null); //운임구분
 
   const [parcel_price, setParcelPrice] = useState("");
-  const [to_account, setToAccount] = useState("");
+  const [to_account, setToAccount] = useState(""); //받는 분 지갑 주소
   const [slowTransitionOpened3, setSlowTransitionOpened3] = useState(false); //모달창
+  /*택배원 */
+  const [worker_type, setWorkerType] = useState("");
+
+  const [worker_public, setWorkerPublic] = useState("");
 
   /*보내는 사람 주소 저장 */
   const onCompletePost = (data: any) => {
-    setToZonecode(data.zonecode);
     setFromAddress(data.address);
 
     setSlowTransitionOpened(false);
   };
   /*받는 사람 주소 저장 */
   const onCompletePost2 = (data: any) => {
+    setToZonecode(data.zonecode);
+
     setToAddress(data.address);
 
     setSlowTransitionOpened2(false);
@@ -227,15 +231,11 @@ export function InvoiceRegistration() {
       icon: IconBox,
     },
     {
-      title: "물품 크기",
-      description: item_size,
+      title: "박스 크기",
+      description: box_size,
       icon: IconBox,
     },
-    {
-      title: "물품 무게",
-      description: item_kg,
-      icon: IconBox,
-    },
+
     {
       title: "우임구분",
       description: item_type,
@@ -243,7 +243,12 @@ export function InvoiceRegistration() {
     },
     {
       title: "택배원",
-      description: worker_pick(to_zonecode),
+      description: worker_type,
+      icon: IconBox,
+    },
+    {
+      title: "가격",
+      description: parcel_price,
       icon: IconBox,
     },
   ];
@@ -290,8 +295,7 @@ export function InvoiceRegistration() {
           to_phone_number2: to_phone_number2,
           to_address: to_address + to_address_detail,
           item_name: item_name,
-          item_size: item_size,
-          item_kg: item_kg,
+          box_size: box_size,
           item_type: item_type,
         },
       };
@@ -304,12 +308,9 @@ export function InvoiceRegistration() {
           transactionBlock.object(
             process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT.toString()
           ),
-          transactionBlock.pure(wallet.address, "address"),
-          transactionBlock.pure(wallet.address, "address"),
-          transactionBlock.pure(
-            "0x76a54842b7db8807879e2da353108a7052ffec54146b6fd3f831035e7b41c9c7",
-            "address"
-          ),
+          transactionBlock.pure(wallet.address, "address"), //보내는분
+          transactionBlock.pure(to_account, "address"), //받는분
+          transactionBlock.pure(worker_public, "address"), //택배기사 주소
           transactionBlock.pure(json_cid),
         ],
       });
@@ -332,7 +333,45 @@ export function InvoiceRegistration() {
       // router.push("/");
     }
   };
+  //가격측정
+  const setPrice = () => {
+    if (!box_size) return;
 
+    if (box_size == "크기:80cm 이하 무게:3kg 이하") {
+      setParcelPrice("2.7sui");
+    } else if (box_size == "크기:80㎝∼100㎝ 무게:3kg∼5kg") {
+      setParcelPrice("3.2sui");
+    } else if (box_size == "크기:80㎝∼100㎝ 무게:5kg∼7kg") {
+      setParcelPrice("3.7sui");
+    } else if (box_size == "크기:100㎝∼120㎝ 무게:7kg∼10kg") {
+      setParcelPrice("4.7sui");
+    } else if (box_size == "크기:100㎝∼120㎝ 무게:10kg∼15kg") {
+      setParcelPrice("5.7sui");
+    } else if (box_size == "크기:100㎝∼120㎝ 무게:15kg∼20kg") {
+      setParcelPrice("6.7sui");
+    } else if (box_size == "크기:100㎝∼120㎝ 무게:20kg∼25kg") {
+      setParcelPrice("8.7sui");
+    } else if (box_size == "크기:120㎝∼160㎝ 무게:25kg∼30kg") {
+      setParcelPrice("10.7sui");
+    }
+  };
+  useEffect(() => {
+    if (!to_zonecode) return;
+    const get_parcel_worker = async () => {
+      await axios
+        .post("/parcel/get_worker", { zonecode: to_zonecode })
+        .then(res => {
+          //결과값이 ture면
+          if (res.data.result == true) {
+            setWorkerType(res.data.type);
+            setWorkerPublic(res.data.worker_public);
+          }
+        });
+    };
+    get_parcel_worker();
+    setPrice();
+  }, [to_zonecode, box_size]);
+  console.log(parcel_price);
   return (
     <Container size="xl">
       <Paper shadow="md" radius="lg">
@@ -479,6 +518,15 @@ export function InvoiceRegistration() {
                   setToAddressDetail(e.target.value);
                 }}
               />
+              <TextInput
+                mt="md"
+                label="지갑 주소"
+                placeholder="지갑 주소"
+                required
+                onChange={e => {
+                  setToAccount(e.target.value);
+                }}
+              />
             </div>
 
             <div style={{ marginTop: 20 }}>
@@ -492,21 +540,46 @@ export function InvoiceRegistration() {
                   required
                   onChange={e => setItemnName(e.target.value)}
                 />
+                <Select
+                  label="박스 크기.무게"
+                  placeholder="Pick one"
+                  onChange={setBoxSize}
+                  data={[
+                    {
+                      value: "크기:80cm 이하 무게:3kg 이하",
+                      label: "크기:80cm 이하 무게:3kg 이하",
+                    },
+                    {
+                      value: "크기:80㎝∼100㎝ 무게:3kg∼5kg",
+                      label: "크기:80㎝∼100㎝ 무게:3kg∼5kg",
+                    },
+                    {
+                      value: "크기:80㎝∼100㎝ 무게:5kg∼7kg",
+                      label: "크기:80㎝∼100㎝ 무게:5kg∼7kg",
+                    },
+                    {
+                      value: "크기:100㎝∼120㎝ 무게:7kg∼10kg",
+                      label: "크기:100㎝∼120㎝ 무게:7kg∼10kg",
+                    },
+                    {
+                      value: "크기:100㎝∼120㎝ 무게:10kg∼15kg",
+                      label: "크기:100㎝∼120㎝ 무게:10kg∼15kg",
+                    },
+                    {
+                      value: "크기:100㎝∼120㎝ 무게:15kg∼20kg",
+                      label: "크기:100㎝∼120㎝ 무게:15kg∼20kg",
+                    },
+                    {
+                      value: "크기:100㎝∼120㎝ 무게:20kg∼25kg",
+                      label: "크기:100㎝∼120㎝ 무게:20kg∼25kg",
+                    },
+                    {
+                      value: "크기:120㎝∼160㎝ 무게:25kg∼30kg",
+                      label: "크기:120㎝∼160㎝ 무게:25kg∼30kg",
+                    },
+                  ]}
+                />
 
-                <TextInput
-                  mt="md"
-                  label="물품 크기"
-                  placeholder="물품 크기"
-                  required
-                  onChange={e => setItemSize(e.target.value)}
-                />
-                <TextInput
-                  mt="md"
-                  label="물품 무게"
-                  placeholder="물품 무게"
-                  required
-                  onChange={e => setItemKg(e.target.value)}
-                />
                 <Select
                   label="우임구분"
                   placeholder="Pick one"

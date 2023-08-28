@@ -45,7 +45,11 @@ sequelize
     console.error(err);
   });
 dotenv.config();
-
+const address_list = [
+  { type: "인천1", zonecode: 22783 },
+  { type: "인천2", zonecode: 21316 },
+  { type: "하남1", zonecode: 12990 },
+];
 app.prepare().then(() => {
   server.use(cors());
   server.use(bodyParser.json());
@@ -173,8 +177,9 @@ app.prepare().then(() => {
 
   //할당된 데이터
   server.post("/parcel/worker_parcel_list", async (req, res) => {
+    const { worker_id } = req.body;
     const worker = await DeliveryWorker.findOne({
-      where: { worker_id: 12341 },
+      where: { worker_id: JSON.parse(worker_id) },
     });
     try {
       //택배 리스트 조회
@@ -196,7 +201,7 @@ app.prepare().then(() => {
           );
           meta_data_list.data.progress =
             data.data?.content.fields.parcel_list[i].fields.progress;
-          data_arr.push(meta_data_list.data);
+          data_arr.push(meta_data_list.data.properties);
         }
       }
       res.send({ result: true, arr: data_arr });
@@ -223,19 +228,19 @@ app.prepare().then(() => {
         );
         meta_data_list.data.progress =
           data.data?.content.fields.parcel_list[i].fields.progress;
-        data_arr.push(meta_data_list.data);
+        data_arr.push(meta_data_list.data.properties);
       }
-      console.log("11");
       res.send({ result: true, arr: data_arr });
     } catch (error) {
       console.log(error);
       res.send({ result: false });
     }
   });
+
   //택배 다음 단계로 변경
   server.post("/parcel/update_parcel_progress", async (req, res) => {
     //아이디 받아서
-    const worker_id = req.body.worker_id;
+    const { worker_id } = req.body;
 
     const worker = await DeliveryWorker.findOne({
       where: { worker_id: worker_id },
@@ -269,6 +274,7 @@ app.prepare().then(() => {
           showObjectChanges: true,
         },
       });
+      console.log(response);
       //성공하면 true,
       res.send({ result: true });
     } catch (error) {
@@ -276,7 +282,10 @@ app.prepare().then(() => {
       res.send({ result: false });
     }
   });
-  //택배 스캔
+  /*
+  스캔에서 배열에서 목록을찾을수 잇게
+  - 추후 : 바로 가져올수 있는 함수로 변경
+  */
   server.post("/parcel/get_parcel", async (req, res) => {
     const { worker_id, id } = req.body;
 
@@ -299,15 +308,33 @@ app.prepare().then(() => {
       );
 
       if (meta_data_list.data.id == id) {
-        data_arr.push(meta_data_list.data);
+        data_arr.push(meta_data_list.data.properties);
       }
     }
     console.log(data_arr);
     res.send({ result: true, arr: data_arr[0] });
   });
 
-  /*======================== Parcel =============================== */
+  //택배 zonecode로 지점명 찾기
+  server.post("/parcel/get_worker", async (req, res) => {
+    const { zonecode } = req.body;
+    try {
+      const type = address_list.filter(item => item.zonecode == zonecode)[0]
+        ?.type;
+      const worker = await DeliveryWorker.findOne({
+        where: { worker_address: type },
+      });
+      res.send({
+        result: true,
+        type: type,
+        worker_public: worker.worker_public,
+      });
+    } catch {
+      res.send({ result: false });
+    }
+  });
 
+  /*======================== Parcel =============================== */
   server.all("*", (req, res) => {
     return handle(req, res);
   });
