@@ -26,6 +26,7 @@ const { fromHEX } = require("@mysten/bcs");
 const connection = new Connection({
   fullnode: "https://fullnode.testnet.sui.io",
 });
+
 const provider = new JsonRpcProvider(connection, {
   skipDataValidation: false,
   faucetURL: DEVNET_FAUCET_URL,
@@ -191,7 +192,7 @@ app.prepare().then(() => {
           data.data?.content.fields.parcel_list[i].fields.worker_address
         ) {
           const meta_data_list = await axios.get(
-            `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
+            `${process.env.NEXT_PUBLIC_IPFS_ADDR}/${data.data?.content.fields.parcel_list[i].fields.url}`
           );
           meta_data_list.data.progress =
             data.data?.content.fields.parcel_list[i].fields.progress;
@@ -218,15 +219,7 @@ app.prepare().then(() => {
       let data_arr = [];
       for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
         const meta_data_list = await axios.get(
-          `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`,
-          {
-            headers: {
-              pinata_api_key:
-                "d10c98647ecb75089d6cff03d6e995e5b5d6d87d4217281c4d2c1698ce293cfa",
-              pinata_secret_api_key:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJkYWMzYjcxYy1hNjAyLTQ5ZGYtYWE2YS05MzFlYjYyYWZhMzAiLCJlbWFpbCI6Imtlc21haS5wbGF5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiJjMWY1Yzc2NzM3YzE3MTY5ZmM5ZCIsInNjb3BlZEtleVNlY3JldCI6ImQxMGM5ODY0N2VjYjc1MDg5ZDZjZmYwM2Q2ZTk5NWU1YjVkNmQ4N2Q0MjE3MjgxYzRkMmMxNjk4Y2UyOTNjZmEiLCJpYXQiOjE2OTI2MDA3NTV9.BMY97a8NxayARap2JVo4d7_OUwUaILY2UG1s3I6Fjcg",
-            },
-          }
+          `${process.env.NEXT_PUBLIC_IPFS_ADDR}/${data.data?.content.fields.parcel_list[i].fields.url}`
         );
         meta_data_list.data.progress =
           data.data?.content.fields.parcel_list[i].fields.progress;
@@ -302,7 +295,7 @@ app.prepare().then(() => {
     let data_arr = [];
     for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
       const meta_data_list = await axios.get(
-        `https://winner.mypinata.cloud/ipfs/${data.data?.content.fields.parcel_list[i].fields.url}`
+        `${process.env.NEXT_PUBLIC_IPFS_ADDR}/${data.data?.content.fields.parcel_list[i].fields.url}`
       );
 
       if (meta_data_list.data.id == id) {
@@ -312,6 +305,7 @@ app.prepare().then(() => {
     console.log(data_arr);
     res.send({ result: true, arr: data_arr[0] });
   });
+
   /*======================== Parcel =============================== */
 
   server.all("*", (req, res) => {

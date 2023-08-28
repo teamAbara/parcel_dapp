@@ -48,28 +48,28 @@ export function ParcelDetailComponent(props: any) {
     if (!parcel_list) return;
     const meta_data_list = async () => {
       await axios
-        .get(`https://winner.mypinata.cloud/ipfs/${parcel_list.url}`)
+        .get(`${process.env.NEXT_PUBLIC_IPFS_ADDR}/${parcel_list.url}`)
         .then(res => {
           //보낸사람
-          setFromName(res?.data?.from_name);
-          setFromPhoneNumber(res.data.from_phone_number);
-          setFromPhoneNumber2(res.data.from_phone_number2);
+          console.log(res.data.properties);
+          setFromName(res.data.properties.from_name);
+          setFromPhoneNumber(res.data.properties.from_phone_number);
+          setFromPhoneNumber2(res.data.properties.from_phone_number2);
           setFromEmail(res.data.from_email);
-          setFromAddress(res.data.from_address);
-          setRequest(res.data.request);
+          setFromAddress(res.data.properties.from_address);
+          setRequest(res.data.properties.request);
           //받는사람
-          setToName(res.data.to_name);
-          setToAddress(res.data.to_address);
-          setToPhoneNumber(res.data.to_phone_number);
-          setToPhoneNumber2(res.data.to_phone_number2);
-          setToEmail(res.data.to_email);
+          setToName(res.data.properties.to_name);
+          setToAddress(res.data.properties.to_address);
+          setToPhoneNumber(res.data.properties.to_phone_number);
+          setToPhoneNumber2(res.data.properties.to_phone_number2);
+          setToEmail(res.data.properties.to_email);
 
           //물품
         });
     };
     meta_data_list();
   }, [parcel_list]);
-  console.log(progress);
   return (
     <div>
       <Container size="md">

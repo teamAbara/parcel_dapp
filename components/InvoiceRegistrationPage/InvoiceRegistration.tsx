@@ -15,8 +15,8 @@ import {
 import { ContactIconsList } from "./ContractIcons";
 import bg from "@img/bg.svg";
 import DaumPostcode from "react-daum-postcode";
-import { useState } from "react";
-import { ethos, TransactionBlock } from "ethos-connect";
+import { useState, useEffect } from "react";
+import { ethos } from "ethos-connect";
 import { useRouter } from "next/router";
 import { worker_pick } from "@/util/worker";
 import {
@@ -27,7 +27,8 @@ import {
   IconAt,
   IconBox,
 } from "@tabler/icons-react";
-import axios from "axios";
+import { TransactionBlock } from "ethos-connect";
+import { create } from "ipfs-http-client";
 const useStyles = createStyles(theme => {
   const BREAKPOINT = theme.fn.smallerThan("sm");
   return {
@@ -134,6 +135,7 @@ export function InvoiceRegistration() {
   const [from_address_detail, setFromAddressDetail] = useState(""); //주소
 
   const [requst, setRequest] = useState(""); //요청사항
+  const [ipfs, setIpfs] = useState(null); // IPFS 객체 상태 추가
 
   /*받는사람 */
   const [slowTransitionOpened2, setSlowTransitionOpened2] = useState(false); //모달창
@@ -251,38 +253,50 @@ export function InvoiceRegistration() {
     if (!wallet?.currentAccount) return;
     if (!process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT) return;
     if (!process.env.NEXT_PUBLIC_SUI_PACKAGE) return;
+    const auth =
+      "Basic " +
+      Buffer.from(
+        "2PbqzILVuq0jwkc47JvYgo6N4vF" + ":" + "60d9ad4d3804548374a03fdc9c7cfd10"
+      ).toString("base64");
 
-    const metadata = {
-      pinataMetadata: {
-        name: from_name + 1,
-      },
-      pinataContent: {
-        from_name: from_name,
-        from_phone_number: from_phone_number,
-        from_phone_number2: from_phone_number2,
-        from_address: from_address + from_address_detail,
-        from_email: from_email,
-        requst: requst,
-        to_name: to_name,
-        to_phone_number: to_phone_number,
-        to_phone_number2: to_phone_number2,
-        to_address: to_address + to_address_detail,
-        item_name: item_name,
-        item_size: item_size,
-        item_kg: item_kg,
-        item_type: item_type,
-      },
-    };
-    const pinJsonUrl = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
-
-    const pinataJsonRsp = await axios.post(pinJsonUrl, metadata, {
-      headers: {
-        pinata_api_key: "c1f5c76737c17169fc9d",
-        pinata_secret_api_key:
-          "d10c98647ecb75089d6cff03d6e995e5b5d6d87d4217281c4d2c1698ce293cfa",
-      },
-    });
     try {
+      //ipfs설정
+      const auth =
+        "Basic " +
+        Buffer.from(
+          `${process.env.NEXT_PUBLIC_IPFS_ID}:${process.env.NEXT_PUBLIC_IPFS_PW}`
+        ).toString("base64");
+      const ipfs = create({
+        host: "ipfs.infura.io",
+        port: 5001,
+        protocol: "https",
+        headers: {
+          authorization: auth,
+        },
+      });
+
+      const metadata = {
+        title: "to_name + 3",
+        type: "object",
+        properties: {
+          from_name: from_name,
+          from_phone_number: from_phone_number,
+          from_phone_number2: from_phone_number2,
+          from_address: from_address + from_address_detail,
+          from_email: from_email,
+          requst: requst,
+          to_name: to_name,
+          to_phone_number: to_phone_number,
+          to_phone_number2: to_phone_number2,
+          to_address: to_address + to_address_detail,
+          item_name: item_name,
+          item_size: item_size,
+          item_kg: item_kg,
+          item_type: item_type,
+        },
+      };
+      const json = await ipfs.add(JSON.stringify(metadata));
+      const json_cid = json.path;
       const transactionBlock = new TransactionBlock();
       transactionBlock.moveCall({
         target: `${process.env.NEXT_PUBLIC_SUI_PACKAGE.toString()}::parcel::parcel_reservation`,
@@ -296,7 +310,7 @@ export function InvoiceRegistration() {
             "0x76a54842b7db8807879e2da353108a7052ffec54146b6fd3f831035e7b41c9c7",
             "address"
           ),
-          transactionBlock.pure(pinataJsonRsp.data.IpfsHash),
+          transactionBlock.pure(json_cid),
         ],
       });
       const response = await wallet.signAndExecuteTransactionBlock({
@@ -309,13 +323,13 @@ export function InvoiceRegistration() {
           showObjectChanges: true,
         },
       });
-
       console.log(response);
       //성공하면 프로필 페이지
       router.push("/Profile");
     } catch (error) {
       //실패하면 메인페이지로
-      router.push("/");
+      console.log(error);
+      // router.push("/");
     }
   };
 
