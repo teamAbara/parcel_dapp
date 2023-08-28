@@ -31,6 +31,19 @@ const provider = new JsonRpcProvider(connection, {
   skipDataValidation: false,
   faucetURL: DEVNET_FAUCET_URL,
 });
+//택배 정보
+const address_list = [
+  { type: "서울1", zonecode: 06035 },
+  { type: "서울2", zonecode: 06034 },
+  { type: "인천1", zonecode: 22783 },
+  { type: "인천2", zonecode: 21316 },
+  { type: "하남1", zonecode: 12990 },
+  { type: "하남2", zonecode: 13007 },
+  { type: "제주1", zonecode: 63534 },
+  { type: "제주2", zonecode: 63548 },
+  { type: "부산1", zonecode: 46729 },
+  { type: "부산2", zonecode: 46768 },
+];
 /*====================sui===================== */
 
 // DB와 연결
@@ -45,11 +58,7 @@ sequelize
     console.error(err);
   });
 dotenv.config();
-const address_list = [
-  { type: "인천1", zonecode: 22783 },
-  { type: "인천2", zonecode: 21316 },
-  { type: "하남1", zonecode: 12990 },
-];
+
 app.prepare().then(() => {
   server.use(cors());
   server.use(bodyParser.json());

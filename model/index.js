@@ -18,7 +18,6 @@ const sequelize = new Sequelize(
     dialect: "mysql",
   }
 );
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

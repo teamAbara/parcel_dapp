@@ -258,11 +258,13 @@ export function InvoiceRegistration() {
     if (!wallet?.currentAccount) return;
     if (!process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT) return;
     if (!process.env.NEXT_PUBLIC_SUI_PACKAGE) return;
-    const auth =
-      "Basic " +
-      Buffer.from(
-        "2PbqzILVuq0jwkc47JvYgo6N4vF" + ":" + "60d9ad4d3804548374a03fdc9c7cfd10"
-      ).toString("base64");
+    //빈값 처리
+    if (to_zonecode == 0) {
+      alert("주소를 다시 입력해 주세요");
+    }
+    if (to_account == "") {
+      alert("받는 분 주소를 입력해주세요");
+    }
 
     try {
       //ipfs설정
@@ -309,7 +311,10 @@ export function InvoiceRegistration() {
             process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT.toString()
           ),
           transactionBlock.pure(wallet.address, "address"), //보내는분
-          transactionBlock.pure(to_account, "address"), //받는분
+          transactionBlock.pure(
+            "0x6cb2311de483fa5009db5efcf7ab775332c970510f57fd78fa651f4aa51d5e6e",
+            "address"
+          ), //받는분
           transactionBlock.pure(worker_public, "address"), //택배기사 주소
           transactionBlock.pure(json_cid),
         ],
