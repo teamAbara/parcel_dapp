@@ -13,20 +13,11 @@ import {
   Container,
   Grid,
 } from "@mantine/core";
-import { ContactIconsList } from "./ContractIcons";
 import bg from "@img/parcel.jpeg"; //송장 배경화면
 import DaumPostcode from "react-daum-postcode";
 import { useState, useEffect } from "react";
 import { ethos } from "ethos-connect";
 import { useRouter } from "next/router";
-import {
-  IconAlignLeft,
-  IconUser,
-  IconPhone,
-  IconMapPin,
-  IconAt,
-  IconBox,
-} from "@tabler/icons-react";
 import { TransactionBlock } from "ethos-connect";
 import { create } from "ipfs-http-client";
 import axios from "axios";
@@ -129,21 +120,16 @@ export function InvoiceRegistration() {
   /*보내는사람 */
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false); //모달창
   const [from_name, setFromName] = useState(""); //이름
-  const [from_email, setFromEmail] = useState(""); //이메일
   const [from_phone_number, setFromPhoneNumber] = useState(""); //연락처1
-  const [from_phone_number2, setFromPhoneNumber2] = useState(""); //연락처2
   const [from_address, setFromAddress] = useState(""); //주소
   const [from_address_detail, setFromAddressDetail] = useState(""); //주소
 
   const [requst, setRequest] = useState(""); //요청사항
-  const [ipfs, setIpfs] = useState(null); // IPFS 객체 상태 추가
 
   /*받는사람 */
   const [slowTransitionOpened2, setSlowTransitionOpened2] = useState(false); //모달창
   const [to_name, setToName] = useState(""); //주소
-  const [to_email, setToEmail] = useState(""); //이메일
   const [to_phone_number, setToPhoneNumber] = useState(""); //연락처1
-  const [to_phone_number2, setToPhoneNumber2] = useState(""); //연락처2
   const [to_address, setToAddress] = useState(""); //주소
   const [to_address_detail, setToAddressDetail] = useState(""); //주소
 
@@ -175,84 +161,6 @@ export function InvoiceRegistration() {
 
     setSlowTransitionOpened2(false);
   };
-
-  const MOCKDATA = [
-    { title: "보내는 분", description: from_name, icon: IconUser },
-    {
-      title: "보내는 분 Email",
-      description: from_email,
-      icon: IconAt,
-    },
-    {
-      title: "보내는 분 연락처1",
-      description: from_phone_number,
-      icon: IconPhone,
-    },
-    {
-      title: "보내는 분 연락처2",
-      description: from_phone_number2,
-      icon: IconPhone,
-    },
-
-    {
-      title: "보내는 분 주소",
-      description: `${from_address} ${from_address_detail}`,
-      icon: IconMapPin,
-    },
-    {
-      title: "요청사항",
-      description: requst,
-      icon: IconAlignLeft,
-    },
-    { title: "받는 분", description: to_name, icon: IconUser },
-    {
-      title: "받는 분 Email",
-      description: to_email,
-      icon: IconAt,
-    },
-    {
-      title: "받는 분 연락처1",
-      description: to_phone_number,
-      icon: IconPhone,
-    },
-    {
-      title: "받는 분 연락처2",
-      description: to_phone_number2,
-      icon: IconPhone,
-    },
-
-    {
-      title: "받는 분 주소",
-      description: `${to_address} ${to_address_detail}`,
-      icon: IconMapPin,
-    },
-    {
-      title: "물품 명",
-      description: item_name,
-      icon: IconBox,
-    },
-    {
-      title: "박스 크기",
-      description: box_size,
-      icon: IconBox,
-    },
-
-    {
-      title: "우임구분",
-      description: item_type,
-      icon: IconBox,
-    },
-    {
-      title: "택배원",
-      description: worker_type,
-      icon: IconBox,
-    },
-    {
-      title: "가격",
-      description: parcel_price,
-      icon: IconBox,
-    },
-  ];
 
   /*택배 블록체인에 저장 */
   const create_parcel = async () => {
@@ -287,19 +195,18 @@ export function InvoiceRegistration() {
         title: "to_name + 3",
         type: "object",
         properties: {
-          from_name: from_name,
-          from_phone_number: from_phone_number,
-          from_phone_number2: from_phone_number2,
-          from_address: from_address + from_address_detail,
-          from_email: from_email,
-          requst: requst,
-          to_name: to_name,
-          to_phone_number: to_phone_number,
-          to_phone_number2: to_phone_number2,
-          to_address: to_address + to_address_detail,
-          item_name: item_name,
-          box_size: box_size,
-          item_type: item_type,
+          from_name: from_name, //보내는분 이름
+          from_phone_number: from_phone_number, //보내는분 전화번호
+          from_address: from_address + from_address_detail, //보내는분 주소
+          requst: requst, //요청사항
+          to_name: to_name, //받느분이름
+          to_phone_number: to_phone_number, //받는분전화번호
+          to_address: to_address + to_address_detail, //받는분 주소
+          item_name: item_name, //물품이름
+          box_size: box_size, //물품사이즈
+          item_type: item_type, //운임정보
+          parcel_price: parcel_price, //가격
+          worker_type: worker_type, //택배원
         },
       };
       const json = await ipfs.add(JSON.stringify(metadata));
@@ -393,19 +300,12 @@ export function InvoiceRegistration() {
             <div className={classes.fields}>
               <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
                 <TextInput
+                  mt="md"
                   label="성함"
                   placeholder="Your name"
                   required
                   onChange={e => {
                     setFromName(e.target.value);
-                  }}
-                />
-                <TextInput
-                  label="이메일"
-                  placeholder="hello@mantine.dev"
-                  required
-                  onChange={e => {
-                    setFromEmail(e.target.value);
                   }}
                 />
                 <TextInput
@@ -415,15 +315,6 @@ export function InvoiceRegistration() {
                   required
                   onChange={e => {
                     setFromPhoneNumber(e.target.value);
-                  }}
-                />
-                <TextInput
-                  mt="md"
-                  label="연락처2"
-                  placeholder="phone2"
-                  required
-                  onChange={e => {
-                    setFromPhoneNumber2(e.target.value);
                   }}
                 />
                 <TextInput
@@ -473,29 +364,18 @@ export function InvoiceRegistration() {
               <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
                 <TextInput
                   label="성함"
+                  mt="md"
                   placeholder="Your name"
                   required
                   onChange={e => setToName(e.target.value)}
                 />
-                <TextInput
-                  label="이메일"
-                  placeholder="hello@mantine.dev"
-                  required
-                  onChange={e => setToEmail(e.target.value)}
-                />
+
                 <TextInput
                   mt="md"
-                  label="연락처1"
-                  placeholder="phone"
-                  required
-                  onChange={e => setToPhoneNumber(e.target.value)}
-                />
-                <TextInput
-                  mt="md"
-                  label="연락처2"
+                  label="연락처"
                   placeholder="phone2"
                   required
-                  onChange={e => setToPhoneNumber2(e.target.value)}
+                  onChange={e => setToPhoneNumber(e.target.value)}
                 />
                 <TextInput
                   mt="md"
@@ -652,15 +532,22 @@ export function InvoiceRegistration() {
             >
               <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
                 <Grid.Col span={12} style={{ paddingTop: "10%" }} />
-                <Grid.Col span={1} style={{ paddingTop: "13%" }} />
-                <Grid.Col span={11} style={{ paddingTop: "13%" }}>
-                  {from_address} {"  "} {from_address_detail}
+
+                <Grid.Col span={1} style={{ paddingTop: "9%" }} />
+                <Grid.Col span={11} style={{ paddingTop: "9%" }}>
+                  {to_name}
+                </Grid.Col>
+                <Grid.Col span={1} style={{ paddingTop: "0%" }} />
+                <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                  {to_address} {"  "} {to_address_detail}
                 </Grid.Col>
                 <Grid.Col span={1} style={{ paddingTop: "5%" }} />
                 <Grid.Col span={7} style={{ paddingTop: "5%" }}>
-                  {to_address}
+                  {from_name}
+                  {":"}
+                  {from_address}
                   {"  "}
-                  {to_address_detail}
+                  {from_address_detail}
                 </Grid.Col>
                 <Grid.Col
                   span={2}
@@ -672,26 +559,25 @@ export function InvoiceRegistration() {
                   {parcel_price}
                 </Grid.Col>
                 <Grid.Col span={1} style={{ paddingTop: "3%" }} />
-                <Grid.Col span={9} style={{ paddingTop: "3%" }}>
+                <Grid.Col span={11} style={{ paddingTop: "3%" }}>
                   {item_name}
                 </Grid.Col>
-                <Grid.Col span={1} style={{ paddingTop: "3%" }} />
-                <Grid.Col span={9} style={{ paddingTop: "3%" }}>
-                  dd
+                <Grid.Col span={1} style={{ paddingTop: "13%" }} />
+                <Grid.Col span={11} style={{ paddingTop: "13%" }}>
+                  {requst}
                 </Grid.Col>
               </Grid>
             </div>
-
-            <Group position="center">
-              <Button
-                onClick={() => {
-                  create_parcel();
-                }}
-              >
-                택배 예약
-              </Button>
-            </Group>
           </div>
+          <Group position="center">
+            <Button
+              onClick={() => {
+                create_parcel();
+              }}
+            >
+              택배 예약
+            </Button>
+          </Group>
         </Modal>
       </Paper>
     </Container>

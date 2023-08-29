@@ -258,10 +258,8 @@ app.prepare().then(() => {
       const keypair = Ed25519Keypair.fromSecretKey(
         fromHEX(worker.worker_private)
       );
-      console.log(id);
       const signer = new RawSigner(keypair, provider);
       //move 함수 호출
-      console.log(process.env.NEXT_PUBLIC_SUI_PACKAGE);
       //성공하면 true,실패하면 false
       const transactionBlock = new TransactionBlock();
       transactionBlock.moveCall({

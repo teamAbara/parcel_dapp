@@ -1,10 +1,10 @@
 import { SimpleGrid, Container, Stack, Button, Grid } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import QRCode from "qrcode"; // qrcode 라이브러리 불러오기
 import axios from "axios";
 import { TimeLine } from "./TimeLine";
 import bg from "@img/parcel.jpeg"; //송장 배경화면
-
+import ReactToPrint from "react-to-print";
 export function ParcelDetailComponent(props: any) {
   const { id, parcel_list, from_account, to_account, worker_acount, progress } =
     props;
@@ -13,26 +13,26 @@ export function ParcelDetailComponent(props: any) {
   const [qrCodeData, setQRCodeData] = useState("");
   /*보내는사람 */
   const [from_name, setFromName] = useState(""); //이름
-  const [from_email, setFromEmail] = useState(""); //이메일
   const [from_phone_number, setFromPhoneNumber] = useState(""); //연락처1
-  const [from_phone_number2, setFromPhoneNumber2] = useState(""); //연락처2
   const [from_address, setFromAddress] = useState(""); //주소
   const [requst, setRequest] = useState(""); //요청사항
 
   /*받는사람 */
   const [to_name, setToName] = useState(""); //주소
-  const [to_email, setToEmail] = useState(""); //이메일
   const [to_phone_number, setToPhoneNumber] = useState(""); //연락처1
-  const [to_phone_number2, setToPhoneNumber2] = useState(""); //연락처2
   const [to_address, setToAddress] = useState(""); //주소
   /*물품 */
   const [item_name, setItemnName] = useState("");
-  const [item_price, setItemPrice] = useState("");
-  const [item_size, setItemSize] = useState("");
-  const [item_kg, setItemKg] = useState("");
+  const [parcel_price, setParcelPrice] = useState("");
+  const [box_size, setBoxSize] = useState(""); //물품사이즈
   const [item_type, setItemType] = useState("");
+
+  const [content, setContent] = useState("");
+  const componentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!parcel_list) return;
+    generateQRCode();
   }, [parcel_list]);
   //qrcode생성하기
   const generateQRCode = async () => {
@@ -45,6 +45,19 @@ export function ParcelDetailComponent(props: any) {
       console.error("Error generating QR code:", error);
     }
   };
+
+  // const onClickEvent = () => {
+  //   // 버튼 클릭 이벤트
+
+  //   // 프린트 함수 호출
+  //   handlePrint();
+  // };
+
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  //   documentTitle: "파일명",
+  // });
+
   //메타데이터 가져오기
   useEffect(() => {
     if (!parcel_list) return;
@@ -56,22 +69,23 @@ export function ParcelDetailComponent(props: any) {
           console.log(res.data.properties);
           setFromName(res.data.properties.from_name);
           setFromPhoneNumber(res.data.properties.from_phone_number);
-          setFromPhoneNumber2(res.data.properties.from_phone_number2);
-          setFromEmail(res.data.from_email);
           setFromAddress(res.data.properties.from_address);
           setRequest(res.data.properties.request);
           //받는사람
           setToName(res.data.properties.to_name);
           setToAddress(res.data.properties.to_address);
           setToPhoneNumber(res.data.properties.to_phone_number);
-          setToPhoneNumber2(res.data.properties.to_phone_number2);
-          setToEmail(res.data.properties.to_email);
 
           //물품
+          setItemnName(res.data.properties.item_name);
+          setParcelPrice(res.data.properties.parcel_price);
+          setItemType(res.data.properties.item_type);
+          setBoxSize(res.data.properties.box_size);
         });
     };
     meta_data_list();
   }, [parcel_list]);
+
   return (
     <div>
       <Container size="md">
@@ -120,13 +134,23 @@ export function ParcelDetailComponent(props: any) {
                           gutterXl={50}
                         >
                           <Grid.Col span={12} style={{ paddingTop: "10%" }} />
-                          <Grid.Col span={1} style={{ paddingTop: "13%" }} />
-                          <Grid.Col span={11} style={{ paddingTop: "13%" }}>
-                            {from_address}
+                          <Grid.Col span={1} style={{ paddingTop: "10%" }} />
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                            {to_name}
                           </Grid.Col>
+                          <Grid.Col span={7} style={{ paddingTop: "10%" }}>
+                            {to_phone_number}
+                          </Grid.Col>
+                          <Grid.Col span={1} style={{ paddingTop: "0%" }} />
+                          <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                            {to_address}
+                          </Grid.Col>
+
                           <Grid.Col span={1} style={{ paddingTop: "5%" }} />
                           <Grid.Col span={7} style={{ paddingTop: "5%" }}>
-                            {to_address}
+                            {from_name}
+                            {":"}
+                            {from_address}
                           </Grid.Col>
                           <Grid.Col
                             span={2}
@@ -135,17 +159,20 @@ export function ParcelDetailComponent(props: any) {
                             {item_type}
                           </Grid.Col>
                           <Grid.Col span={2} style={{ paddingTop: "5%" }}>
-                            {/* {parcel_price} */}
+                            {parcel_price}
                           </Grid.Col>
                           <Grid.Col span={1} style={{ paddingTop: "3%" }} />
-                          <Grid.Col span={9} style={{ paddingTop: "3%" }}>
+                          <Grid.Col span={11} style={{ paddingTop: "3%" }}>
                             {item_name}
                           </Grid.Col>
-                          <Grid.Col span={1} style={{ paddingTop: "3%" }} />
-                          <Grid.Col
-                            span={9}
-                            style={{ paddingTop: "3%" }}
-                          ></Grid.Col>
+                          <Grid.Col span={1} style={{ paddingTop: "13%" }} />
+                          <Grid.Col span={11} style={{ paddingTop: "13%" }}>
+                            {requst}
+                          </Grid.Col>
+                          <Grid.Col span={1} style={{ paddingTop: "0%" }} />
+                          <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                            {box_size}
+                          </Grid.Col>
                         </Grid>
                       </div>
                     </div>
@@ -189,13 +216,36 @@ export function ParcelDetailComponent(props: any) {
                         height: "100%",
                         margin: 10,
                         borderRadius: 20,
-                        padding: 40,
+                        padding: 50,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
                       }}
                     >
-                      <Button onClick={generateQRCode}>Qr</Button>
-                      {qrCodeData && (
-                        <img src={qrCodeData} width="80%" alt="QR Code" />
-                      )}
+                      <ReactToPrint
+                        trigger={() => (
+                          <Button
+                            onClick={() => {
+                              generateQRCode();
+                            }}
+                          >
+                            인쇄하기
+                          </Button>
+                        )}
+                        content={() => componentRef.current}
+                      />
+                      <div
+                        ref={componentRef}
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 40,
+                        }}
+                      >
+                        {qrCodeData && (
+                          <img src={qrCodeData} width="40%" alt="QR Code" />
+                        )}
+                      </div>
                     </div>
                   </Stack>
                 </SimpleGrid>
