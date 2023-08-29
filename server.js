@@ -248,30 +248,30 @@ app.prepare().then(() => {
 
   //택배 다음 단계로 변경
   server.post("/parcel/update_parcel_progress", async (req, res) => {
-    //아이디 받아서
-    const { worker_id } = req.body;
-
-    const worker = await DeliveryWorker.findOne({
-      where: { worker_id: worker_id },
-    });
-    const keypair = Ed25519Keypair.fromSecretKey(
-      fromHEX(worker.worker_private)
-    );
-    const signer = new RawSigner(keypair, provider);
-    //move 함수 호출
-
-    //성공하면 true,실패하면 false
     try {
+      //아이디 받아서
+      const { worker_id, id } = req.body;
+
+      const worker = await DeliveryWorker.findOne({
+        where: { worker_id: worker_id },
+      });
+      const keypair = Ed25519Keypair.fromSecretKey(
+        fromHEX(worker.worker_private)
+      );
+      console.log(id);
+      const signer = new RawSigner(keypair, provider);
+      //move 함수 호출
+      console.log(process.env.NEXT_PUBLIC_SUI_PACKAGE);
+      //성공하면 true,실패하면 false
       const transactionBlock = new TransactionBlock();
       transactionBlock.moveCall({
-        target: `${process.env.NEXT_PUBLIC_SUI_PACKAGE.toString()}::parcel::next_parcel_progress`,
+        target: `${process.env.NEXT_PUBLIC_SUI_PACKAGE}::parcel::next_parcel_progress`,
         arguments: [
-          transactionBlock.object(
-            process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT.toString()
-          ),
-          transactionBlock.pure(1),
+          transactionBlock.object(process.env.NEXT_PUBLIC_PARCEL_LIST_OBJECT),
+          transactionBlock.pure(Number(id)),
         ],
       });
+
       //트랙잭션
       const response = await signer.signAndExecuteTransactionBlock({
         transactionBlock,
