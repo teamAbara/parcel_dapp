@@ -11,9 +11,10 @@ import {
   Modal,
   Select,
   Container,
+  Grid,
 } from "@mantine/core";
 import { ContactIconsList } from "./ContractIcons";
-import bg from "@img/bg.svg";
+import bg from "@img/parcel.jpeg"; //송장 배경화면
 import DaumPostcode from "react-daum-postcode";
 import { useState, useEffect } from "react";
 import { ethos } from "ethos-connect";
@@ -627,29 +628,70 @@ export function InvoiceRegistration() {
           <DaumPostcode autoClose={false} onComplete={onCompletePost2} />
         </Modal>
         <Modal
-          size={"xl"}
+          size={"55%"}
           opened={slowTransitionOpened3}
           onClose={() => setSlowTransitionOpened3(false)}
           centered
-          title="주소"
+          title="송장"
           transitionProps={{ transition: "fade", duration: 200 }}
         >
-          <div className={classes.contacts} style={{ marginTop: 100 }}>
-            <Text fz="xl" fw={800} className={classes.title} c="#fff">
-              송장
-            </Text>
-
-            <ContactIconsList variant="white" data={MOCKDATA} />
-          </div>
-          <Group position="center">
-            <Button
-              onClick={() => {
-                create_parcel();
+          <div style={{ position: "relative" }}>
+            <img src={bg.src} style={{ width: "100%" }} />
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                zIndex: 1,
+                width: "100%",
+                height: "100%",
+                transform: "translate(-50%, -50%)",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              택배 예약
-            </Button>
-          </Group>
+              <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+                <Grid.Col span={12} style={{ paddingTop: "10%" }} />
+                <Grid.Col span={1} style={{ paddingTop: "13%" }} />
+                <Grid.Col span={11} style={{ paddingTop: "13%" }}>
+                  {from_address} {"  "} {from_address_detail}
+                </Grid.Col>
+                <Grid.Col span={1} style={{ paddingTop: "5%" }} />
+                <Grid.Col span={7} style={{ paddingTop: "5%" }}>
+                  {to_address}
+                  {"  "}
+                  {to_address_detail}
+                </Grid.Col>
+                <Grid.Col
+                  span={2}
+                  style={{ paddingTop: "5%", textAlign: "center" }}
+                >
+                  {item_type}
+                </Grid.Col>
+                <Grid.Col span={2} style={{ paddingTop: "5%" }}>
+                  {parcel_price}
+                </Grid.Col>
+                <Grid.Col span={1} style={{ paddingTop: "3%" }} />
+                <Grid.Col span={9} style={{ paddingTop: "3%" }}>
+                  {item_name}
+                </Grid.Col>
+                <Grid.Col span={1} style={{ paddingTop: "3%" }} />
+                <Grid.Col span={9} style={{ paddingTop: "3%" }}>
+                  dd
+                </Grid.Col>
+              </Grid>
+            </div>
+
+            <Group position="center">
+              <Button
+                onClick={() => {
+                  create_parcel();
+                }}
+              >
+                택배 예약
+              </Button>
+            </Group>
+          </div>
         </Modal>
       </Paper>
     </Container>

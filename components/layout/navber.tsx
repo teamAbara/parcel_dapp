@@ -15,12 +15,11 @@ import Image from "next/image";
 import Logo from "@img/logo.jpg";
 import Link from "next/link";
 
-const HEADER_HEIGHT = rem(150);
+const HEADER_HEIGHT = rem(0);
 
 const useStyles = createStyles(theme => ({
   logo: {},
   inner: {
-    height: HEADER_HEIGHT,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -86,7 +85,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
   return (
     <Header
       height={HEADER_HEIGHT}
-      sx={{ borderBottom: 0, backgroundColor: "#091140", position: "fixed" }}
+      sx={{ borderBottom: 0, backgroundColor: "#091140" }}
       mb={0}
     >
       <Container className={classes.inner} fluid>
