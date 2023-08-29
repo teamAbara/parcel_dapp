@@ -31,7 +31,7 @@ const useStyles = createStyles(theme => ({
     },
   },
 }));
-
+/*하단 일단 디자인만 */
 export default function FooterSocial() {
   const { classes } = useStyles();
 

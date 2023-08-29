@@ -1,13 +1,12 @@
 import { SimpleGrid, Container, Stack, Button, Grid } from "@mantine/core";
-import { useEffect, useState, useRef, forwardRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import QRCode from "qrcode"; // qrcode 라이브러리 불러오기
 import axios from "axios";
 import { TimeLine } from "./TimeLine";
 import bg from "@img/parcel.jpeg"; //송장 배경화면
 import ReactToPrint from "react-to-print";
 export function ParcelDetailComponent(props: any) {
-  const { id, parcel_list, from_account, to_account, worker_acount, progress } =
-    props;
+  const { id, parcel_list, progress } = props;
 
   /*qrcode */
   const [qrCodeData, setQRCodeData] = useState("");
@@ -26,14 +25,8 @@ export function ParcelDetailComponent(props: any) {
   const [parcel_price, setParcelPrice] = useState("");
   const [box_size, setBoxSize] = useState(""); //물품사이즈
   const [item_type, setItemType] = useState("");
-
-  const [content, setContent] = useState("");
   const componentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!parcel_list) return;
-    generateQRCode();
-  }, [parcel_list]);
   //qrcode생성하기
   const generateQRCode = async () => {
     try {
@@ -46,43 +39,32 @@ export function ParcelDetailComponent(props: any) {
     }
   };
 
-  // const onClickEvent = () => {
-  //   // 버튼 클릭 이벤트
+  //메타데이터 불러오기
+  const meta_data_list = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_IPFS_ADDR}/${parcel_list.url}`)
+      .then(res => {
+        //보낸사람
+        setFromName(res.data.properties.from_name);
+        setFromPhoneNumber(res.data.properties.from_phone_number);
+        setFromAddress(res.data.properties.from_address);
+        setRequest(res.data.properties.request);
+        //받는사람
+        setToName(res.data.properties.to_name);
+        setToAddress(res.data.properties.to_address);
+        setToPhoneNumber(res.data.properties.to_phone_number);
 
-  //   // 프린트 함수 호출
-  //   handlePrint();
-  // };
-
-  // const handlePrint = useReactToPrint({
-  //   content: () => componentRef.current,
-  //   documentTitle: "파일명",
-  // });
-
-  //메타데이터 가져오기
+        //물품
+        setItemnName(res.data.properties.item_name);
+        setParcelPrice(res.data.properties.parcel_price);
+        setItemType(res.data.properties.item_type);
+        setBoxSize(res.data.properties.box_size);
+      });
+  };
+  //렌더링
   useEffect(() => {
     if (!parcel_list) return;
-    const meta_data_list = async () => {
-      await axios
-        .get(`${process.env.NEXT_PUBLIC_IPFS_ADDR}/${parcel_list.url}`)
-        .then(res => {
-          //보낸사람
-          console.log(res.data.properties);
-          setFromName(res.data.properties.from_name);
-          setFromPhoneNumber(res.data.properties.from_phone_number);
-          setFromAddress(res.data.properties.from_address);
-          setRequest(res.data.properties.request);
-          //받는사람
-          setToName(res.data.properties.to_name);
-          setToAddress(res.data.properties.to_address);
-          setToPhoneNumber(res.data.properties.to_phone_number);
-
-          //물품
-          setItemnName(res.data.properties.item_name);
-          setParcelPrice(res.data.properties.parcel_price);
-          setItemType(res.data.properties.item_type);
-          setBoxSize(res.data.properties.box_size);
-        });
-    };
+    generateQRCode();
     meta_data_list();
   }, [parcel_list]);
 

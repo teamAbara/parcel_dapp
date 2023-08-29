@@ -69,7 +69,7 @@ interface HeaderActionProps {
     label: string;
   }[];
 }
-
+/*상단헤더 */
 export function HeaderAction({ links }: HeaderActionProps) {
   const { wallet } = ethos.useWallet();
   const { classes } = useStyles();

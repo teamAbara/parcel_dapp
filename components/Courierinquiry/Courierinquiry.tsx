@@ -47,7 +47,7 @@ const useStyles = createStyles(theme => ({
     borderRadius: rem(21),
   },
 }));
-
+/*택배 조회 페이지 */
 function Th({ children, reversed, sorted, onSort }: ThProps) {
   const { classes } = useStyles();
   const Icon = sorted

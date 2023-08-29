@@ -79,7 +79,7 @@ const useStyles = createStyles(theme => ({
     },
   },
 }));
-
+/*배너 */
 export function MainBenner() {
   const { classes } = useStyles();
   return (

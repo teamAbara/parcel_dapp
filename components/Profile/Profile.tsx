@@ -1,6 +1,5 @@
 import { ethos } from "ethos-connect";
 import { useEffect, useState } from "react";
-import { TransactionBlock } from "ethos-connect";
 import {
   SimpleGrid,
   Container,
@@ -11,27 +10,23 @@ import {
   Title,
   CopyButton,
 } from "@mantine/core";
-import { BCS, getSuiMoveConfig } from "@mysten/bcs";
-
 import { useRouter } from "next/router";
 import CourierSent from "./CourierSent";
 import CourierReceived from "./CourierReceived";
 import RecentTransaction from "./RecentTransaction";
 //마이페이지
 export function Profile() {
-  const bcs = new BCS(getSuiMoveConfig());
-
   const router = useRouter();
   const [parcel_list, setParcelList] = useState<any[]>([]);
+  //sui 지갑
   const { wallet } = ethos.useWallet();
 
-  /* 월렛이 로그인이 안대있으면 메인페이지로 이동*/
   useEffect(() => {
+    /* 월렛이 로그인이 안대있으면 메인페이지로 이동*/
+
     if (!wallet) {
       router.push("/");
     }
-  }, [wallet]);
-  useEffect(() => {
     const providers = async () => {
       //지갑이 없으면 리턴
       if (!wallet) return;
@@ -146,8 +141,7 @@ export function Profile() {
               <div
                 style={{
                   backgroundColor: "#696969",
-
-                  minHeight: 500,
+                  height: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}
@@ -159,8 +153,7 @@ export function Profile() {
               <div
                 style={{
                   backgroundColor: "#696969",
-
-                  maxHeight: 500,
+                  height: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}
@@ -172,8 +165,7 @@ export function Profile() {
               <div
                 style={{
                   backgroundColor: "#696969",
-
-                  maxHeight: 500,
+                  height: 500,
                   margin: 10,
                   borderRadius: 20,
                 }}

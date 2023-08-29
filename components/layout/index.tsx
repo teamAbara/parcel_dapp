@@ -1,6 +1,6 @@
 import { HeaderAction } from "./navber";
 import FooterSocial from "./footer"; // 파일 경로를 실제 파일 경로로 변경
-
+/**레이아웃 */
 export default function RootLayout({
   children,
 }: {

@@ -5,8 +5,10 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  //월렛설정
   const ethosConfiguration = {
     preferredWallets: ["Ethos Wallet"],
+    //testnet연결
     chain: Chain.SUI_TESTNET,
   };
   return (

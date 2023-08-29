@@ -2,6 +2,7 @@ import { TableSort } from "@/components/Courierinquiry/Courierinquiry";
 import { useEffect, useState } from "react";
 import CourierinquiryLogo from "@img/Courierinquiry.png";
 import Image from "next/image";
+//택배 조회 사이트
 export default function Courierinquiry() {
   const [mounted, setMounted] = useState(false);
 

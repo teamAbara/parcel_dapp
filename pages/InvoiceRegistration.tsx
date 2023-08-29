@@ -3,9 +3,9 @@ import { InvoiceRegistration } from "@/components/InvoiceRegistrationPage/Invoic
 import Image from "next/image";
 
 import InvoiceRegistrationLogo from "@img/InvoiceRegistration.jpeg";
+//택배 등록 페이지
 export default function InvoiceRegistrationPage() {
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
   }, []);

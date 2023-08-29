@@ -137,14 +137,14 @@ export function InvoiceRegistration() {
   /*물품 */
   const [item_name, setItemnName] = useState(""); //물품명
   const [box_size, setBoxSize] = useState<string | null>(null); //물품사이즈
+  const [box_num, setBoxNum] = useState(0); //수량
   const [item_type, setItemType] = useState<string | null>(null); //운임구분
-
-  const [parcel_price, setParcelPrice] = useState("");
+  const [parcel_price, setParcelPrice] = useState(0);
   const [to_account, setToAccount] = useState(""); //받는 분 지갑 주소
+
   const [slowTransitionOpened3, setSlowTransitionOpened3] = useState(false); //모달창
   /*택배원 */
   const [worker_type, setWorkerType] = useState("");
-
   const [worker_public, setWorkerPublic] = useState("");
 
   /*보내는 사람 주소 저장 */
@@ -251,23 +251,24 @@ export function InvoiceRegistration() {
     if (!box_size) return;
 
     if (box_size == "크기:80cm 이하 무게:3kg 이하") {
-      setParcelPrice("2.7sui");
+      setParcelPrice(2.7 * box_num);
     } else if (box_size == "크기:80㎝∼100㎝ 무게:3kg∼5kg") {
-      setParcelPrice("3.2sui");
+      setParcelPrice(3.2 * box_num);
     } else if (box_size == "크기:80㎝∼100㎝ 무게:5kg∼7kg") {
-      setParcelPrice("3.7sui");
+      setParcelPrice(3.7 * box_num);
     } else if (box_size == "크기:100㎝∼120㎝ 무게:7kg∼10kg") {
-      setParcelPrice("4.7sui");
+      setParcelPrice(4.7 * box_num);
     } else if (box_size == "크기:100㎝∼120㎝ 무게:10kg∼15kg") {
-      setParcelPrice("5.7sui");
+      setParcelPrice(5.7 * box_num);
     } else if (box_size == "크기:100㎝∼120㎝ 무게:15kg∼20kg") {
-      setParcelPrice("6.7sui");
+      setParcelPrice(6.7 * box_num);
     } else if (box_size == "크기:100㎝∼120㎝ 무게:20kg∼25kg") {
-      setParcelPrice("8.7sui");
+      setParcelPrice(8.7 * box_num);
     } else if (box_size == "크기:120㎝∼160㎝ 무게:25kg∼30kg") {
-      setParcelPrice("10.7sui");
+      setParcelPrice(10.7 * box_num);
     }
   };
+  /*렌더링 */
   useEffect(() => {
     if (!to_zonecode) return;
     const get_parcel_worker = async () => {
@@ -283,8 +284,7 @@ export function InvoiceRegistration() {
     };
     get_parcel_worker();
     setPrice();
-  }, [to_zonecode, box_size]);
-  console.log(parcel_price);
+  }, [to_zonecode, box_size, box_num]);
   return (
     <Container size="xl">
       <Paper shadow="md" radius="lg">
@@ -465,7 +465,13 @@ export function InvoiceRegistration() {
                     },
                   ]}
                 />
-
+                <TextInput
+                  label="수량"
+                  placeholder="수량"
+                  required
+                  type={"number"}
+                  onChange={e => setBoxNum(Number(e.target.value))}
+                />
                 <Select
                   label="우임구분"
                   placeholder="Pick one"
@@ -534,15 +540,18 @@ export function InvoiceRegistration() {
                 <Grid.Col span={12} style={{ paddingTop: "10%" }} />
 
                 <Grid.Col span={1} style={{ paddingTop: "9%" }} />
-                <Grid.Col span={11} style={{ paddingTop: "9%" }}>
+                <Grid.Col span={4} style={{ paddingTop: "9%" }}>
                   {to_name}
+                </Grid.Col>
+                <Grid.Col span={7} style={{ paddingTop: "9%" }}>
+                  {to_phone_number}
                 </Grid.Col>
                 <Grid.Col span={1} style={{ paddingTop: "0%" }} />
                 <Grid.Col span={11} style={{ paddingTop: "0%" }}>
                   {to_address} {"  "} {to_address_detail}
                 </Grid.Col>
                 <Grid.Col span={1} style={{ paddingTop: "5%" }} />
-                <Grid.Col span={7} style={{ paddingTop: "5%" }}>
+                <Grid.Col span={5} style={{ paddingTop: "5%" }}>
                   {from_name}
                   {":"}
                   {from_address}
@@ -553,10 +562,16 @@ export function InvoiceRegistration() {
                   span={2}
                   style={{ paddingTop: "5%", textAlign: "center" }}
                 >
+                  {box_num}
+                </Grid.Col>
+                <Grid.Col
+                  span={2}
+                  style={{ paddingTop: "5%", textAlign: "center" }}
+                >
                   {item_type}
                 </Grid.Col>
                 <Grid.Col span={2} style={{ paddingTop: "5%" }}>
-                  {parcel_price}
+                  {parcel_price}SUI
                 </Grid.Col>
                 <Grid.Col span={1} style={{ paddingTop: "3%" }} />
                 <Grid.Col span={11} style={{ paddingTop: "3%" }}>

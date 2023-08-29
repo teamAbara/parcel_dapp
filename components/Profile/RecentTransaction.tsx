@@ -1,10 +1,9 @@
 import { ethos } from "ethos-connect";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SimpleGrid, Container, Stack, ScrollArea } from "@mantine/core";
 import { useRouter } from "next/router";
-
+//최근 거래 내역 컴포넌트
 export default function RecentTransaction({ parcel_list }: any) {
-  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
   const router = useRouter();
   const { wallet } = ethos.useWallet();
   /* 월렛이 로그인이 안대있으면 메인페이지로 이동*/
@@ -24,11 +23,7 @@ export default function RecentTransaction({ parcel_list }: any) {
   return (
     parcel && (
       <>
-        <ScrollArea
-          w={"100%"}
-          h={"100%"}
-          onScrollPositionChange={onScrollPositionChange}
-        >
+        <ScrollArea w={"100%"} h={"100%"}>
           <div
             style={{
               textAlign: "center",
