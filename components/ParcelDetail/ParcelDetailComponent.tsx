@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import QRCode from "qrcode"; // qrcode 라이브러리 불러오기
 import axios from "axios";
 import { TimeLine } from "./TimeLine";
+import bg from "@img/parcel.jpeg"; //송장 배경화면
+
 export function ParcelDetailComponent(props: any) {
   const { id, parcel_list, from_account, to_account, worker_acount, progress } =
     props;
@@ -84,441 +86,71 @@ export function ParcelDetailComponent(props: any) {
                   borderRadius: 20,
                 }}
               >
-                <SimpleGrid
-                  cols={2}
-                  breakpoints={[{ maxWidth: "xs", cols: 1 }]}
-                >
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
+                <Stack>
+                  <div
+                    style={{
+                      backgroundColor: "#FFCD4A",
+                      height: "100%",
+                      margin: 10,
+                      borderRadius: 20,
+                    }}
+                  >
+                    <div style={{ position: "relative" }}>
+                      <img
+                        src={bg.src}
+                        style={{ width: "100%", borderRadius: 20 }}
+                      />
+                      <div
                         style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          zIndex: 1,
+                          width: "100%",
+                          height: "100%",
+                          transform: "translate(-50%, -50%)",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        보낸사람:{from_name}
-                      </p>
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          margin: 10,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {from_account}
-                      </p>
+                        <Grid
+                          gutter={5}
+                          gutterXs="md"
+                          gutterMd="xl"
+                          gutterXl={50}
+                        >
+                          <Grid.Col span={12} style={{ paddingTop: "10%" }} />
+                          <Grid.Col span={1} style={{ paddingTop: "13%" }} />
+                          <Grid.Col span={11} style={{ paddingTop: "13%" }}>
+                            {from_address}
+                          </Grid.Col>
+                          <Grid.Col span={1} style={{ paddingTop: "5%" }} />
+                          <Grid.Col span={7} style={{ paddingTop: "5%" }}>
+                            {to_address}
+                          </Grid.Col>
+                          <Grid.Col
+                            span={2}
+                            style={{ paddingTop: "5%", textAlign: "center" }}
+                          >
+                            {item_type}
+                          </Grid.Col>
+                          <Grid.Col span={2} style={{ paddingTop: "5%" }}>
+                            {/* {parcel_price} */}
+                          </Grid.Col>
+                          <Grid.Col span={1} style={{ paddingTop: "3%" }} />
+                          <Grid.Col span={9} style={{ paddingTop: "3%" }}>
+                            {item_name}
+                          </Grid.Col>
+                          <Grid.Col span={1} style={{ paddingTop: "3%" }} />
+                          <Grid.Col
+                            span={9}
+                            style={{ paddingTop: "3%" }}
+                          ></Grid.Col>
+                        </Grid>
+                      </div>
                     </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        받은사람:{to_name}
-                      </p>
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          margin: 10,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {to_account}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        보낸 분 주소:{from_address}
-                      </p>
-                      <p></p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        받은 분 주소:{to_address}
-                      </p>
-                      <p></p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        보낸분 연락처 1:{from_phone_number}
-                        {from_phone_number2}
-                      </p>
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        보낸분 연락처 2:{from_phone_number}
-                        {from_phone_number2}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        받은 분 연락처 1:{to_phone_number}
-                        {from_phone_number2}
-                      </p>
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        받은 분 연락처 2:{to_phone_number2}
-                        {from_phone_number2}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        보낸 분 Email:{from_email}
-                      </p>
-                      <p></p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        받은 분 Email:{to_email}
-                      </p>
-                      <p></p>
-                    </div>
-                  </Stack>
-                </SimpleGrid>
-                <SimpleGrid
-                  cols={1}
-                  breakpoints={[{ maxWidth: "xs", cols: 1 }]}
-                >
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        요청사항:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                </SimpleGrid>
-                <SimpleGrid
-                  cols={2}
-                  breakpoints={[{ maxWidth: "xs", cols: 1 }]}
-                >
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        물품명:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        물품 가격:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        물품 사이즈:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        물품 무게:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        운임 구분:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                  <Stack>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(51 50 61)",
-                        height: "100%",
-                        margin: 10,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <p
-                        style={{
-                          textAlign: "center",
-                          color: "white",
-                          padding: 20,
-                          width: "90%",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        결제 가격:{requst}
-                      </p>
-                    </div>
-                  </Stack>
-                </SimpleGrid>
+                  </div>
+                </Stack>
                 <SimpleGrid
                   cols={1}
                   breakpoints={[{ maxWidth: "xs", cols: 1 }]}
