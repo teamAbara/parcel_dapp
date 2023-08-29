@@ -208,7 +208,7 @@ app.prepare().then(() => {
           const meta_data_list = await axios.get(
             `${process.env.NEXT_PUBLIC_IPFS_ADDR}/${data.data?.content.fields.parcel_list[i].fields.url}`
           );
-          meta_data_list.data.progress =
+          meta_data_list.data.properties.progress =
             data.data?.content.fields.parcel_list[i].fields.progress;
           data_arr.push(meta_data_list.data.properties);
         }
