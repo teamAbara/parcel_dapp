@@ -13,6 +13,9 @@ import {
   Container,
   Grid,
 } from "@mantine/core";
+import { LoadingOverlay } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+
 import bg from "@img/parcel.jpeg"; //송장 배경화면
 import DaumPostcode from "react-daum-postcode";
 import { useState, useEffect } from "react";
@@ -116,6 +119,8 @@ const useStyles = createStyles(theme => {
 });
 //택배 예약 컴포넌트
 export function InvoiceRegistration() {
+  const [visible, { toggle }] = useDisclosure(false);
+
   const router = useRouter();
   const { classes } = useStyles();
   const { wallet } = ethos.useWallet();
@@ -239,13 +244,14 @@ export function InvoiceRegistration() {
           showObjectChanges: true,
         },
       });
-      console.log(response);
+      alert("예약 완료");
+      toggle();
+
       //성공하면 프로필 페이지
       router.push("/Profile");
     } catch (error) {
       //실패하면 메인페이지로
-      console.log(error);
-      // router.push("/");
+      router.push("/");
     }
   };
   //가격측정
@@ -587,8 +593,11 @@ export function InvoiceRegistration() {
             </div>
           </div>
           <Group position="center">
+            <LoadingOverlay visible={visible} overlayBlur={2} />
+
             <Button
               onClick={() => {
+                toggle();
                 create_parcel();
               }}
             >
