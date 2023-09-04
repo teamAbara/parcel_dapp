@@ -6,7 +6,8 @@ import {
   Button,
   rem,
 } from "@mantine/core";
-import Link from "next/link";
+import { ethos } from "ethos-connect";
+import { useRouter } from "next/router";
 const useStyles = createStyles(theme => ({
   root: {
     backgroundColor: "#11284b",
@@ -81,6 +82,8 @@ const useStyles = createStyles(theme => ({
 }));
 /*배너 */
 export function MainBenner() {
+  const { wallet } = ethos.useWallet();
+  const router = useRouter();
   const { classes } = useStyles();
   return (
     <div className={classes.root}>
@@ -104,17 +107,23 @@ export function MainBenner() {
               뛰어난 보안을 제공하며 추후 글로벌 배송 네트워크를 구축하는 발판을
               마련하고 있습니다.
             </Text>
-            <Link href="/InvoiceRegistration">
-              <Button
-                variant="gradient"
-                gradient={{ from: "#FFCD4A", to: "#FFCD4A" }}
-                size="xl"
-                className={classes.control}
-                mt={200}
-              >
-                예약하기
-              </Button>
-            </Link>
+            <Button
+              variant="gradient"
+              gradient={{ from: "#FFCD4A", to: "#FFCD4A" }}
+              size="xl"
+              className={classes.control}
+              mt={200}
+              onClick={() => {
+                if (!wallet) {
+                  //로그인 안대있으면 로그인 요청하기
+                  alert("로그인을 해주세요");
+                } else {
+                  router.push("/InvoiceRegistration");
+                }
+              }}
+            >
+              예약하기
+            </Button>
           </div>
         </div>
       </Container>

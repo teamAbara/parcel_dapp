@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
 import Logo from "@img/logo.jpg";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
 const HEADER_HEIGHT = rem(0);
 
 const useStyles = createStyles(theme => ({
@@ -71,12 +71,24 @@ interface HeaderActionProps {
 }
 /*상단헤더 */
 export function HeaderAction({ links }: HeaderActionProps) {
+  const router = useRouter();
   const { wallet } = ethos.useWallet();
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const items = links.map(link => {
     return (
-      <a key={link.label} href={link.link} className={classes.link}>
+      <a
+        key={link.label}
+        onClick={e => {
+          if (!wallet) {
+            //로그인 미완료시 처리
+            alert("로그인을 먼저해주세요");
+          } else {
+            router.push(link.link);
+          }
+        }}
+        className={classes.link}
+      >
         {link.label}
       </a>
     );
