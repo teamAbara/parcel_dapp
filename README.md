@@ -17,8 +17,8 @@
 
 ## 팀원
 
-- 장아라/데이터분석/:https://github.com/purin96
-- 한경현/블록체인/:https://github.com/kyunghyunHan
+- 장아라|데이터분석|디자인:https://github.com/purin96
+- 한경현|블록체인|:https://github.com/kyunghyunHan
 
 ## 프로젝트명 : Delivery system using blockchain
 

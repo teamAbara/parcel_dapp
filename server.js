@@ -70,7 +70,7 @@ app.prepare().then(() => {
   /* 택배기사 회원가입 */
   server.post("/auth/sign_up", async (req, res) => {
     //아이디,비밀번호,주소 받아서
-    const { worker_id, worker_pw, worker_address } = req.body;
+    const { worker_id, worker_pw, worker_address, worker_phone } = req.body;
     //sui keypair 생성
     const keypair = new Ed25519Keypair();
     //주소
@@ -84,10 +84,11 @@ app.prepare().then(() => {
       worker_id: worker_id,
       worker_pw: worker_pw,
       worker_address: worker_address,
+      worker_phone: worker_phone,
       worker_public: publickey,
       worker_private: privateKey,
     })
-      .then(data => {
+      .then(() => {
         res.send({ result: true });
       })
       .catch(err => {

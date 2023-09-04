@@ -22,6 +22,10 @@ module.exports = class DeliveryWorker extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        worker_phone: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         worker_public: {
           type: Sequelize.STRING,
           allowNull: false,
