@@ -31,6 +31,8 @@ const provider = new JsonRpcProvider(connection, {
   skipDataValidation: false,
   faucetURL: DEVNET_FAUCET_URL,
 });
+/*====================sui===================== */
+/*====================상태변수===================== */
 //택배 정보
 const address_list = [
   { type: "서울1", zonecode: 06035 },
@@ -44,7 +46,7 @@ const address_list = [
   { type: "부산1", zonecode: 46729 },
   { type: "부산2", zonecode: 46768 },
 ];
-/*====================sui===================== */
+/*====================상태변수===================== */
 
 // DB와 연결
 sequelize
@@ -77,9 +79,7 @@ app.prepare().then(() => {
     const privateKey = `0x${Buffer.from(
       fromB64(keypair.export().privateKey).slice(0, 32)
     ).toString("hex")}`;
-    //db에 저장
-    console.log("pub", publickey);
-    console.log("pv", privateKey);
+
     await DeliveryWorker.create({
       worker_id: worker_id,
       worker_pw: worker_pw,
@@ -153,7 +153,7 @@ app.prepare().then(() => {
     }
   });
 
-  //유저 정보 받아오기
+  /*유저 정보 받아오기 */
   server.post("/auth/get_user", async (req, res) => {
     const { worker_id } = req.body;
     const worker = await DeliveryWorker.findOne({
@@ -164,28 +164,9 @@ app.prepare().then(() => {
   });
   /*======================== USER =============================== */
   /*======================== Parcel =============================== */
-
-  //전체 택배 리스트 가져오기
-  server.post("/parcel/all_parcel_list", async (req, res) => {
-    //택배 리스트 조회
-    const data = await provider.getObject({
-      id: process?.env?.NEXT_PUBLIC_PARCEL_LIST_OBJECT,
-      options: {
-        showContent: true,
-      },
-    });
-    if (data && data.data?.content?.dataType === "moveObject") {
-      let data_arr = [];
-      for (let i = 0; i < data.data?.content.fields.parcel_counter; i++) {
-        data_arr.push(data.data?.content.fields.parcel_list[i].fields);
-      }
-
-      res.send({ result: true, arr: data_arr });
-    }
-  });
-
-  //할당된 데이터
+  /*택배기사한테 할당된 목록 가져오기 */
   server.post("/parcel/worker_parcel_list", async (req, res) => {
+    //id를 받아서 검색
     const { worker_id } = req.body;
     const worker = await DeliveryWorker.findOne({
       where: { worker_id: JSON.parse(worker_id) },

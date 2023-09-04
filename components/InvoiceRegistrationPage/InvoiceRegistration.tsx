@@ -17,10 +17,12 @@ import bg from "@img/parcel.jpeg"; //송장 배경화면
 import DaumPostcode from "react-daum-postcode";
 import { useState, useEffect } from "react";
 import { ethos } from "ethos-connect";
-import { useRouter } from "next/router";
-import { TransactionBlock } from "ethos-connect";
-import { create } from "ipfs-http-client";
+import { useRouter } from "next/router"; //userouter
+import { TransactionBlock } from "ethos-connect"; //wallet
+import { create } from "ipfs-http-client"; //infura ipfs
 import axios from "axios";
+
+//스타일
 const useStyles = createStyles(theme => {
   const BREAKPOINT = theme.fn.smallerThan("sm");
   return {
@@ -112,7 +114,7 @@ const useStyles = createStyles(theme => {
     },
   };
 });
-
+//택배 예약 컴포넌트
 export function InvoiceRegistration() {
   const router = useRouter();
   const { classes } = useStyles();
@@ -285,6 +287,7 @@ export function InvoiceRegistration() {
     get_parcel_worker();
     setPrice();
   }, [to_zonecode, box_size, box_num]);
+
   return (
     <Container size="xl">
       <Paper shadow="md" radius="lg">
@@ -359,7 +362,6 @@ export function InvoiceRegistration() {
             <Text fz="lg" fw={700} className={classes.title}>
               받는 분
             </Text>
-
             <div className={classes.fields}>
               <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
                 <TextInput

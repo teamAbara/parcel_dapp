@@ -21,27 +21,27 @@ export default function RecentTransaction({ parcel_list }: any) {
   //그중에 가장 최신것만 가져오기
   const parcel = parcel_list_arr.reverse()[0];
   return (
-    parcel && (
-      <>
-        <ScrollArea w={"100%"} h={"100%"}>
-          <div
-            style={{
-              textAlign: "center",
-              marginTop: 10,
-              fontSize: 25,
-              fontWeight: "bold",
-              color: "white",
-            }}
-          >
-            최근 거래내역
-          </div>
+    <>
+      <ScrollArea w={"100%"} h={"100%"}>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: 10,
+            fontSize: 25,
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
+          최근 거래내역
+        </div>
+        {parcel && (
           <Container size="xl">
             <SimpleGrid cols={1} breakpoints={[{ maxWidth: "xs", cols: 1 }]}>
               <Stack>
                 <div
                   style={{
                     backgroundColor: "rgb(51 50 61)",
-                    height: "100%",
+                    height: 400,
                     margin: 10,
                     borderRadius: 20,
                   }}
@@ -111,8 +111,8 @@ export default function RecentTransaction({ parcel_list }: any) {
               </Stack>
             </SimpleGrid>
           </Container>
-        </ScrollArea>
-      </>
-    )
+        )}
+      </ScrollArea>
+    </>
   );
 }

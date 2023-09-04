@@ -1,15 +1,18 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { ethos, TransactionBlock } from "ethos-connect";
+import { ethos } from "ethos-connect";
 import { ParcelDataType } from "@/util/type";
 import { ParcelDetailComponent } from "@/components/ParcelDetail/ParcelDetailComponent";
+
+/*상품 디테일 페이지 */
 export default function ParcelDetail() {
   const router = useRouter();
+  //리엑트 쿼리에서 id받아서 받아오기
   const { id } = router.query;
   const [mounted, setMounted] = useState(false);
   const { wallet } = ethos.useWallet();
   const [parcel_list, setParcelList] = useState<ParcelDataType | undefined>();
-
+  /*next js에서 page원할하게 가져올려면 데이머 먼저 로딩후에 페이지 렌더링 */
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -38,7 +41,8 @@ export default function ParcelDetail() {
     };
     providers();
   }, [wallet]);
-  console.log(parcel_list);
+
+  //mounted가 랜더링 되야 페이지 뜨게
   return (
     mounted &&
     parcel_list && (
