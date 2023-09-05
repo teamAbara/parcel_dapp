@@ -340,8 +340,7 @@ export function ParcelDetailComponent(props: any) {
                         }}
                       >
                         {qrCodeData && (
-                          <div style={{ padding: 70 }}>
-                            <img src={qrCodeData} width="40%" alt="QR Code" />
+                          <div style={{ padding: 0 }}>
                             <Image
                               src={bg}
                               alt="Picture of me"
@@ -349,9 +348,10 @@ export function ParcelDetailComponent(props: any) {
                                 width: "40%",
                                 height: "40px",
                                 textAlign: "center",
-                                padding: 30,
+                                padding: 70,
                               }}
                             />
+                            <img src={qrCodeData} width="30%" alt="QR Code" />
                           </div>
                         )}
                       </div>
