@@ -15,8 +15,8 @@ import {
 } from "@mantine/core";
 import { LoadingOverlay } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-
-import bg from "@img/parcel.jpeg"; //송장 배경화면
+import Image from "next/image";
+import bg from "@img/footer_logo.jpg"; //송장 배경화면
 import DaumPostcode from "react-daum-postcode";
 import { useState, useEffect } from "react";
 import { ethos } from "ethos-connect";
@@ -212,6 +212,7 @@ export function InvoiceRegistration() {
           item_name: item_name, //물품이름
           box_size: box_size, //물품사이즈
           item_type: item_type, //운임정보
+          box_num: box_num, //수량
           parcel_price: parcel_price, //가격
           worker_type: worker_type, //택배원
         },
@@ -541,6 +542,21 @@ export function InvoiceRegistration() {
           >
             <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
               <Grid.Col
+                span={12}
+                style={{
+                  backgroundColor: "#FFCD4A",
+                  borderRadius: 10,
+                  textAlign: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={bg}
+                  alt="Picture of me"
+                  style={{ width: "300px", height: "70px" }}
+                />
+              </Grid.Col>
+              <Grid.Col
                 span={1}
                 style={{
                   paddingTop: "6%",
@@ -607,7 +623,7 @@ export function InvoiceRegistration() {
                 span={3}
                 style={{ paddingTop: "6%", textAlign: "center" }}
               >
-                10
+                {box_num}
               </Grid.Col>
               <Grid.Col
                 span={1}
@@ -658,7 +674,7 @@ export function InvoiceRegistration() {
                 span={3}
                 style={{ paddingTop: "6%", textAlign: "center" }}
               >
-                10
+                {item_name}
               </Grid.Col>
               <Grid.Col
                 span={1}

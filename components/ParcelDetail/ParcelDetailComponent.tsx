@@ -26,6 +26,8 @@ export function ParcelDetailComponent(props: any) {
   const [parcel_price, setParcelPrice] = useState("");
   const [box_size, setBoxSize] = useState(""); //물품사이즈
   const [item_type, setItemType] = useState("");
+  const [box_num, setBoxNum] = useState(""); //수량
+
   const componentRef = useRef<HTMLDivElement>(null);
 
   //qrcode생성하기
@@ -60,6 +62,7 @@ export function ParcelDetailComponent(props: any) {
         setParcelPrice(res.data.properties.parcel_price);
         setItemType(res.data.properties.item_type);
         setBoxSize(res.data.properties.box_size);
+        setBoxNum(res.data.properties.box_num);
       });
   };
   //렌더링
@@ -187,7 +190,7 @@ export function ParcelDetailComponent(props: any) {
                         span={3}
                         style={{ paddingTop: "6%", textAlign: "center" }}
                       >
-                        10
+                        {box_num}
                       </Grid.Col>
                       <Grid.Col
                         span={1}
@@ -238,7 +241,7 @@ export function ParcelDetailComponent(props: any) {
                         span={3}
                         style={{ paddingTop: "6%", textAlign: "center" }}
                       >
-                        10
+                        {item_name}
                       </Grid.Col>
                       <Grid.Col
                         span={1}
@@ -315,7 +318,7 @@ export function ParcelDetailComponent(props: any) {
                         height: "100%",
                         margin: 10,
                         borderRadius: 20,
-                        padding: 50,
+                        padding: 40,
                         justifyContent: "center",
                         alignItems: "center",
                         textAlign: "center",
@@ -336,13 +339,31 @@ export function ParcelDetailComponent(props: any) {
                       <div
                         ref={componentRef}
                         style={{
+                          marginTop: 30,
                           justifyContent: "center",
                           alignItems: "center",
-                          padding: 40,
+                          backgroundColor: "#FFCD4A",
+                          textAlign: "center",
+                          padding: 20,
+                          display: "block",
+                          width: "94%",
+                          borderRadius: 40,
                         }}
                       >
                         {qrCodeData && (
-                          <img src={qrCodeData} width="40%" alt="QR Code" />
+                          <div style={{ padding: 70 }}>
+                            <Image
+                              src={bg}
+                              alt="Picture of me"
+                              style={{
+                                width: "40%",
+                                height: "60px",
+                                textAlign: "center",
+                                padding: 90,
+                              }}
+                            />
+                            <img src={qrCodeData} width="40%" alt="QR Code" />
+                          </div>
                         )}
                       </div>
                     </div>
