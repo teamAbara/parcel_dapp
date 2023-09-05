@@ -322,51 +322,52 @@ export function ParcelDetailComponent(props: any) {
                         justifyContent: "center",
                         alignItems: "center",
                         textAlign: "center",
+                        display: "flex",
                       }}
                     >
-                      <ReactToPrint
-                        trigger={() => (
-                          <Button
-                            onClick={() => {
-                              generateQRCode();
-                            }}
-                          >
-                            인쇄하기
-                          </Button>
-                        )}
-                        content={() => componentRef.current}
-                      />
                       <div
                         ref={componentRef}
                         style={{
-                          marginTop: 30,
+                          marginTop: 20,
+
                           justifyContent: "center",
                           alignItems: "center",
                           backgroundColor: "#FFCD4A",
                           textAlign: "center",
                           padding: 20,
-                          display: "block",
-                          width: "94%",
+                          width: "60%",
                           borderRadius: 40,
                         }}
                       >
                         {qrCodeData && (
                           <div style={{ padding: 70 }}>
+                            <img src={qrCodeData} width="40%" alt="QR Code" />
                             <Image
                               src={bg}
                               alt="Picture of me"
                               style={{
                                 width: "40%",
-                                height: "60px",
+                                height: "40px",
                                 textAlign: "center",
-                                padding: 90,
+                                padding: 30,
                               }}
                             />
-                            <img src={qrCodeData} width="40%" alt="QR Code" />
                           </div>
                         )}
                       </div>
                     </div>
+                    <ReactToPrint
+                      trigger={() => (
+                        <Button
+                          onClick={() => {
+                            generateQRCode();
+                          }}
+                        >
+                          인쇄하기
+                        </Button>
+                      )}
+                      content={() => componentRef.current}
+                    />
                   </Stack>
                 </SimpleGrid>
               </div>
