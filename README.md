@@ -1,6 +1,6 @@
 # 2023 공개SW 개발자대회
 
-## 프로젝트명 : Delivery system using blockchain
+## 프로젝트명 : Delivery system using blockchain 📦
 
 ## 팀명 : 아바라
 
