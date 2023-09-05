@@ -3,8 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import QRCode from "qrcode"; // qrcode 라이브러리 불러오기
 import axios from "axios";
 import { TimeLine } from "./TimeLine";
-import bg from "@img/parcel.jpeg"; //송장 배경화면
+import bg from "@img/footer_logo.jpg"; //송장 배경화면
 import ReactToPrint from "react-to-print";
+import Image from "next/image";
 export function ParcelDetailComponent(props: any) {
   const { id, parcel_list, progress } = props;
 
@@ -85,79 +86,195 @@ export function ParcelDetailComponent(props: any) {
                 <Stack>
                   <div
                     style={{
-                      backgroundColor: "#FFCD4A",
+                      backgroundColor: "rgb(51 50 61)",
                       height: "100%",
                       margin: 10,
                       borderRadius: 20,
+                      padding: 40,
+                      color: "white",
                     }}
                   >
-                    <div style={{ position: "relative" }}>
-                      <img
-                        src={bg.src}
-                        style={{ width: "100%", borderRadius: 20 }}
-                      />
-                      <div
+                    <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+                      <Grid.Col
+                        span={12}
                         style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          zIndex: 1,
-                          width: "100%",
-                          height: "100%",
-                          transform: "translate(-50%, -50%)",
+                          backgroundColor: "#FFCD4A",
+                          borderRadius: 10,
+                          textAlign: "center",
                           alignItems: "center",
-                          justifyContent: "center",
                         }}
                       >
+                        <Image
+                          src={bg}
+                          alt="Picture of me"
+                          style={{ width: "300px", height: "70px" }}
+                        />
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          paddingTop: "6%",
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 20,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        받는 분
+                      </Grid.Col>
+                      <Grid.Col span={11} style={{ paddingTop: "0%" }}>
                         <Grid
                           gutter={5}
                           gutterXs="md"
                           gutterMd="xl"
                           gutterXl={50}
                         >
-                          <Grid.Col span={12} style={{ paddingTop: "10%" }} />
-                          <Grid.Col span={1} style={{ paddingTop: "10%" }} />
                           <Grid.Col span={4} style={{ paddingTop: "10%" }}>
-                            {to_name}
+                            성함:{to_name}
                           </Grid.Col>
-                          <Grid.Col span={7} style={{ paddingTop: "10%" }}>
-                            {to_phone_number}
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                            연락처: {to_phone_number}
                           </Grid.Col>
-                          <Grid.Col span={1} style={{ paddingTop: "0%" }} />
-                          <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }} />
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }}>
                             {to_address}
                           </Grid.Col>
-
-                          <Grid.Col span={1} style={{ paddingTop: "5%" }} />
-                          <Grid.Col span={7} style={{ paddingTop: "5%" }}>
-                            {from_name}
-                            {":"}
+                        </Grid>
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          paddingTop: "6%",
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 20,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        보내는 분
+                      </Grid.Col>
+                      <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                        <Grid
+                          gutter={5}
+                          gutterXs="md"
+                          gutterMd="xl"
+                          gutterXl={50}
+                        >
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                            성함:{from_name}
+                          </Grid.Col>
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                            연락처: {from_phone_number}
+                          </Grid.Col>
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }} />
+                          <Grid.Col span={4} style={{ paddingTop: "10%" }}>
                             {from_address}
                           </Grid.Col>
-                          <Grid.Col
-                            span={2}
-                            style={{ paddingTop: "5%", textAlign: "center" }}
-                          >
-                            {item_type}
-                          </Grid.Col>
-                          <Grid.Col span={2} style={{ paddingTop: "5%" }}>
-                            {parcel_price}
-                          </Grid.Col>
-                          <Grid.Col span={1} style={{ paddingTop: "3%" }} />
-                          <Grid.Col span={11} style={{ paddingTop: "3%" }}>
-                            {item_name}
-                          </Grid.Col>
-                          <Grid.Col span={1} style={{ paddingTop: "13%" }} />
-                          <Grid.Col span={11} style={{ paddingTop: "13%" }}>
-                            {requst}
-                          </Grid.Col>
-                          <Grid.Col span={1} style={{ paddingTop: "0%" }} />
-                          <Grid.Col span={11} style={{ paddingTop: "0%" }}>
-                            {box_size}
-                          </Grid.Col>
                         </Grid>
-                      </div>
-                    </div>
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 15,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        수량
+                      </Grid.Col>
+                      <Grid.Col
+                        span={3}
+                        style={{ paddingTop: "6%", textAlign: "center" }}
+                      >
+                        10
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 15,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        운임
+                      </Grid.Col>
+                      <Grid.Col
+                        span={3}
+                        style={{ paddingTop: "6%", textAlign: "center" }}
+                      >
+                        {item_type}
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 15,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        가격
+                      </Grid.Col>
+                      <Grid.Col
+                        span={3}
+                        style={{ paddingTop: "6%", textAlign: "center" }}
+                      >
+                        {parcel_price}SUI
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 15,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        물품 명
+                      </Grid.Col>
+                      <Grid.Col
+                        span={3}
+                        style={{ paddingTop: "6%", textAlign: "center" }}
+                      >
+                        10
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 15,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        박스 사이즈
+                      </Grid.Col>
+                      <Grid.Col
+                        span={3}
+                        style={{ paddingTop: "6%", textAlign: "center" }}
+                      >
+                        {box_size}
+                      </Grid.Col>
+                      <Grid.Col
+                        span={1}
+                        style={{
+                          backgroundColor: "#3CA0FF",
+                          fontSize: 15,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        요청사항
+                      </Grid.Col>
+                      <Grid.Col
+                        span={3}
+                        style={{ paddingTop: "6%", textAlign: "center" }}
+                      >
+                        {requst}
+                      </Grid.Col>
+                    </Grid>
                   </div>
                 </Stack>
                 <SimpleGrid

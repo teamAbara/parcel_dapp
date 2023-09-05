@@ -529,68 +529,172 @@ export function InvoiceRegistration() {
           title="송장"
           transitionProps={{ transition: "fade", duration: 200 }}
         >
-          <div style={{ position: "relative" }}>
-            <img src={bg.src} style={{ width: "100%" }} />
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                zIndex: 1,
-                width: "100%",
-                height: "100%",
-                transform: "translate(-50%, -50%)",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
-                <Grid.Col span={12} style={{ paddingTop: "10%" }} />
-
-                <Grid.Col span={1} style={{ paddingTop: "9%" }} />
-                <Grid.Col span={4} style={{ paddingTop: "9%" }}>
-                  {to_name}
-                </Grid.Col>
-                <Grid.Col span={7} style={{ paddingTop: "9%" }}>
-                  {to_phone_number}
-                </Grid.Col>
-                <Grid.Col span={1} style={{ paddingTop: "0%" }} />
-                <Grid.Col span={11} style={{ paddingTop: "0%" }}>
-                  {to_address} {"  "} {to_address_detail}
-                </Grid.Col>
-                <Grid.Col span={1} style={{ paddingTop: "5%" }} />
-                <Grid.Col span={5} style={{ paddingTop: "5%" }}>
-                  {from_name}
-                  {":"}
-                  {from_address}
-                  {"  "}
-                  {from_address_detail}
-                </Grid.Col>
-                <Grid.Col
-                  span={2}
-                  style={{ paddingTop: "5%", textAlign: "center" }}
-                >
-                  {box_num}
-                </Grid.Col>
-                <Grid.Col
-                  span={2}
-                  style={{ paddingTop: "5%", textAlign: "center" }}
-                >
-                  {item_type}
-                </Grid.Col>
-                <Grid.Col span={2} style={{ paddingTop: "5%" }}>
-                  {parcel_price}SUI
-                </Grid.Col>
-                <Grid.Col span={1} style={{ paddingTop: "3%" }} />
-                <Grid.Col span={11} style={{ paddingTop: "3%" }}>
-                  {item_name}
-                </Grid.Col>
-                <Grid.Col span={1} style={{ paddingTop: "13%" }} />
-                <Grid.Col span={11} style={{ paddingTop: "13%" }}>
-                  {requst}
-                </Grid.Col>
-              </Grid>
-            </div>
+          <div
+            style={{
+              backgroundColor: "rgb(51 50 61)",
+              height: "100%",
+              margin: 10,
+              borderRadius: 20,
+              padding: 40,
+              color: "white",
+            }}
+          >
+            <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+              <Grid.Col
+                span={1}
+                style={{
+                  paddingTop: "6%",
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 20,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                받는 분
+              </Grid.Col>
+              <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                    성함:{to_name}
+                  </Grid.Col>
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                    연락처: {to_phone_number}
+                  </Grid.Col>
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }} />
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                    {to_address}
+                  </Grid.Col>
+                </Grid>
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  paddingTop: "6%",
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 20,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                보내는 분
+              </Grid.Col>
+              <Grid.Col span={11} style={{ paddingTop: "0%" }}>
+                <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                    성함:{from_name}
+                  </Grid.Col>
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                    연락처: {from_phone_number}
+                  </Grid.Col>
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }} />
+                  <Grid.Col span={4} style={{ paddingTop: "10%" }}>
+                    {from_address}
+                  </Grid.Col>
+                </Grid>
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 15,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                수량
+              </Grid.Col>
+              <Grid.Col
+                span={3}
+                style={{ paddingTop: "6%", textAlign: "center" }}
+              >
+                10
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 15,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                운임
+              </Grid.Col>
+              <Grid.Col
+                span={3}
+                style={{ paddingTop: "6%", textAlign: "center" }}
+              >
+                {item_type}
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 15,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                가격
+              </Grid.Col>
+              <Grid.Col
+                span={3}
+                style={{ paddingTop: "6%", textAlign: "center" }}
+              >
+                {parcel_price}SUI
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 15,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                물품 명
+              </Grid.Col>
+              <Grid.Col
+                span={3}
+                style={{ paddingTop: "6%", textAlign: "center" }}
+              >
+                10
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 15,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                박스 사이즈
+              </Grid.Col>
+              <Grid.Col
+                span={3}
+                style={{ paddingTop: "6%", textAlign: "center" }}
+              >
+                {box_size}
+              </Grid.Col>
+              <Grid.Col
+                span={1}
+                style={{
+                  backgroundColor: "#3CA0FF",
+                  fontSize: 15,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                요청사항
+              </Grid.Col>
+              <Grid.Col
+                span={3}
+                style={{ paddingTop: "6%", textAlign: "center" }}
+              >
+                {requst}
+              </Grid.Col>
+            </Grid>
           </div>
           <Group position="center">
             <LoadingOverlay visible={visible} overlayBlur={2} />
