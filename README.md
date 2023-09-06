@@ -17,7 +17,16 @@
 - [기사1](https://www.asiatoday.co.kr/view.php?key=20210413010007288)
 - [기사2](http://www.bizwnews.com/news/articleView.html?idxno=27545)
 
-## 주요기능
+## 개발환경 언어
+
+- typescript
+- move
+- react-native
+- next-js
+
+## 시스템 구성 및 아키텍처
+
+## 프로젝트 주요기능
 
 ### 지갑으로 로그인
 
@@ -39,13 +48,6 @@
 
 - qr코드를 찍어 위치 정보를 저장할수 있다.
 
-## 개발환경 언어
+## 기대효과 및 활용분야
 
-- typescript
-- move
-- react-native
-- next-js
-
-## 개발환경
-
-## 디렉토리 구조
+## 기차
