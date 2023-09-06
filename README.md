@@ -29,6 +29,7 @@
 ## 프로젝트 주요기능
 
 ### 지갑으로 로그인
+![ezgif com-video-to-gif](https://github.com/teamAbara/parcel_dapp/assets/88940298/c0aa29c7-39e7-4127-ac2d-4791705dc934)
 
 - ethos wallet으로 간편하게 로그인 로그아웃을 할수 있다.
 
