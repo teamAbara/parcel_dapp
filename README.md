@@ -29,25 +29,31 @@
 
 ### 지갑으로 로그인(web)
 
-#### - ethos wallet으로 간편하게 로그인 을 할수 있다.    
+#### - ethos wallet으로 간편하게 로그인 을 할수 있다.
+
 ![ezgif com-video-to-gif](https://github.com/teamAbara/parcel_dapp/assets/88940298/c0aa29c7-39e7-4127-ac2d-4791705dc934)
-#### - ethos wallet으로 간편하게 로그아웃 을 할수 있다.       
+
+#### - ethos wallet으로 간편하게 로그아웃 을 할수 있다.
+
 ![ezgif com-video-to-gif (1)](https://github.com/teamAbara/parcel_dapp/assets/88940298/87456da6-0505-427f-a18e-5f70edce61b2)
 
 ### 택배예약(web)
 
 #### - infura에 메타데이터를 저장하며 url을 sui chain에 저장한다
+
 ![3 택배예약](https://github.com/teamAbara/parcel_dapp/assets/88940298/b3918652-f7d7-4ff3-ad26-28341104d7d7)
 
 ### 택배 확인(web)
 
 #### - 마이페이지에 목록에서 자신이 보낸 택배 or 받은 택배목록을 확인할수 있으며 detail페이지에 들어가면 인쇄할수 있다.
+
 ![4인쇄](https://github.com/teamAbara/parcel_dapp/assets/88940298/77eb5b25-4287-42e9-b8c8-5634834d9772)
 
 #### - 또한 상세 택배조회를 통해서도 상세페이지로 들어갈수 있다
+
 ![5 택배조회](https://github.com/teamAbara/parcel_dapp/assets/88940298/e65d620e-aab0-447f-8afa-d9b26a12cafd)
 
-### 택배기사 택배확인
+### 택배기사 택배확인(app)
 
 - 택배기사는 상자에 있는 택배에 qr코드를 통해 사용자의 개인정보 및 내역을 열람할수 있다.
 
@@ -57,4 +63,8 @@
 
 ## 기대효과 및 활용분야
 
-## 기차
+- 기존 택배 송장 스티커를 qr코드로 대체함으로써 개인정보 도용하는 범죄를 예방할수 있다.
+- 또한 기존에 택배시스템을 간편하게 스마트컨트렉으로 작성할수 있다.
+- 사용자 기준에서는 간편하게 결제를 할수 있으며 개인정보 위험에 대한 우려를 억제할수 있다.
+
+## 기타
