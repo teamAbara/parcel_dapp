@@ -87,7 +87,7 @@
 
 #### - 택배기사는 상자에 있는 택배에 qr코드를 스캔하여 사용자의 택배 내역을 확인 및 처리할수 있다.
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/d97df561-6c4e-4d6c-bada-aedf1a63a557"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/5f6b85e7-258b-44c3-bdcd-2010fb529202"  width="30%" height="30%">
 
 #### - 택배기사는 택배리스트를 통해 할당된 택배 목록을 확인할수 있으며 누르면 상세한 정보까지 확인할수 있다.
 
