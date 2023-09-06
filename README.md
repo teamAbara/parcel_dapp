@@ -54,19 +54,31 @@
 
 ![5 택배조회](https://github.com/teamAbara/parcel_dapp/assets/88940298/e65d620e-aab0-447f-8afa-d9b26a12cafd)
 ### 택배기사 로그인(app)
+
+#### - 택배기사는 아이디 패스워드를 입력하며 지역정보를 입력하여 회원가입및 로그인을 할 수 있다.
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/9ccf45c7-e9f6-44fd-bfaf-a700dfa61e67"  width="30%" height="30%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/cf52ae67-2985-47eb-bf58-e99d48f4799a"  width="30%" height="30%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/093597ce-fcf6-4b41-a1d6-436cbe1a9d91"  width="30%" height="30%">
 
+#### - 로그인을 하게되면 프로필을 눌러 개인정보를확인할수 있으며 로그아웃 및 주소 복사등을 할수 있다.
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/5490cdbb-4a72-46be-b5ea-0d4656bcf4ea"  width="30%" height="30%">
+
+### 메인페이지(app)
+#### - 로그인을하게되면 메인페이지로 이동하는데 스캔 및 할당된 택배리스트를 확인할수 있다.
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/936ff1db-2012-42dd-b4ae-4bea4a79cc16"  width="30%" height="30%">
 
 
 ### 택배기사 택배확인(app)
 
-- 택배기사는 상자에 있는 택배에 qr코드를 통해 사용자의 개인정보 및 내역을 열람할수 있다.
+#### - 택배기사는 상자에 있는 택배에 qr코드를 스캔하여 사용자의 택배 내역을 확인 및 처리할수 있다.
 
-### 택배 qr
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/d97df561-6c4e-4d6c-bada-aedf1a63a557"  width="30%" height="30%">
 
-- qr코드를 찍어 위치 정보를 저장할수 있다.
+#### - 택배기사는 택배리스트를 통해 할당된 택배 목록을 확인할수 있으며 누르면 상세한 정보까지 확인할수 있다.
+
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/a2ee0886-1cfe-4a23-9086-ab05fb27c38a"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/6f6d9445-84ec-495e-8a83-dcf0889c3eb9"  width="30%" height="30%">
+
 
 ## 기대효과 및 활용분야
 
