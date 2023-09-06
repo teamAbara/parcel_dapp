@@ -85,10 +85,22 @@ module parcel_package_addr::parcel {
       assert!(parcel_list.progress != DELIVERY_COMPLETED,0);
       parcel_list.progress = parcel_list.progress+1;
     }
-  
-    public fun get_parcel_list(coin: &ParcelList,id:u64): &Parcel{
 
-     vector::borrow(&coin.parcel_list, id - 1 )
+    public entry fun next_return_parcel_progress(parcel_list:&mut ParcelList,id:u64){
+      let return_parcel_list= vector::borrow_mut(&mut parcel_list.return_parcel_list, id - 1 );
+      assert!(return_parcel_list.progress != RETURN_COMPLETE,0);
+      return_parcel_list.progress = return_parcel_list.progress+1;
+    }
+
+
+    public fun get_return_parcel_list(parcel: &ParcelList,id:u64): &ReturnParcel{
+
+     vector::borrow(&parcel.return_parcel_list, id - 1 )
+      
+    }
+    public fun get_parcel_list(parcel: &ParcelList,id:u64): &Parcel{
+
+     vector::borrow(&parcel.parcel_list, id - 1 )
       
     }
 
