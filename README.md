@@ -11,26 +11,37 @@
 
 ## 개발 목적 배경
 
-- 개인정보 유출로 인한 범죄가 나날이 늘어감에 따라 개인정보를 유출을 막기위해 택배에도 QrCode와 블록체인을 결합하여 개인정보를 쉽게 열람할수 없게 한다.
+- 개인정보 유출로 인한 범죄가 나날이 늘어가고 있다.특히 택배에는 이름,연락처,주소가 노출되어 범죄의 타겟이 되고 있다.서울의 한 살인사건에도 택배송장을 이용해 피해자의 주소를 알아내어 범죄가 발생하였으며,스토킹 강도 살인사건같은 강력 범죄에 택배송장으로부터 얻은 개인정보가 악용된다.이러한 개인정보 유출사건을 방지하기위해 택배에도 QrCode와 블록체인을 결합하여 이러한문제를 해결할수 없을까 하여 서비스를 개발하게 되었다.
 
 - [기사1](https://www.asiatoday.co.kr/view.php?key=20210413010007288)
 - [기사2](http://www.bizwnews.com/news/articleView.html?idxno=27545)
 
 ## 개발환경 언어
 
+### 1.웹
+
 - typescript
-- move
-- react-native
 - next-js
+- node js
+
+### 2.앱
+
+- typescript
+- react-native
+
+### 3.블록체인
+
+- Sui Network
+- Move(smart contract language)
+- Infura
 
 ## 시스템 구성 및 아키텍처
 
 ## 프로젝트 주요기능
 
-
 ### 지갑으로 로그인(web)
 
-#### - ethos wallet으로 간편하게 로그인 을 할수 있다.
+#### - ethos wallet으로 간편하게 회원가입 없이 로그인 을 할수 있다.
 
 ![ezgif com-video-to-gif](https://github.com/teamAbara/parcel_dapp/assets/88940298/c0aa29c7-39e7-4127-ac2d-4791705dc934)
 
@@ -53,20 +64,24 @@
 #### - 또한 상세 택배조회를 통해서도 상세페이지로 들어갈수 있다
 
 ![5 택배조회](https://github.com/teamAbara/parcel_dapp/assets/88940298/e65d620e-aab0-447f-8afa-d9b26a12cafd)
+
 ### 택배기사 로그인(app)
 
 #### - 택배기사는 아이디 패스워드를 입력하며 지역정보를 입력하여 회원가입및 로그인을 할 수 있다.
+
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/9ccf45c7-e9f6-44fd-bfaf-a700dfa61e67"  width="30%" height="30%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/cf52ae67-2985-47eb-bf58-e99d48f4799a"  width="30%" height="30%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/093597ce-fcf6-4b41-a1d6-436cbe1a9d91"  width="30%" height="30%">
 
 #### - 로그인을 하게되면 프로필을 눌러 개인정보를확인할수 있으며 로그아웃 및 주소 복사등을 할수 있다.
+
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/5490cdbb-4a72-46be-b5ea-0d4656bcf4ea"  width="30%" height="30%">
 
 ### 메인페이지(app)
-#### - 로그인을하게되면 메인페이지로 이동하는데 스캔 및 할당된 택배리스트를 확인할수 있다.
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/936ff1db-2012-42dd-b4ae-4bea4a79cc16"  width="30%" height="30%">
 
+#### - 로그인을하게되면 메인페이지로 이동하는데 스캔 및 할당된 택배리스트를 확인할수 있다.
+
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/936ff1db-2012-42dd-b4ae-4bea4a79cc16"  width="30%" height="30%">
 
 ### 택배기사 택배확인(app)
 
@@ -79,11 +94,6 @@
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/a2ee0886-1cfe-4a23-9086-ab05fb27c38a"  width="30%" height="30%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/6f6d9445-84ec-495e-8a83-dcf0889c3eb9"  width="30%" height="30%">
 
-
 ## 기대효과 및 활용분야
 
-- 기존 택배 송장 스티커를 qr코드로 대체함으로써 개인정보 도용하는 범죄를 예방할수 있다.
-- 또한 기존에 택배시스템을 간편하게 스마트컨트렉으로 작성할수 있다.
-- 사용자 기준에서는 간편하게 결제를 할수 있으며 개인정보 위험에 대한 우려를 억제할수 있다.
-
-## 기타
+- 기존 택배에는 이름,연락처,주소가 입력되어 있어 이 개인정보가 노출되어 범죄에 악용되는 것을 막아 개인정보 유출 범죄를 예방할수 있으며,블록체인 smart contract로 인해 간단한 로직으로도 택배시스템을 구축할수 있으며,간단하게 지갑으로 결제할수 있다.
