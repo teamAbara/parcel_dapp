@@ -81,7 +81,7 @@
 
 #### - 로그인을하게되면 메인페이지로 이동하는데 스캔 및 할당된 택배리스트를 확인할수 있다.
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/936ff1db-2012-42dd-b4ae-4bea4a79cc16"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/121744538/83230e43-d489-4d49-981a-a774b897d38d"  width="30%" height="30%">
 
 ### 택배기사 택배확인(app)
 
