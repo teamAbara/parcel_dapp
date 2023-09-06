@@ -29,9 +29,9 @@
 
 ### 지갑으로 로그인
 
-- ethos wallet으로 간편하게 로그인 을 할수 있다.    
+#### - ethos wallet으로 간편하게 로그인 을 할수 있다.    
 ![ezgif com-video-to-gif](https://github.com/teamAbara/parcel_dapp/assets/88940298/c0aa29c7-39e7-4127-ac2d-4791705dc934)
-- ethos wallet으로 간편하게 로그아웃 을 할수 있다.       
+#### - ethos wallet으로 간편하게 로그아웃 을 할수 있다.       
 ![ezgif com-video-to-gif (1)](https://github.com/teamAbara/parcel_dapp/assets/88940298/87456da6-0505-427f-a18e-5f70edce61b2)
 
 ### 택배예약
