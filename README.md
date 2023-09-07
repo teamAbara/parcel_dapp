@@ -1,7 +1,8 @@
 # 2023 공개SW 개발자대회
 
 ## 프로젝트명 : Delivery system using blockchain 📦
-![1](https://github.com/teamAbara/parcel_dapp/assets/88940298/484b0bf0-75e8-464e-b49b-2122617c19b3)
+
+![21](https://github.com/teamAbara/parcel_dapp/assets/88940298/c67912c5-7a18-41fd-a191-f9ec974dd037)
 
 ## 팀명 : 아바라 ☕
 
@@ -16,18 +17,18 @@
  특히 택배에는 이름, 연락처, 주소가 나와 있어 범죄에 노출되기 쉽습니다. 얼마 전 서울에서 일어난 한 살인사건은 택배 송장을 이용해 피해자의 주소를 알아내어 범죄가 발생하였으며, 스토킹 및 강도 같은 강력 범죄 사건에 택배 송장으로부터 개인정보를 알아내어 이를 악용한다고 합니다.
 
 택배에 Qr Code와 블록체인을 결합하면 이러한 개인정보 유출 문제를 해결할 수 있을까 하여 서비스를 개발하게 돼었습니다.
-![3](https://github.com/teamAbara/parcel_dapp/assets/88940298/472fcde9-e9ad-4af5-a838-53fecc43f3db)
-![4](https://github.com/teamAbara/parcel_dapp/assets/88940298/fb9f1e24-69f6-42a7-8c00-3e0c0a69b68e)
-![5](https://github.com/teamAbara/parcel_dapp/assets/88940298/ee63e3b2-36be-4f0e-8e16-54751c8be49c)
-![6](https://github.com/teamAbara/parcel_dapp/assets/88940298/49033a02-c5e5-439b-9a66-d90c3682ae1d)
+![3](https://github.com/teamAbara/parcel_dapp/assets/88940298/e281b459-6217-437d-b169-68cd733f1a4b)
+![4](https://github.com/teamAbara/parcel_dapp/assets/88940298/179e36bc-0cba-416c-9e57-57956bdc52f7)
 
+![5](https://github.com/teamAbara/parcel_dapp/assets/88940298/c53a0908-535a-41ac-a9f9-eb2f73902368)
 
+![6](https://github.com/teamAbara/parcel_dapp/assets/88940298/9a5bf121-74c6-4a0b-8c01-44eaaaeaa7f4)
 
 - [기사1](https://www.asiatoday.co.kr/view.php?key=20210413010007288)
 - [기사2](http://www.bizwnews.com/news/articleView.html?idxno=27545)
 
 ## 개발환경 언어
-![7](https://github.com/teamAbara/parcel_dapp/assets/88940298/ee3e2542-12cd-481c-a599-667e0d01c116)
+![7](https://github.com/teamAbara/parcel_dapp/assets/88940298/e02ea81b-580e-45e8-96d6-afd2c465f7bb)
 
 ### 1.웹
 
@@ -53,36 +54,36 @@
 ### 지갑으로 로그인(web)
 
 #### - ethos wallet으로 간편하게 회원가입 없이 로그인 을 할수 있습니다.
+![1 로그인](https://github.com/teamAbara/parcel_dapp/assets/88940298/0bb095fc-f0c3-459b-bbd4-59a3232eea2e)
 
-![ezgif com-video-to-gif](https://github.com/teamAbara/parcel_dapp/assets/88940298/c0aa29c7-39e7-4127-ac2d-4791705dc934)
 
 #### - ethos wallet으로 간편하게 로그아웃 을 할수 있습니다.
+![2 로그아웃](https://github.com/teamAbara/parcel_dapp/assets/88940298/ae0ecb5b-5015-4834-846e-1d01d0f7b81d)
 
-![ezgif com-video-to-gif (1)](https://github.com/teamAbara/parcel_dapp/assets/88940298/87456da6-0505-427f-a18e-5f70edce61b2)
 
 ### 택배예약(web)
 
 #### - infura ipfs 에 택배 예약 내역을 cid로 저장하며 url을 Sui Network에 저장합니다.
+![3 택배예약](https://github.com/teamAbara/parcel_dapp/assets/88940298/eb971383-9f59-4155-a661-d16f5919b21a)
 
-![3 택배예약](https://github.com/teamAbara/parcel_dapp/assets/88940298/b3918652-f7d7-4ff3-ad26-28341104d7d7)
 
 ### 택배 확인(web)
 
 #### - 마이페이지에서 자신이 보낸 택배와  받은 택배목록 및 최신 내역을  확인할수 있으며 클릭하게 되면 상세 페이지로 넘어가 더욱 자세한 상세 내용 및 현재 처리과정등을 확인할수 있으며  Qr코드를 확인 및 인쇄를 할수 있습니다. 
+![4인쇄](https://github.com/teamAbara/parcel_dapp/assets/88940298/87441909-6df5-48f6-a3b2-5f528bd13049)
 
-![4인쇄](https://github.com/teamAbara/parcel_dapp/assets/88940298/77eb5b25-4287-42e9-b8c8-5634834d9772)
 
 #### - 또한 상세 택배조회를 통해서도 상세페이지로 들어갈수 있습니다.
+![5 택배조회](https://github.com/teamAbara/parcel_dapp/assets/88940298/3d8b8465-5f55-4f87-8611-d2826ffed630)
 
-![5 택배조회](https://github.com/teamAbara/parcel_dapp/assets/88940298/e65d620e-aab0-447f-8afa-d9b26a12cafd)
 
 ### 택배기사 로그인(app)
 
 #### - 택배기사는 아이디 패스워드를 입력하며 지역정보를 입력하여 회원가입및 로그인을 할 수 있습니다
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/9ccf45c7-e9f6-44fd-bfaf-a700dfa61e67"  width="30%" height="30%">
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/cf52ae67-2985-47eb-bf58-e99d48f4799a"  width="30%" height="30%">
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/093597ce-fcf6-4b41-a1d6-436cbe1a9d91"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/81f8972e-29c3-4310-944e-253784f78150"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/81952b64-2d2c-45ed-bcc4-a54d32c8d78e"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/e825110a-83bb-4157-b5b1-3e9b4ff3f6ac"  width="30%" height="30%">
 
 #### - 로그인을 하게되면 프로필을 눌러 개인정보를확인할수 있으며, 택배기사의 지갑 주소 복사 및 로그아웃을 할수 있습니다.
 
@@ -92,18 +93,18 @@
 
 #### - 로그인을하게되면 메인페이지로 이동하는데 맨위에 접속중인 프로필 내용을 확인할수 있으며 밑에는 스캔 및 할당된 리스트등 이 있습니다 
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/121744538/83230e43-d489-4d49-981a-a774b897d38d"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/44035b1e-d06e-4e42-8e0f-f4d96bd93ac3"  width="30%" height="30%">
 
 ### 택배기사 택배확인(app)
 
 #### - 택배기사는 택배 상자에 있는 qr코드를 스캔하여 사용자의 택배 내역을 확인을 할수 있으며 처리버튼 눌러 처리단계를 업데이트 할수 있습니다.
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/5f6b85e7-258b-44c3-bdcd-2010fb529202"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/d925fbf8-5b0a-49b1-87b2-4b0d2f752f25"  width="30%" height="30%">
 
 #### - 택배기사는 택배리스트를 통해 할당된 택배 목록을 확인할수 있으며 누르면 상세한 정보까지 확인할수 있습니다.
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/a2ee0886-1cfe-4a23-9086-ab05fb27c38a"  width="30%" height="30%">
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/6f6d9445-84ec-495e-8a83-dcf0889c3eb9"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/94f4e65a-fc09-4001-8698-e9e555680679"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/d7866276-d294-4931-9876-738950c5a14d"  width="30%" height="30%">
 
 ## 기대효과 및 활용분야
 
