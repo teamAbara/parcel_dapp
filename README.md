@@ -1,4 +1,4 @@
-![프로필](https://github.com/teamAbara/parcel_dapp/assets/88940298/a9887dc9-a897-471c-a8a4-192326e5a1f3)# 2023 공개SW 개발자대회
+# 2023 공개SW 개발자대회
 
 ## 프로젝트명 : Delivery system using blockchain 📦
 
