@@ -77,7 +77,7 @@
 
 #### - 택배기사는 아이디 패스워드를 입력하며 지역정보를 입력하여 회원가입및 로그인을 할 수 있습니다
 
-<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/9ccf45c7-e9f6-44fd-bfaf-a700dfa61e67"  width="30%" height="30%">
+<img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/9ccf45c7-e9f6-44fd-bfaf-a700dfa61e67"  width="50%" height="50%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/cf52ae67-2985-47eb-bf58-e99d48f4799a"  width="30%" height="30%">
 <img src ="https://github.com/teamAbara/parcel_dapp/assets/88940298/093597ce-fcf6-4b41-a1d6-436cbe1a9d91"  width="30%" height="30%">
 
