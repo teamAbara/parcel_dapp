@@ -14,6 +14,9 @@
 
 - 개인정보 유출로 인한 범죄가 나날이 늘어가고 있습니다.특히 택배에는 이름,연락처,주소가 노출되어 범죄의 타겟이 되고 있습니다.서울의 한 살인사건에도 택배송장을 이용해 피해자의 주소를 알아내어 범죄가 발생하였으며,스토킹 강도 살인사건같은 강력 범죄에 택배송장으로부터 얻은 개인정보가 악용됩니다.이러한 개인정보 유출사건을 방지하기위해 택배에도 QrCode와 블록체인을 결합하여 이러한문제를 해결할수 없을까 하여 서비스를 개발하게 되었습니다.
 ![3](https://github.com/teamAbara/parcel_dapp/assets/88940298/472fcde9-e9ad-4af5-a838-53fecc43f3db)
+![4](https://github.com/teamAbara/parcel_dapp/assets/88940298/fb9f1e24-69f6-42a7-8c00-3e0c0a69b68e)
+![5](https://github.com/teamAbara/parcel_dapp/assets/88940298/ee63e3b2-36be-4f0e-8e16-54751c8be49c)
+![6](https://github.com/teamAbara/parcel_dapp/assets/88940298/49033a02-c5e5-439b-9a66-d90c3682ae1d)
 
 
 
@@ -21,6 +24,7 @@
 - [기사2](http://www.bizwnews.com/news/articleView.html?idxno=27545)
 
 ## 개발환경 언어
+![7](https://github.com/teamAbara/parcel_dapp/assets/88940298/ee3e2542-12cd-481c-a599-667e0d01c116)
 
 ### 1.웹
 
