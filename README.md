@@ -35,7 +35,7 @@
 - next-js
 - node js
 
-### 2.앱
+### 2.[앱](https://github.com/teamAbara/parcel_app)
 
 - typescript
 - react-native
