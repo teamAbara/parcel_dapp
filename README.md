@@ -18,9 +18,10 @@
 
 택배에 Qr Code와 블록체인을 결합하면 이러한 개인정보 유출 문제를 해결할 수 있을까 하여 서비스를 개발하게 돼었습니다.
 ![3](https://github.com/teamAbara/parcel_dapp/assets/88940298/e281b459-6217-437d-b169-68cd733f1a4b)
-![4](https://github.com/teamAbara/parcel_dapp/assets/88940298/179e36bc-0cba-416c-9e57-57956bdc52f7)
+![KakaoTalk_20230907_182342519](https://github.com/teamAbara/parcel_dapp/assets/121744538/f9e302c5-5625-475c-aa60-b24fa94e2572)
 
-![5](https://github.com/teamAbara/parcel_dapp/assets/88940298/c53a0908-535a-41ac-a9f9-eb2f73902368)
+![KakaoTalk_20230907_182346252](https://github.com/teamAbara/parcel_dapp/assets/121744538/11f2ab0f-ca93-4185-b853-5eb564e1514f)
+
 
 ![6](https://github.com/teamAbara/parcel_dapp/assets/88940298/9a5bf121-74c6-4a0b-8c01-44eaaaeaa7f4)
 
